@@ -1,9 +1,10 @@
+{% load static %}
 <html>
 <head>
     <title> Seoul Hotpalce </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
 </head>
 
 <body id='_body'>
@@ -19,7 +20,7 @@
                 <img src="/SeoulRtd/images/logo/type.png"> {% endcomment %}
             </a>
         </div>
-        <div class="btns_top text-right float-right">
+        {% comment %} <div class="btns_top text-right float-right">
             <a class="text-sm mr-2" href="/SeoulRtd/downloads/실시간 도시데이터 매뉴얼.pdf" target="_blank">데이터매뉴얼 <span class="material-icons">chevron_right</span></a>
             <a class="text-sm mr-2" href="https://data.seoul.go.kr/dataList/OA-21778/A/1/datasetView.do" target="_blank">실시간 인구 API <span class="material-icons">chevron_right</span></a>
             <a class="text-sm mr-2" href="https://data.seoul.go.kr/dataList/OA-21285/A/1/datasetView.do" target="_blank">실시간 통합 API <span class="material-icons">chevron_right</span></a>
@@ -34,7 +35,7 @@
                     <li><a href="https://data.seoul.go.kr/dataList/OA-21285/A/1/datasetView.do" target="_blank">실시간 통합 API 이용신청</a></li>
                 </ul>
             </div>
-        </div>
+        </div> {% endcomment %}
     </section>
 
     <div class = "container_list" id="container_list">
@@ -55,9 +56,11 @@
                         <option value="false">가나다 순</option>
                     </select>
                 </div>
+
+                {% comment %} for문으로 list 작성 예정 {% endcomment %}
                 <div class="select_list srcd_list" id='srcd_list'>
                     <a href="/SeoulRtd?hotspotNm=충정로역&amp;y=126.96369152122713&amp;x=충정로역">
-                        <img src="../static/images/s.jpg">
+                        <img src="../../static/images/s.jpg">
                         <div>
                             <p>인구밀집지역</p>
                             <h4>충정로역</h4>
