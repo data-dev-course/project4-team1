@@ -1,0 +1,72 @@
+<html>
+<head>
+    <title> Seoul Hotpalce </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+</head>
+
+<body id='_body'>
+
+    <section id="header" class="text-center fixed w-full top-0 text-white z-[111112] h-[38px] p-[7px] bg-cover">
+        <div class="pl-1">
+            <a class=" show_map inline-block float-left"><span class="material-icons">home</span></a>
+        </div>
+        <div class="logo_top">
+            <a class="show_map">
+                <h4>충정로역</h4>
+                {% comment %} <img src="/SeoulRtd/images/logo/logo_seoul_white.png">
+                <img src="/SeoulRtd/images/logo/type.png"> {% endcomment %}
+            </a>
+        </div>
+        <div class="btns_top text-right float-right">
+            <a class="text-sm mr-2" href="/SeoulRtd/downloads/실시간 도시데이터 매뉴얼.pdf" target="_blank">데이터매뉴얼 <span class="material-icons">chevron_right</span></a>
+            <a class="text-sm mr-2" href="https://data.seoul.go.kr/dataList/OA-21778/A/1/datasetView.do" target="_blank">실시간 인구 API <span class="material-icons">chevron_right</span></a>
+            <a class="text-sm mr-2" href="https://data.seoul.go.kr/dataList/OA-21285/A/1/datasetView.do" target="_blank">실시간 통합 API <span class="material-icons">chevron_right</span></a>
+        </div>
+        <div class="mobile_menu text-right display-none">
+            <a class="mobile_menu_a on" id="mobile_menu_a"><span class="material-icons">menu</span></a>
+            <div class="dropdown-menu3" id="dropdown-menu3" style="display: block;">
+                <div></div>
+                <ul>
+                    <li class="pb-1"><a href="/SeoulRtd/downloads/실시간 도시데이터 매뉴얼.pdf" target="_blank">데이터매뉴얼 다운받기</a></li>
+                    <li class="pb-1"><a href="https://data.seoul.go.kr/dataList/OA-21778/A/1/datasetView.do" target="_blank">실시간 인구 API 이용신청</a></li>
+                    <li><a href="https://data.seoul.go.kr/dataList/OA-21285/A/1/datasetView.do" target="_blank">실시간 통합 API 이용신청</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class = "container_list" id="container_list">
+        <div class="left-1/2 relative max-w-screen-2xl translate-x-[-50%]">
+            <div class='slide'>
+                <div class="list_tab">
+                    <a id="전체보기" class="srcd_tab_list">전체보기</a>
+                    <a id="고궁·문화유산" class="srcd_tab_list">고궁·문화유산</a>
+                    <a id="공원" class="srcd_tab_list">공원</a>
+                    <a id="관광특구" class="srcd_tab_list on">관광특구</a>
+                    <a id="발달상권" class="srcd_tab_list">발달상권</a>
+                    <a id="인구밀집지역" class="srcd_tab_list">인구밀집지역</a>                        
+                </div>
+                <span class="float-left container_list_total">총 <span id="spotlist_cnt" class="black b">??</span>곳</span>
+                <div class="float-right container_list_sort">
+                    <select name="sort" id="sort">
+                        <option value="true">혼잡도 높은 순</option>
+                        <option value="false">가나다 순</option>
+                    </select>
+                </div>
+                <div class="select_list srcd_list" id='srcd_list'>
+                    <a href="/SeoulRtd?hotspotNm=충정로역&amp;y=126.96369152122713&amp;x=충정로역">
+                        <img src="../static/images/s.jpg">
+                        <div>
+                            <p>인구밀집지역</p>
+                            <h4>충정로역</h4>
+                            <h5 class="srcd_congest" style="background: #DD1F3D">붐빔</h5>
+                        </div>
+                    </a>
+                <div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

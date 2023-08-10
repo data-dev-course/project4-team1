@@ -1,0 +1,143 @@
+<html>
+    <head>
+        <style class="vjs-styles-defaults">
+        .video-js {
+        width: 300px;
+        height: 150px;
+        }
+    
+        .vjs-fluid:not(.vjs-audio-only-mode) {
+        padding-top: 56.25%
+        }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="서울시 실시간 도시데이터"> 
+    <meta name="author" content="">
+    <title>서울시 실시간 도시데이터</title>
+        <link rel="shortcut icon" href="/SeoulRtd/images/logo/favicon.ico">
+        <link rel="apple-touch-icon" href="/SeoulRtd/images/logo/favicon.ico">	    
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&amp;display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="text/javascript" src="https://weblog2.eseoul.go.kr/event/?ra=WOX7T3RKDECB8W81FOXZYA2Z0K7YPQNE&amp;service_id=data.seoul.go.kr&amp;pc_id=16906970593148161249031&amp;session_id=&amp;screen=2560x1440&amp;language=ko-KR&amp;mode=&amp;referrer=https%3A%2F%2Fdata.seoul.go.kr%2FSeoulRtd%3FhotspotNm%3D%25EC%2584%259C%25EB%25A6%25AC%25ED%2592%2580%25EA%25B3%25B5%25EC%259B%2590%25C2%25B7%25EB%25AA%25BD%25EB%25A7%2588%25EB%25A5%25B4%25EB%259C%25A8%25EA%25B3%25B5%25EC%259B%2590%26y%3D127.0026831794888%26x%3D%25EC%2584%259C%25EB%25A6%25AC%25ED%2592%2580%25EA%25B3%25B5%25EC%259B%2590%25C2%25B7%25EB%25AA%25BD%25EB%25A7%2588%25EB%25A5%25B4%25EB%259C%25A8%25EA%25B3%25B5%25EC%259B%2590&amp;unique_info=%5B%7B%22code%22%3A%22PLUG%22%2C%20%22hsCode%22%3A%2299a88d21e10e959428879450d48ceeb1%22%7D%2C%20%7B%22code%22%3A%22UAGT%22%2C%20%22hsCode%22%3A%223b8d399b56fb9df5592b051fde36c903%22%7D%2C%20%7B%22code%22%3A%22SCRE%22%2C%20%22hsCode%22%3A%22572cda553fa9ac8d225f93d1bae76ab8%22%7D%5D&amp;e_url=https%3A%2F%2Fdata.seoul.go.kr%2FSeoulRtd%2F%3FhotspotNm%3D%25EC%2584%259C%25EB%25A6%25AC%25ED%2592%2580%25EA%25B3%25B5%25EC%259B%2590%25C2%25B7%25EB%25AA%25BD%25EB%25A7%2588%25EB%25A5%25B4%25EB%259C%25A8%25EA%25B3%25B5%25EC%259B%2590%26y%3D127.0026831794888%26x%3D%25EC%2584%259C%25EB%25A6%25AC%25ED%2592%2580%25EA%25B3%25B5%25EC%259B%2590%25C2%25B7%25EB%25AA%25BD%25EB%25A7%2588%25EB%25A5%25B4%25EB%259C%25A8%25EA%25B3%25B5%25EC%259B%2590&amp;e_title=%EC%84%9C%EC%9A%B8%EC%8B%9C%20%EC%8B%A4%EC%8B%9C%EA%B0%84%20%EB%8F%84%EC%8B%9C%EB%8D%B0%EC%9D%B4%ED%84%B0&amp;e_type=pageview&amp;END" async="" charset="UTF-8"></script><script type="text/javascript" src="//weblog.eseoul.go.kr/wlo/js/seetoc.js?2023710" async="" charset="utf-8"></script><script type="text/javascript" src="//weblog.eseoul.go.kr/wlo/js/AutoEvent.js?2023710" async="" charset="utf-8"></script><script type="text/javascript" src="//weblog.eseoul.go.kr/wlo/js/wl6.js?2023710" async="" charset="utf-8"></script><script src="/SeoulRtd/js/tailwindcss-3.1.3.min.js"></script>
+    <script>
+        tailwind.config = {  theme: {  extend: {  colors: {	keycolor: '#577de0'  }}  }	}
+    </script>
+    <!-- custom css -->
+    <link rel="stylesheet" type="text/css" href="/SeoulRtd/css/custom.css?v=20230622">
+    <link rel="stylesheet" type="text/css" href="/SeoulRtd/css/icon-material-icons.css">
+    <link rel="stylesheet" type="text/css" href="/SeoulRtd/css/gisMapCss.css?v=20230622">    
+    <link rel="stylesheet" href="/SeoulRtd/css/map.css?v=20230622">
+    <script src="/SeoulRtd/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/SeoulRtd/js/map/mapsvr.do"></script> 
+    <link href="/SeoulRtd/js/video/video-js.min.css" rel="stylesheet">
+    <script src="/SeoulRtd/js/video/video.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/SeoulRtd/css/mobile_bottom.css?v=20230622">   
+    <style>/* ! tailwindcss v3.1.3 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;font-weight:inherit;line-height:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::-webkit-backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.top-0{top:0px}.left-0{left:0px}.top-\[38px\]{top:38px}.top-28{top:7rem}.right-2\.5{right:0.625rem}.top-36{top:9rem}.right-2{right:0.5rem}.z-\[111112\]{z-index:111112}.float-right{float:right}.float-left{float:left}.my-1\.5{margin-top:0.375rem;margin-bottom:0.375rem}.my-1{margin-top:0.25rem;margin-bottom:0.25rem}.mr-2{margin-right:0.5rem}.mb-1{margin-bottom:0.25rem}.mt-3{margin-top:0.75rem}.mt-2{margin-top:0.5rem}.ml-5{margin-left:1.25rem}.ml-4{margin-left:1rem}.ml-6{margin-left:1.5rem}.mt-4{margin-top:1rem}.mr-3{margin-right:0.75rem}.ml-3{margin-left:0.75rem}.mt-1{margin-top:0.25rem}.mt-5{margin-top:1.25rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.hidden{display:none}.h-\[38px\]{height:38px}.h-screen{height:100vh}.w-full{width:100%}.w-\[650px\]{width:650px}.w-\[450px\]{width:450px}.w-40{width:10rem}.w-\[3\.2rem\]{width:3.2rem}.grow{flex-grow:1}.basis-1\/2{flex-basis:50%}.basis-3\/4{flex-basis:75%}.basis-3\/5{flex-basis:60%}.basis-1\/6{flex-basis:16.666667%}.basis-1\/4{flex-basis:25%}.basis-2\/4{flex-basis:50%}.basis-1\/3{flex-basis:33.333333%}.basis-4\/5{flex-basis:80%}.flex-col{flex-direction:column}.content-center{align-content:center}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-around{justify-content:space-around}.justify-evenly{justify-content:space-evenly}.gap-3{gap:0.75rem}.gap-2{gap:0.5rem}.gap-4{gap:1rem}.gap-1{gap:0.25rem}.rounded-md{border-radius:0.375rem}.rounded-l-full{border-top-left-radius:9999px;border-bottom-left-radius:9999px}.rounded-r-full{border-top-right-radius:9999px;border-bottom-right-radius:9999px}.rounded-l-md{border-top-left-radius:0.375rem;border-bottom-left-radius:0.375rem}.rounded-t-md{border-top-left-radius:0.375rem;border-top-right-radius:0.375rem}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity))}.bg-cover{background-size:cover}.p-\[7px\]{padding:7px}.p-2{padding:0.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.pl-1{padding-left:0.25rem}.pb-1{padding-bottom:0.25rem}.pt-\[15px\]{padding-top:15px}.pb-2\.5{padding-bottom:0.625rem}.pt-2{padding-top:0.5rem}.pl-2{padding-left:0.5rem}.pt-0{padding-top:0px}.pt-3{padding-top:0.75rem}.pr-2{padding-right:0.5rem}.pb-2{padding-bottom:0.5rem}.pb-5{padding-bottom:1.25rem}.pr-5{padding-right:1.25rem}.pl-5{padding-left:1.25rem}.pl-4{padding-left:1rem}.pl-3{padding-left:0.75rem}.pr-1{padding-right:0.25rem}.pt-1{padding-top:0.25rem}.pl-0{padding-left:0px}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-medium{font-weight:500}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.text-black{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.opacity-80{opacity:0.8}.shadow-none{--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}</style><style type="text/css">
+    @font-face {
+    font-weight: 400;
+    font-style:  normal;
+    font-family: circular;
+    
+    src: url('chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/CircularXXWeb-Book.woff2') format('woff2');
+    }
+    
+    @font-face {
+    font-weight: 700;
+    font-style:  normal;
+    font-family: circular;
+    
+    src: url('chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/CircularXXWeb-Bold.woff2') format('woff2');
+    }</style>
+    </head>
+
+    <body>
+        <div class="report_title_m">
+            <div class="bg-white pt-[15px]" id="mobile_draggable">
+            <header class="controls">
+                <div class="close_this " id="fullscreen_close_m" style="display: block;">
+                    <a><span class="material-icons select_map_close">close</span></a>
+                </div>
+            </header>
+                <div class="refresh_report"><span class="rpt_date">2023-08-10 16:41:20 기준</span> <a class="refresh_btn"><span class="material-icons">refresh</span></a></div>
+                <h2>지금 <span class="rpt_hotspotNm">서리풀공원·몽마르뜨공원은</span></h2>
+                <div class="report_m_summary" style="display: none;">
+                        <div class="flex items-center  " id="m_summary_normal" style="display: none;">
+                        <table>
+                            <tbody><tr>
+                            <td>인구혼잡도 <b class="pop_congest rpt_data" style="color: rgb(221, 31, 61);">붐빔</b></td>
+                            <td>예상혼잡시간 <b class="rp_congest_next rpt_data color_bk">-</b></td>
+                            <td rowspan="4"><img class="hotspotImg" src="/SeoulRtd/images/hotspot/서리풀공원·몽마르뜨공원.jpg"></td>
+                            </tr>
+                            <tr>
+                            <td colspan="2">실시간 인구: <b class="pop_congest_curr color_bk">5,500~6,000명</b></td>
+                            </tr>
+                            <tr>
+                            <td>통합대기환경지수 <b class="rpt_wAll rpt_data"><span class="wAll_color_soso">보통</span></b></td>
+                            <td>자외선지수 <b class="color_bk rpt_ray2 rpt_data"><span class="color_good"> 낮음</span></b></td>
+                            </tr>
+                            <tr>
+                            <td>도로소통단계 <b class="rpt_road rpt_data"><span class="color_soso">서행</span></b></td>
+                            <td>사고돌발건수 <b class=" rpt_acc rpt_data_zero">0</b>건</td>
+                            </tr>
+                        </tbody></table>
+                    </div>
+                    <div class="flex items-center pt-2 " id="m_summary_special" style="display: block;">
+                        <table>
+                            <tbody><tr>
+                            <td colspan="2" class="m_summary_special_type"><b class="color_bk">태풍주의보</b> 발효 중! 외출을 자제해주세요.</td>
+                            <td rowspan="4"><img class="hotspotImg" src="/SeoulRtd/images/hotspot/서리풀공원·몽마르뜨공원.jpg"></td>
+                            </tr>
+                            <tr>
+                            <td>인구혼잡도 <b class="pop_congest rpt_data" style="color: rgb(221, 31, 61);">붐빔</b></td>
+                            <td>예상혼잡시간 <b class="rp_congest_next rpt_data color_bk">-</b></td>
+                            </tr>
+                            <tr>
+                            <td colspan="2">실시간 인구: <b class="pop_congest_curr color_bk">5,500~6,000명</b></td>
+                            </tr>
+                            <tr>
+                            <td>통합대기환경지수 <b class="rpt_wAll rpt_data"><span class="wAll_color_soso">보통</span></b></td>
+                            <td>자외선지수 <b class="color_bk rpt_ray2 rpt_data"><span class="color_good"> 낮음</span></b></td>
+                            </tr>
+                        </tbody></table>
+                    </div>
+                </div>
+        <div class="flex">
+            <section class="getHotspot map sidebar sidebar_m flex"> 
+                <a class="sidemenu_m" id="side_home_m" data-target="report_home_m" onclick="show_home_m();">
+                    <span class="material-icons">map</span>
+                    지도 홈
+                </a>
+                <a class="sidemenu_m on" id="side_population_m" data-target="report_population_m" onclick="show_population_m();">
+                    <span class="material-icons">accessibility</span>
+                    실시간 인구
+                </a>
+                <a class="sidemenu_m" id="side_traffic_m" data-target="report_traffic_m" onclick="show_traffic_m();">
+                    <span class="material-icons">traffic</span>
+                    도로소통
+                </a>
+                <a class="sidemenu_m" id="side_transport_m" data-target="report_transport_m" onclick="show_transport_m();">
+                    <span class="material-icons">directions_subway</span>
+                    대중교통
+                </a>
+                <a class="sidemenu_m" id="side_weather_m" data-target="report_weather_m" onclick="show_weather_m();">
+                    <span class="material-icons">public</span>
+                    날씨/환경
+                </a>
+                <!--  
+                <a class="sidemenu_m" id="side_covid_m"  data-target="report_covid_m" onClick="show_covid_m();">
+                    <span class="material-icons">coronavirus</span>
+                    코로나19
+                </a>
+            -->
+            </section>
+        </div>
+            </div>
+        </div>
+
+    </body>
+
+</html>
