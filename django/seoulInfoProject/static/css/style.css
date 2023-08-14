@@ -1509,20 +1509,16 @@ canvas{cursor: default;}
 	height: 50px;
 	background: #A1CCD1;
 	display: flex;
-	{% comment %} text-align:left; {% endcomment %}
 }
 .top_home{
 	width: 43%;
 	float: left;
-	{% comment %} text-align:left; {% endcomment %}
 }
 .top_center{
 	width: 40%;
 	height: 90%; 
-	{% comment %} margin-left: 5%; {% endcomment %}
 	float: center;
 	display: flex;
-	{% comment %} text-align:left; {% endcomment %}
 }
 a{
 	text-decoration: none;
