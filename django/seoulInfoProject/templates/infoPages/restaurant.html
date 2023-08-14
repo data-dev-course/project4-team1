@@ -1,0 +1,25 @@
+{% extends '../base.html' %}
+
+
+{% block content %}
+<div class="list_tab">
+    <a id="인구" class="srcd_tab_list" href='/population'>인구</a>
+    <a id="날씨" class="srcd_tab_list" href='/weather'>날씨·환경</a>
+    <a id="맛집" class="srcd_tab_list on" href='/restaurant'>맛집</a>
+    <a id="뉴스" class="srcd_tab_list" href='/news'>뉴스</a>                      
+</div>
+
+<div class="report_inner_wrap">
+    <!-- 혼잡도 추이-->
+    <div class="report_cell">
+        <h3 class="border-bottom">실시간 인구 및 혼잡도 추이 전망</h3>
+         <p class="pop_date_right">※ 2023-08-11 17:30 기준</p>
+    </div>
+    <!-- 성별/연령별 -->
+    <div class="report_cell">
+        <h3 class="border-bottom">실시간 인구 구성 비율  <span class="text_rt"> <span class="pop_date_right">※ 2023-08-11 17:30 기준</span></span></h3>
+
+    </div>
+    <!-- //성별/연령별 -->                
+</div>
+{% endblock %}

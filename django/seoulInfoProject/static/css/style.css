@@ -98,10 +98,10 @@ small {font-size: 12px}
 .logo_top img:nth-child(1){width: 22px; display: inline; margin-right: 8px}
 .logo_top img:nth-child(2) {width: 151px; display: inline; margin-right: 15px}
 #header .material-icons {font-size: 22px; vertical-align: -5px}
-#_body {background: #E7EDF5}
+#_body {background: #F4F2DE;}
 
 #body {position: relative; height: calc(100vh - 38px); overflow: hidden;  z-index:99}
-#body_list {background: #E7EDF5; position: relative; min-height: calc(100vh - 38px); padding: 20px}
+#body_list {background: #F4F2DE; position: relative; min-height: calc(100vh - 38px); padding: 20px}
 
 .map_list img {display: inline}
 .color_01 {color: #4C65A7 !important}
@@ -1258,7 +1258,7 @@ canvas{cursor: default;}
 
 
 
-.container_list {padding: 20px 0%; background: #E7EDF5;  top: 38px;position: relative;     height: calc(100% - 38px); overflow-y: scroll;}
+.container_list {padding: 20px 0%; background: #F4F2DE;  top: 38px;position: relative;     height: calc(100% - 38px); overflow-y: scroll;}
 
 
 .container_list_total{
@@ -1306,8 +1306,6 @@ canvas{cursor: default;}
     padding-left: 10px;
 }
 
-
-
 #sheet { display: none;}
 @keyframes blink {
   to {
@@ -1318,16 +1316,27 @@ canvas{cursor: default;}
 	#sheet {width: 0%; display: none;  }
 }
 
+@media screen  {
+	.report_inner_wrap{
+		overflow-y: scroll; 
+		overflow-x: clip; 
+		height: calc(100vh - 200px) !important;  
+		display: flex; 
+		flex-direction: column; 
+		gap:10px; 
+		padding: 30px; 
+	}
+}
 
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: 1024px) {
 	html{    overflow-x: hidden; }
 	/*  report */
 	#report_home_m{display: block}
 	.report_home_traffic{overflow-x: scroll;}
 	.report_home_traffic > div {border-bottom:  1px solid #e5e5e5; padding: 2vh 1vh 2vh 0}
 	.report_home_traffic h4{font-size: 12px !important}
-	.report_inner_wrap{overflow-y: scroll; overflow-x: clip;  height: calc(100vh - 200px) !important;  display: flex; flex-direction: column; gap:10px; padding: 10px; }
+	/* .report_inner_wrap{overflow-y: scroll; overflow-x: clip; top: 30px; height: calc(100vh - 200px) !important;  display: flex; flex-direction: column; gap:10px; padding: 10px; } */
 	.chart_line{width: 100%;}
 	.chart_sojn{ width: 100%; }
 	.chart_genderAge{width: 100%;}
@@ -1364,7 +1373,7 @@ canvas{cursor: default;}
 
 	/* ì§€ë„ ë©”ë‰´ë“¤ */
 
-	 #map_category_tb{ margin-top: 5px}
+	#map_category_tb{ margin-top: 5px}
 	.pop_category, #select_tile, .btn_tile{top: 47px !important; }
 	#btns_zoom{ top: 145px !important;}
 	.select_map_layer{top: 93px !important; }
@@ -1493,4 +1502,28 @@ canvas{cursor: default;}
 }
 @media screen and (max-width: 400px) {
 	.logo_top{width: 80% ;}
+}
+
+.main_top{
+	width: 100%;
+	height: 50px;
+	background: #A1CCD1;
+	display: flex;
+	{% comment %} text-align:left; {% endcomment %}
+}
+.top_home{
+	width: 43%;
+	float: left;
+	{% comment %} text-align:left; {% endcomment %}
+}
+.top_center{
+	width: 40%;
+	height: 90%; 
+	{% comment %} margin-left: 5%; {% endcomment %}
+	float: center;
+	display: flex;
+	{% comment %} text-align:left; {% endcomment %}
+}
+a{
+	text-decoration: none;
 }

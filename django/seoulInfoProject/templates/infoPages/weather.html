@@ -1,0 +1,164 @@
+{% extends 'base.html'%}
+
+{% block content%}
+    
+<div class="list_tab">
+    <a id="인구" class="srcd_tab_list" href='/population'>인구</a>
+    <a id="날씨" class="srcd_tab_list on" href='/weather'>날씨·환경</a>
+    <a id="맛집" class="srcd_tab_list" href='/restaurant'>맛집</a>
+    <a id="뉴스" class="srcd_tab_list" href='/news'>뉴스</a>                      
+</div>
+
+<!-- 보고서 -->
+<div class="flex relative top-[38px]" id="contents">
+
+    <!-- 보고서 내용 -->
+    <!-- 지도 -->
+
+
+        <!-- 모바일 보고서 환경 -->
+        <div class="container_report container_report_m " id="report_weather_m" style="width: 455px; display: block;">
+            <div class="report_inner_wrap">
+                <!-- 실시간 날씨 현황 -->
+                <div class="report_cell">
+                    <h3 class="border-bottom">실시간 날씨 현황 <span class="text_rt">※ <span class="weather_lastdate">2023-08-12 17:10</span> 기준</span></h3>
+                    <!-- 기온 -->
+                    <div class="temperature">
+                        <img src="/SeoulRtd/images/icon/weather/icon_temperature.png" class="icon_temperature">
+                        <b class="rpt_temp1 rpt_data color_01">23.8℃</b> 체감 <span class="rpt_temp2 rpt_data">26.5℃</span>
+                    </div>
+                    <!-- 습도 바람 -->
+                    <div class="moisture flex mt-3">
+                        <div class="basis-1/2 text-right pr-5 border-right"><img src="/SeoulRtd/images/icon/weather/icon_moisture.png" class="icon_moisture"> 습도 <b class="rpt_humidity rpt_data">91%</b></div>
+                        <div class="basis-1/2 text-left pl-5"><img src="/SeoulRtd/images/icon/weather/icon_wind.png" class="icon_wind"> 바람 <b class="rpt_wind rpt_data">3.1m/s</b></div>
+                    </div>
+                    <!-- 최저최고 일출일몰 -->
+                    <div class="flex weather_box  items-center mt-2">
+                        <div class="">
+                            최저기온 <b class="color_bk rpt_tmp_low rpt_data">24℃</b>
+                        </div>
+                        <div>
+                            최고기온 <b class="color_bk rpt_tmp_high rpt_data">32℃</b>
+                        </div>
+                        <div class="">
+                            일출 <b class="rpt_sunrise rpt_data">05:45</b>
+                        </div>
+                        <div>
+                            일몰 <b class="rpt_sunset rpt_data">19:29</b>
+                        </div>
+                    </div>
+                    <h4 class="border-bottom mt-2 pt-3 pb-2" id="weather_special_title">기상 특보</h4>
+                    <!-- 주의보 -->
+                    <div class="rpt_data_empty rpt_weather_special"></div>
+                    <!-- 강수량 / 자외선 -->
+                    <div class="flex weather_03 border-bottom">
+                        <div class="mr-3 vertical-center"><img src="/SeoulRtd/images/icon/weather/ico_weather_rain.png" class="ico_weather_rain"></div>
+                        <div class="mw-77 basis-1/4 border-right vertical-center">
+                            강수량<br>
+                                <b class="color_bk rpt_rain rpt_data">-</b>
+                        </div>
+                        <div class="pl-4 rpt_wAll_msgRain  rpt_data vertical-center">비 또는 눈 소식이 없어요.</div>
+                    </div>
+                    <div class="flex weather_03">
+                        <div class=" mr-3 vertical-center"><img src="/SeoulRtd/images/icon/weather/ico_weather_uv.png" class="ico_weather_uv"></div>
+                        <div class="mw-77 pr-5 basis-2/4 border-right vertical-center">
+                            자외선지수<br>
+                            <b class="color_bk rpt_ray2 rpt_data"><span class="color_soso"> 보통</span></b>
+                        </div>
+                        <ul class="pl-4 rpt_wAll_msgRay  rpt_data vertical-center"><li><b class="color_bk">2-3시간</b> 햇볕에 노출 시 피부 화상을 입을 수 있어요.</li><li>외출시 모자나 선글라스를 착용해주세요.</li><li>자외선 차단제를 발라주세요.</li></ul>
+                    </div>
+                    <!-- 예보 테이블 -->
+                    <h4 class="mt-2">24시간 날씨 예보 </h4>
+                    <div class="wrap_table_wf">
+                        <table class="table_wehather_forecast table_wehather_forecast_l"><tbody><tr><th>시간</th><td>15시</td><td>16시</td><td>17시</td><td>18시</td><td>19시</td><td>20시</td><td>21시</td><td>22시</td><td>23시</td><td>24시</td><td>01시</td><td>02시</td><td>03시</td><td>04시</td><td>05시</td><td>06시</td><td>07시</td><td>08시</td><td>09시</td><td>10시</td><td>11시</td><td>12시</td><td>13시</td><td>14시</td></tr><tr><th>날씨</th><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_rain.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_halfsun.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_clear_night.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_clear_night.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td></tr><tr><th>기온</th><td>27℃</td><td>27℃</td><td>24℃</td><td>23℃</td><td>24℃</td><td>25℃</td><td>26℃</td><td>26℃</td><td>25℃</td><td>25℃</td><td>25℃</td><td>25℃</td><td>25℃</td><td>24℃</td><td>24℃</td><td>24℃</td><td>24℃</td><td>25℃</td><td>26℃</td><td>27℃</td><td>28℃</td><td>29℃</td><td>30℃</td><td>30℃</td></tr><tr><th>강수량(mm)</th><td>-</td><td>-</td><td>빗방울</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><th>강수확률</th><td>30%</td><td>30%</td><td>30%</td><td>20%</td><td>20%</td><td>20%</td><td>20%</td><td>20%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td></tr></tbody></table>
+                    </div>
+                </div>
+                <!-- 대기오염현황 -->
+                <div class="report_cell">
+                    <h3 class="border-bottom">대기오염 현황 <span class="text_rt">※ <span class="weather_lastdate">2023-08-12 17:10</span> 기준</span></h3>
+                    
+                    <h2 class="air_h2">통합대기환경지수 <b class="rpt_wAll rpt_data"><span class="wAll_color_soso">보통</span></b>
+                        <span>
+                            <span class="material-icons help help_icon">help_outline</span>
+                            <span class="help_text fix_1 " id="weather_air_help">
+                                <table class="table_legend table_pm">
+                                    <tbody><tr>
+                                        <th class="pm_good_border">좋음<br>(0~ 50)</th>
+                                        <th class="pm_soso_border">보통<br>(51 ~ 100)</th>
+                                        <th class="pm_bad_border">나쁨<br>(101 ~ 250)</th>
+                                        <th class="pm_terrible_border">매우나쁨<br>(251~ 550)</th>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                                지수 기준 : 측정 시  6개 대기오염물질별로 통합대기환경지수 점수를 산정하며 가장 높은 점수를 통합 지수값으로 사용<br>
+                                결정지수 : 미세먼지
+                            </span>
+                        </span>
+                    </h2>
+                    
+                    <ul class="report_ul mt-2 rpt_wAll_msgAll  rpt_data"><li>호흡기가 예민하신 분들은 몸상태 유의하며 활동해주세요.</li></ul>
+                    
+                    <div class="flex infobox_1 infobox_pm">
+                        <div class="basis-1/2">
+                            미세먼지<br><b class="PM10  PM10_color rpt_data good">14㎍/㎥ 좋음</b>
+                        </div>
+                        <div class="basis-1/2">
+                            초미세먼지<br><b class="PM25 PM25_color  rpt_data good">8㎍/㎥ 좋음</b>
+                        </div>
+                    </div>
+                    
+                    
+                        <!-- row -->
+                    <div class="flex weather_02">
+
+                        <div class="basis-1/4 ">
+                            <p class="size-default">오존농도</p>
+                            <span class="O3 rpt_data color_soso">0.032ppm 보통</span>
+                        </div>
+
+                        <div class="basis-1/4 ">
+                            <p class="size-default">이산화질소</p>
+                            <span class="NO2 rpt_data color_good">0.022ppm 좋음</span>
+                        </div>
+                        <div class="basis-1/4 ">
+                            <p class="size-default">일산화탄소</p>
+                            <span class="CO rpt_data color_good">0.2ppm 좋음</span>
+                        </div>
+                        <div class="basis-1/4 ">
+                            <p class="size-default">아황산가스</p>
+                            <span class="SO2 rpt_data color_good">0.002ppm 좋음</span>
+                        </div>
+
+                    </div>
+                    <!-- //row  -->
+                </div>
+                <!-- //대기오염현황 -->
+            </div>
+        </div>
+    </main>
+    </div>
+</div>
+
+<!--  로딩중 -->
+<div id="loading" class="display-none" style="display: none;">
+        <h1 id="loading-msg">데이터를 수신하고 있습니다.조금만 기다려주세요.</h1>
+</div>
+
+<script>
+    var	map = null;
+    var sbs = null;
+        var x_minus = 0;
+    var layerGroup = {};
+    var layerList = ["swipe", "heatmap", "hotspot", "parking", "subway", "bike", "bus", "acc", "cctv", "road"];
+    busColor = { "1": {"color": "brown", "name": "공항"}, "2": {"color": "green", "name": "마을"}, "3": {"color": "blue", "name": "간선"}, "4": {"color": "green", "name": "지선"}, "5": {"color": "brown", "name": "순환"}, "6": {"color": "red", "name": "광역"}, "7": {"color": "bluegreen", "name": "인천"}, "8": {"color": "bluegreen", "name": "경기"}, "9": {"color": "gray", "name": "폐지"}, "0": {"color": "gray", "name": "공용"}, "10": {"color": "gray", "name": "공용"} };
+</script>
+<script>
+    var _hotspotNm = "\uC601\uB4F1\uD3EC \uD0C0\uC784\uC2A4\uD018\uC5B4";
+        var _x = "\uC601\uB4F1\uD3EC \uD0C0\uC784\uC2A4\uD018\uC5B4";
+        var _y= "126.9067563";
+        var minDate= "2023-08-10";
+        var maxDate= "2023-08-12";
+</script>
+
+{%endblock%}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+<br>
+{% block content %}
+
+        <div class="list_tab">
+            <a id="전체보기" class="srcd_tab_list">전체보기</a>
+            <a id="고궁·문화유산" class="srcd_tab_list">고궁·문화유산</a>
+            <a id="공원" class="srcd_tab_list">공원</a>
+            <a id="관광특구" class="srcd_tab_list">관광특구</a>
+            <a id="발달상권" class="srcd_tab_list">발달상권</a>
+            <a id="인구밀집지역" class="srcd_tab_list">인구밀집지역</a>                        
+        </div>
+        <span class="float-left container_list_total">총 <span id="spotlist_cnt" class="black b">??</span>곳</span>
+        <div class="float-right container_list_sort">
+            <select name="sort" id="sort">
+                <option value="true">혼잡도 높은 순</option>
+                <option value="false">가나다 순</option>
+            </select>
+        </div>
+
+        {% comment %} for문으로 list 작성 예정 {% endcomment %}
+        <div class="select_list srcd_list" id='srcd_list'>
+            {% for i in "x"|rjust:"10" %}
+            <a href="/population" style= "text-decoration: none; color: black;">
+                <img src="../../static/images/s.jpg">
+                <div>
+                    <p>인구밀집지역</p>
+                    <h4>충정로역</h4>
+                    <h5 class="srcd_congest" style="background: #DD1F3D">붐빔</h5>
+                </div>
+            </a>
+            {% endfor %}
+        <div>
+
+{% endblock %}

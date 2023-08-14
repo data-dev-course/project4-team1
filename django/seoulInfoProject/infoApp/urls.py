@@ -4,5 +4,8 @@ import infoApp.views
 
 urlpatterns = [
     path('', infoApp.views.home),
-    path("info/", infoApp.views.info, name="info")
+    path("population/", infoApp.views.population, name="population"),
+    path("weather/", infoApp.views.weather, name="weather"),
+    path("restaurant/", infoApp.views.restaurant, name="restaurant"),
+    path("news/", infoApp.views.news, name="news"),
 ]

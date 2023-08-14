@@ -1,0 +1,25 @@
+{% load static %}
+<html>
+<head>
+    <title> Seoul Hotpalce </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+</head>
+
+<body id='_body'>
+    <div class="main_top">
+        <div class="top_home">
+            <a href='/'><img src= "{% static 'images/icons8-home-48.png'%}"> <a>
+        </div>
+        <div class="top_center">
+            <img src= "{% static 'images/free-icon-seoul-4480816.png'%}">
+            &nbsp
+            <h4> 실시간서울정보 </h4>
+        </div>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
