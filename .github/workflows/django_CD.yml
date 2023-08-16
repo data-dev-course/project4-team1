@@ -1,0 +1,53 @@
+name: Django to Elastic Beanstalk
+
+on:
+  push:
+      paths:
+        - 'django/seoulInfoProject/**'
+        - '!django/seoulInfoProject/static/**'
+      branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.11]
+        
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+      
+    - name: Generate deployment package (zip)
+      run: |
+        cd django/seoulInfoProject
+        zip -r deploy.zip . -x '*.git*'
+
+    - name: move deploy.zip to home
+      run: |
+        mv ./django/seoulInfoProject/deploy.zip ./deploy.zip
+        ls -al
+
+    - name: Get current time
+      uses: 1466587594/get-current-time@v2
+      id: current-time
+      with:
+        format: YYYY-MM-DDTHH-mm-ss
+        utcOffset: "+09:00"
+
+    - name: Deploy Django to Elastic Beanstalk
+      uses: einaregilsson/beanstalk-deploy@v21
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_PRIVATE_ACCESS_KEY }}
+        application_name: DE-3-1-ebdjango
+        environment_name: DE-3-1-ebdjango-env
+        version_label: github-action-${{steps.current-time.outputs.formattedTime}}
+        region: ap-northeast-2
+        deployment_package: deploy.zip
+        wait_for_environment_recovery: 120
