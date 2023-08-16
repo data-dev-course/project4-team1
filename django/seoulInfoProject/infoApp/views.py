@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from infoApp.models import Place
+PATH = ""
+
 
 # Create your views here.
 def placeList(request):
@@ -13,16 +15,17 @@ def placeList(request):
     context = {
         "page_obj" : page_obj,
     }
-    return render(request, './infoPages/placeList.html', context)
+    return render(request, PATH +'infoPages/placeList.html', context)
+
 
 def population(request):
-    return render(request, './infoPages/population.html')
+    return render(request, PATH + 'infoPages/population.html')
 
 def weather(request):
-    return render(request, './infoPages/weather.html')
+    return render(request, PATH + 'infoPages/weather.html')
 
 def restaurant(request):
-    return render(request, './infoPages/restaurant.html')
+    return render(request, PATH + 'infoPages/restaurant.html')
 
 def news(request):
-    return render(request, './infoPages/news.html')
+    return render(request, PATH + 'infoPages/news.html')
