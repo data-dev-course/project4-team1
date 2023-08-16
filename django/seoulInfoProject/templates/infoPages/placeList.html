@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 <br>
+{% load static %}
 {% block content %}
 
         <div class="list_tab">
@@ -22,7 +23,7 @@
         <div class="select_list srcd_list" id='srcd_list'>
             {% for i in "x"|rjust:"10" %}
             <a href="/population" style= "text-decoration: none; color: black;">
-                <img src="../../static/images/s.jpg">
+                <img src="{% static 'images/s.jpg'%}">
                 <div>
                     <p>인구밀집지역</p>
                     <h4>충정로역</h4>

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-PATH = "infoApp/"
+PATH = ""
 
 # Create your views here.
 def home(request):
