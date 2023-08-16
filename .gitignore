@@ -161,3 +161,7 @@ cython_debug/
 
 # Mac Ds_store
 .DS_Store
+
+
+# django debug setting
+django/seoulInfoProject/seoulInfoProject/debug.py
