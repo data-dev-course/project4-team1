@@ -3,29 +3,34 @@ import os
 
 DEBUG = False
 SECRET_KEY = "django-insecure-" + os.environ["DJANGO_SECRET_KEY"]
-ALLOWED_HOSTS = ["infoseoul.ap-northeast-2.elasticbeanstalk.com", 
-                 "infoseoul.link", 
-                 "*.infoseoul.link"]
+ALLOWED_HOSTS = [
+    "infoseoul.ap-northeast-2.elasticbeanstalk.com",
+    "infoseoul.link",
+    "*.infoseoul.link",
+]
 
 # aws health check
 import requests
+
 EC2_PRIVATE_IP = None
 try:
     security_token = requests.put(
-        'http://169.254.169.254/latest/api/token',
-        headers={'X-aws-ec2-metadata-token-ttl-seconds': '60'}).text
+        "http://169.254.169.254/latest/api/token",
+        headers={"X-aws-ec2-metadata-token-ttl-seconds": "60"},
+    ).text
 
     EC2_PRIVATE_IP = requests.get(
-        'http://169.254.169.254/latest/meta-data/local-ipv4',
-        headers={'X-aws-ec2-metadata-token': security_token},
-        timeout=0.01).text
+        "http://169.254.169.254/latest/meta-data/local-ipv4",
+        headers={"X-aws-ec2-metadata-token": security_token},
+        timeout=0.01,
+    ).text
 except requests.exceptions.RequestException:
     pass
 
 if EC2_PRIVATE_IP:
     ALLOWED_HOSTS.append(EC2_PRIVATE_IP)
-    
-    
+
+
 # aws RDS
 if "RDS_DB_NAME" in os.environ:
     DATABASES = {
@@ -45,9 +50,8 @@ else:
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
-    
-    
-    
+
+
 # aws S3
 INSTALLED_APPS += ["storages"]
 STATIC_ROOT = BASE_DIR / "static/"
