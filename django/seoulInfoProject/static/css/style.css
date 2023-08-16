@@ -1258,7 +1258,13 @@ canvas{cursor: default;}
 
 
 
-.container_list {padding: 20px 0%; background: #F4F2DE;  top: 38px;position: relative;     height: calc(100% - 38px); overflow-y: scroll;}
+.container_list {
+	/* padding: 20px 0%;  */
+	background: #F4F2DE;  
+	top: 10px;position: relative;     
+	height: calc(100% - 80px); 
+	overflow-y: scroll;
+}
 
 
 .container_list_total{
@@ -1522,4 +1528,16 @@ canvas{cursor: default;}
 }
 a{
 	text-decoration: none;
+}
+.filter{
+	width: 100%;
+	display: flex;
+}
+
+.container_list_total{
+	float: left;
+}
+
+.pagination{
+	text-align: center;
 }

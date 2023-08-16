@@ -1,9 +1,19 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
+from infoApp.models import Place
 
 # Create your views here.
-def home(request):
+def placeList(request):
     template_name = ''
-    return render(request, './infoPages/placeList.html')
+    place = Place.objects.all()
+    paginator = Paginator(place, 15)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "page_obj" : page_obj,
+    }
+    return render(request, './infoPages/placeList.html', context)
 
 def population(request):
     return render(request, './infoPages/population.html')
