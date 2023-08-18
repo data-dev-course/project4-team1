@@ -2,13 +2,13 @@ name: Django to Elastic Beanstalk
 
 on:
   push:
-      paths:
-        - 'django/seoulInfoProject/**'
-        - '!django/seoulInfoProject/static/**'
-      branches: [ "main" ]
+    paths:
+    - 'django/seoulInfoProject/**'
+    - '!django/seoulInfoProject/static/**'
+    branches: [ "main" ]
 
 jobs:
-  build:
+  django_to_elastic_beanstalk:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -40,7 +40,7 @@ jobs:
         format: YYYY-MM-DDTHH-mm-ss
         utcOffset: "+09:00"
 
-    - name: Deploy Django to Elastic Beanstalk
+    - name: Deploy
       uses: einaregilsson/beanstalk-deploy@v21
       with:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
