@@ -1,0 +1,4 @@
+pendulum==2.1.2
+xmltodict==0.13.0
+pandas==1.4.4
+requests==2.28.1

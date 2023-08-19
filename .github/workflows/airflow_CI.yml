@@ -10,8 +10,11 @@ on:
     branches: [ "main", "develop"]
 
 jobs:
-  Django-run-Test:
+  airflow-dags-test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./airflow
     strategy:
       max-parallel: 4
       matrix:
@@ -21,7 +24,7 @@ jobs:
     - name: 'Test Airflow DAGs'
       uses: micael-grilo/airflow-dags-test-action@v2.5.1
       with:
-        requirements-file: airflow/requirements.txt
-        dags-path: airflow/Dags
-        dags-test-folder: airflow/Test
-        var-file: project/variables.json
+        requirements-file: requirements.txt
+        dags-path: Dags
+        dags-test-folder: Test
+        var-file: variables.json
