@@ -21,11 +21,7 @@ jobs:
     - name: 'Test Airflow DAGs'
       uses: micael-grilo/airflow-dags-test-action@v2.5.1
       with:
-        requirements-file: /github/workspace/airflow/requirements.txt
+        requirements-file: airflow/requirements.txt
         dags-path: airflow/Dags
         dags-test-folder: airflow/Test
         # var-file: airflow/variables.json
-    
-    - run: |
-        ls -al
-        pwd
