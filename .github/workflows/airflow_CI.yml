@@ -24,4 +24,8 @@ jobs:
         requirements-file: airflow/requirements.txt
         dags-path: airflow/Dags
         dags-test-folder: airflow/Test
-        var-file: airflow/variables.json
+        # var-file: airflow/variables.json
+    
+    - run: |
+        ls -al
+        pwd
