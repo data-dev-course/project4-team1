@@ -1,4 +1,4 @@
-name: Auto-Lint python black
+name: python Auto Lint black
 
 on:
   push:
@@ -16,7 +16,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  python_auto_lint_black:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4

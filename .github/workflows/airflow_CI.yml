@@ -1,0 +1,27 @@
+name: Airflow Dags Test
+
+on:
+  pull_request:
+    paths:
+      - 'airflow/Dags/**.py'
+      - 'airflow/Test/**.py'
+      - 'airflow/requirements.txt'
+      - '!**.md'
+    branches: [ "main", "develop"]
+
+jobs:
+  Django-run-Test:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.11]
+
+    steps:
+    - name: 'Test Airflow DAGs'
+      uses: micael-grilo/airflow-dags-test-action@v2.5.1
+      with:
+        requirements-file: airflow/requirements.txt
+        dags-path: airflow/Dags
+        dags-test-folder: airflow/Test
+        var-file: project/variables.json
