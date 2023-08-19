@@ -10,7 +10,7 @@ on:
     branches: [ "main", "develop"]
 
 jobs:
-  Django-run-Test:
+  airflow-dags-test:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -24,4 +24,4 @@ jobs:
         requirements-file: airflow/requirements.txt
         dags-path: airflow/Dags
         dags-test-folder: airflow/Test
-        var-file: project/variables.json
+        # var-file: airflow/variables.json
