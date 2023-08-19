@@ -5,6 +5,7 @@ on:
     paths:
     - 'django/seoulInfoProject/**'
     - '!django/seoulInfoProject/static/**'
+    - '!**.md'
     branches: [ "main" ]
 
 jobs:

@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'django/seoulInfoProject/**'
+      - '!**.md'
     branches: [ "main", "develop"]
 
 jobs:
