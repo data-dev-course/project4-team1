@@ -1,0 +1,45 @@
+name: Airflow Dags Deploy
+
+on:
+  push:
+    paths:
+      - 'airflow/Dags/**.py'
+      - 'airflow/requirements.txt'
+      - '!**.md'
+    branches: [ "main"]
+
+env:
+  BUCKET_NAME : "de-3-1"
+  DAGS_PATH : "Dags"
+  AWS_REGION : "ap-northeast-2"
+
+# permission can be added at job level or workflow level    
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
+jobs:
+  airflow-dags-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./airflow
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.S3_ROLE_ARN }}
+          role-session-name: AirflowDagsDeploy
+          aws-region: ${{ env.AWS_REGION }}
+
+    # Upload a file to AWS s3
+      - name: Sync requirements to s3
+        run: |
+          aws s3 Sync requirements.txt s3://${{ env.BUCKET_NAME }}/mwaa_requirements/requirements.txt
+
+      - name: Sync Dags to s3
+        run: |
+          cd Dags
+          aws s3 Sync . s3://${{ env.BUCKET_NAME }}/${{ env.DAGS_PATH }} 
