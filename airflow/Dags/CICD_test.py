@@ -7,6 +7,7 @@ from airflow.operators.empty import EmptyOperator
 from airflow.operators.latest_only import LatestOnlyOperator
 from airflow.utils.trigger_rule import TriggerRule
 
+# test
 with DAG(
     dag_id="latest_only_with_trigger",
     schedule=datetime.timedelta(hours=4),
