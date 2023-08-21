@@ -37,9 +37,9 @@ jobs:
     # Upload a file to AWS s3
       - name: Sync requirements to s3
         run: |
-          aws s3 Sync requirements.txt s3://${{ env.BUCKET_NAME }}/mwaa_requirements/requirements.txt
+          aws s3 sync requirements.txt s3://${{ env.BUCKET_NAME }}/mwaa_requirements/requirements.txt
 
       - name: Sync Dags to s3
         run: |
           cd Dags
-          aws s3 Sync . s3://${{ env.BUCKET_NAME }}/${{ env.DAGS_PATH }} 
+          aws s3 sync . s3://${{ env.BUCKET_NAME }}/${{ env.DAGS_PATH }} 
