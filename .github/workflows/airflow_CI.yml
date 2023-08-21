@@ -3,8 +3,8 @@ name: Airflow Dags Test
 on:
   pull_request:
     paths:
-      - 'airflow/Dags/**.py'
-      - 'airflow/Test/**.py'
+      - 'airflow/Dags/*'
+      - 'airflow/Test/*'
       - 'airflow/requirements.txt'
       - '!**.md'
     branches: [ "main", "develop"]
@@ -24,4 +24,5 @@ jobs:
         requirements-file: airflow/requirements.txt
         dags-path: airflow/Dags
         dags-test-folder: airflow/Test
-        # var-file: airflow/variables.json
+        var-file: airflow/vars.json
+
