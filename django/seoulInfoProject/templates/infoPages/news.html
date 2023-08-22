@@ -1,7 +1,8 @@
 {% extends '../base.html' %}
-
+{% load static %}
 
 {% block content %}
+
 <div class="list_tab">
     <a id="인구" class="srcd_tab_list" href='/population'>인구</a>
     <a id="날씨" class="srcd_tab_list" href='/weather'>날씨·환경</a>
@@ -18,8 +19,15 @@
     <!-- 성별/연령별 -->
     <div class="report_cell">
         <h3 class="border-bottom">실시간 인구 구성 비율  <span class="text_rt"> <span class="pop_date_right">※ 2023-08-11 17:30 기준</span></span></h3>
-
+        <figure class="highcharts-figure">
+            <div id="container"></div>
+            <p class="highcharts-description">
+                Pie chart showing a hollow semi-circle. This is a compact visualization,
+                often used in dashboards.
+            </p>
+        </figure> 
     </div>
-    <!-- //성별/연령별 -->                
+    <!-- //성별/연령별 -->     
 </div>
+<script src="{% static 'js/chart/highchart-custom.js'%}"></script>
 {% endblock %}

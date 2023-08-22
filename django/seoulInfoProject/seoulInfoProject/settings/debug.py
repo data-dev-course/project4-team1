@@ -9,13 +9,12 @@ DEBUG = True
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 ALLOWED_HOSTS = ["*"]
 
-
 # DB
 if "RDS_DB_NAME_debug" in env:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": env("RDS_DB_NAME"),
+            "NAME": env("RDS_DB_NAME_debug"),
             "USER": env("RDS_USERNAME"),
             "PASSWORD": env("RDS_PASSWORD"),
             "HOST": env("RDS_HOSTNAME"),

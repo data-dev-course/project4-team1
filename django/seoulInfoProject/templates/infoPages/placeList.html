@@ -1,36 +1,59 @@
 {% extends 'base.html' %}
-<br>
 {% load static %}
+<br>
 {% block content %}
-
-        <div class="list_tab">
-            <a id="전체보기" class="srcd_tab_list">전체보기</a>
-            <a id="고궁·문화유산" class="srcd_tab_list">고궁·문화유산</a>
-            <a id="공원" class="srcd_tab_list">공원</a>
-            <a id="관광특구" class="srcd_tab_list">관광특구</a>
-            <a id="발달상권" class="srcd_tab_list">발달상권</a>
-            <a id="인구밀집지역" class="srcd_tab_list">인구밀집지역</a>                        
-        </div>
+<div class="container_list " id="container_list">
+    <div class="list_tab">
+        <a id="전체보기" class="srcd_tab_list">전체보기</a>
+        <a id="고궁·문화유산" class="srcd_tab_list">고궁·문화유산</a>
+        <a id="공원" class="srcd_tab_list">공원</a>
+        <a id="관광특구" class="srcd_tab_list">관광특구</a>
+        <a id="발달상권" class="srcd_tab_list">발달상권</a>
+        <a id="인구밀집지역" class="srcd_tab_list">인구밀집지역</a>                        
+    </div>
+    <div style="width:100%">
         <span class="float-left container_list_total">총 <span id="spotlist_cnt" class="black b">??</span>곳</span>
-        <div class="float-right container_list_sort">
-            <select name="sort" id="sort">
+        <div class="float-right container_list_sort" style="float:right;">
+            <select name="sort" id="sort" style="width:170px;">
                 <option value="true">혼잡도 높은 순</option>
                 <option value="false">가나다 순</option>
             </select>
         </div>
+    </div>
+    <div class="select_list srcd_list" id='srcd_list'>
+        {% for place in page_obj %}
+        <a href="/population" style= "text-decoration: none; color: black;">
+            <img src="{% static 'images/s.jpg'%}">
+            <div>
+                <p>{{place.place_class}}</p>
+                <h4>{{place.name}}</h4>
+                <h5 class="srcd_congest" style="background: #DD1F3D;">{{place.population}}</h5>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    
+    <div class="pagination" id="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; 처음으로</a>
+                &nbsp;
+                <a href="?page={{ page_obj.previous_page_number }}">이전</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">다음</a>
+                &nbsp;
+                <a href="?page={{ page_obj.paginator.num_pages }}">끝으로 &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 
-        {% comment %} for문으로 list 작성 예정 {% endcomment %}
-        <div class="select_list srcd_list" id='srcd_list'>
-            {% for i in "x"|rjust:"10" %}
-            <a href="/population" style= "text-decoration: none; color: black;">
-                <img src="{% static 'images/s.jpg'%}">
-                <div>
-                    <p>인구밀집지역</p>
-                    <h4>충정로역</h4>
-                    <h5 class="srcd_congest" style="background: #DD1F3D">붐빔</h5>
-                </div>
-            </a>
-            {% endfor %}
-        <div>
+</div>
+
 
 {% endblock %}

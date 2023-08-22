@@ -15,4 +15,4 @@ urllib3==1.26.16
 requests==2.31.0
 
 # local test
-# django-environ==0.10.0
+django-environ==0.10.0

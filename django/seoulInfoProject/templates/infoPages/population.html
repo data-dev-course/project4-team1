@@ -1,47 +1,43 @@
 {% extends '../base.html' %}
-
+{% load static %}
 
 {% block content %}
+{{ q_set|json_script:"q_set_data" }}
+
+<div class="area" style="height:50px;  position:block;">
+    <div style="text-align: center;">
+        <div class="refresh_report"><span class="rpt_date">2023-08-20 20:11:47 기준</span> <a class="refresh_btn"><span class="material-icons">refresh</span></a></div>
+        <div ><span style="color: #4C65A7; font-size: 25px; font-weight:bold;"> 지금 충정로역은</span></div>
+    </div>
+</div>
 
 <div class="list_tab">
     <a id="인구" class="srcd_tab_list on" href='/population'>인구</a>
     <a id="날씨" class="srcd_tab_list" href='/weather'>날씨·환경</a>
     <a id="맛집" class="srcd_tab_list" href='/restaurant'>맛집</a>
-    <a id="뉴스" class="srcd_tab_list" href='/news'>뉴스</a>                      
+    <a id="뉴스" class="srcd_tab_list" href='/news'>뉴스</a>                     
 </div>
 
 <div class="report_inner_wrap">
     <div class="report_cell">
         <p class="pop_date_right">※ 2023-08-11 17:30 기준</p>
         <br>
-        <h2 class="air_h2">인구혼잡도 <b class="pop_congest rpt_data" style="color: rgb(221, 31, 61);">붐빔</b>
-            <span>
-                <span class="material-icons help help_icon">help_outline</span>
-                <span class="help_text   fix_1">
-                    해당 장소에 사람이 얼마나 붐비는지 나타내는 지표로, 과거 평균 실시간 인구와 면적 대비 인구 수 등을 고려하여 산출합니다.<br>자세한 산출 방법은 데이터 매뉴얼에서 확인 가능합니다.
-                </span>
-            </span>
-        </h2>
-        <div class="graphic_guage population_graph_gauge">이미지</div>
-        <div class="text_graphic_popul flex">
-            <div class="rpt_on pop_01">여유</div>
-            <div class="rpt_on pop_02">보통</div>
-            <div class="rpt_on pop_03">약간 붐빔</div>
-            <div class="rpt_on pop_04 on">붐빔</div>                        
-        </div>
+        {% include "../partialPages/popul_graphic.html" with congest="보통" %}
         <ul class="report_ul mt-2 rpt_pop_congest_txt2_m rpt_data"><li>사람들이 몰려있을 가능성이 매우 크고  많이 붐빈다고 느낄 수 있어요.</li><li>인구밀도가 높은 구간에서는 도보 이동시 부딪힘이 발생할 수 있어요.</li><li>특정지역에 인구가 집중되어 있을 수 있어요. 인구가 집중된 지역은 우측의 지도에서 히트맵을 통해 확인해주세요.</li></ul>
-        <div class="flex mt-2 items-center pt-2 pl-2">
-            <div class="ico_past"> 이미지 </div>
-            <ul class="report_ul ml-4 basis-4/5">
-                <li class="flex">
+        <div class="flex mt-2 items-center pt-2 pl-2" style="display: flex; align-items: center;">
+            <div class="ico_past">
+                <img src="{% static 'images/ico_past.png'%}">
+            </div>
+            <ul class="report_ul">
+                <li class="flex_report" style="display:flex;">
                     <div class="grow">1시간 전 대비 증감율</div>
                     <div class="rpt_data rpt_pop_updown1 color_up arr_up">2.9%</div>
                 </li>
-                <li class="flex">
+                <li class="flex_report" style="display:flex;">
                     <div class="grow">3시간 전 대비 증감율</div>
                     <div class="rpt_data rpt_pop_updown2 color_up arr_up">29.4%</div>
                 </li>
-                <li class="flex">
+                <li class="flex_report" style="display:flex; text-align:center;">
                     <div class="grow">최근 28일 동시간 평균 대비 증감율</div>
                     <div class="rpt_data rpt_pop_updown3 color_up arr_up">72.5%</div>
                 </li>
@@ -54,128 +50,98 @@
     <!-- 혼잡도 추이-->
     <div class="report_cell">
         <h3 class="border-bottom">실시간 인구 및 혼잡도 추이 전망</h3>
-         <p class="pop_date_right">※ 2023-08-11 17:30 기준</p>
-         <br>
-        <div class="graphbox mt-2" style="height: 180px; position: relative">
-            <div id="population_graph_pop_m" class="chart_pop2" _echarts_instance_="ec_1691744844269" style="user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;"><div style="position: relative; width: 891px; height: 160px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="891" height="160" style="position: absolute; left: 0px; top: 0px; width: 891px; height: 160px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas><canvas data-zr-dom-id="zr_1" width="891" height="160" style="position: absolute; left: 0px; top: 0px; width: 891px; height: 160px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div class="" style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px; transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1) 0s, visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1) 0s, transform 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgb(255, 255, 255); border-width: 1px; border-radius: 4px; color: rgb(102, 102, 102); font: 14px / 21px sans-serif; padding: 10px; top: 0px; left: 0px; transform: translate3d(149px, 50px, 0px); border-color: rgb(255, 255, 255); pointer-events: none; visibility: hidden; opacity: 0;">09시<br>과거 혼잡도: <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#00D369;"></span>여유<br>과거 인구수: 8,500~9,000명</div></div>
+        <p class="pop_date_right">※ 2023-08-11 17:30 기준</p>
+        <br>
+        <div class="graphbox mt-2" style="height: 400px; position: relative">
+            <div id="congest_bar_chart"></div>
+            <script src="{% static 'js/chart/congest_bar_chart.js'%}"></script>
         </div>
         <div class="predict_div" id="predict_div" style="display: none;">
             <h4 class="mt-2 pt-2">향후 12시간 전망</h4>
             <div class="flex items-center pt-2">
-                <div class="ico_past"><img src="/SeoulRtd/images/icon/ico_future.png"></div>
+                <div class="ico_past"><img src="{% static 'images/ico_future.png'%}"></div>
                 <ul class="report_ul ml-6 basis-4/5 rp_pop_next rpt_data">-</ul>
             </div>
         </div>
         <h4 class="mt-2 pt-2 past_div" id="past_div">지난 24시간 추이</h4>
-        <div class="flex items-center pt-2">
-            <div class="ico_past"><img src="/SeoulRtd/images/icon/ico_past.png"></div>
-            <ul class="report_ul ml-6 basis-4/5 rp_pop_prev rpt_data"><li><b class="color_bk">18시(현재)</b>에 인구가 제일 많고<br>혼잡도도 가장 높아요.</li><li>혼잡정도는 <b class="rpt_data" style="color:#DD1F3D">붐빔</b>이예요.</li></ul>
+        <div class="items-center" style="display: flex; align-items: center;">
+            <div class="ico_past"><img src="{% static 'images/ico_past.png'%}"></div>
+            <ul class="report_ul" style="margin: 25px; font-size: 11px;"><li><b class="color_bk">18시(현재)</b>에 인구가 제일 많고<br>혼잡도도 가장 높아요.</li><li>혼잡정도는 <b class="rpt_data" style="color:#DD1F3D">붐빔</b>이예요.</li></ul>
         </div>
     </div>
     <!-- 성별/연령별 -->
     <div class="report_cell">
         <h3 class="border-bottom">실시간 인구 구성 비율  <span class="text_rt"> <span class="pop_date_right">※ 2023-08-11 17:30 기준</span></span></h3>
         <h4 class="mt-4">성별 비율</h4>                    
-        <div class="graphbox pt-0 chart_gender_m" style="height: 220px">
-            <div id="population_graph_gender_m" class="chart_gender" _echarts_instance_="ec_1691744844261" style="user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><div style="position: relative; width: 891px; height: 233px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="891" height="233" style="position: absolute; left: 0px; top: 0px; width: 891px; height: 233px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div></div>
-            <div class="age_legend text-center">
-                <div class="flex">
-                    <div class="basis-1/2">
-                        <div class="chart_img m">
-                            <center><img src="/SeoulRtd/images/icon/icon_male.png"></center>
-                            <p>남성</p>
-                        </div>
-                    </div>
-                    <div class="basis-1/2">
-                        <div class="chart_img f">
-                            <center><img src="/SeoulRtd/images/icon/icon_female.png"></center>		
-                            <p>여성</p>
-                        </div>
-                    </div>
+        <div class="graphbox pt-0 chart_gender_m" style="height: 250px">
+            
+            <div id="gender_ratio_pie_chart"></div>
+            <script src="{% static 'js/chart/gender_ratio_pie_chart.js'%}"></script>
+            
+            <div class="basis-1/2" >
+                <div class="chart_img m">
+                    <center><img src="{% static 'images/icon_male.png'%}"></center>
+                    <p>남성</p>
                 </div>
             </div>
+            <div class="basis-1/2">
+                <div class="chart_img f">
+                    <center><img src="{% static 'images/icon_female.png'%}"></center>		
+                    <p>여성</p>
+                </div>
+            </div>
+            
+            
         </div>
         <ul class="report_ul mt-2">
             <li class="rpt_data rpt_pop_gender"><b class="color_01">남성</b>이 여성보다 <b class="color_01">17.8%</b> 많아요</li>
         </ul>
         <h4 class="mt-2 pt-3">연령대별 비율</h4>
-        <div class="graphbox pt-0" style="height: 220px">
-            <div id="population_graph_age_m" class="chart_age" _echarts_instance_="ec_1691744844263" style="user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><div style="position: relative; width: 891px; height: 233px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="891" height="233" style="position: absolute; left: 0px; top: 0px; width: 891px; height: 233px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div></div>
-            <div class="age_legend">
-                    <div class="flex">
-                        <div class="basis-1/3">
-                            <div class="flex pr-2">
-                                <div class="basis-1/2">
-                                    <div class="rect rect1"></div>
-                                </div>
-                                <div class="basis-1/2">
-                                    <p class="pl-1">10대이하</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="basis-1/3">
-                            <div class="flex pr-2">
-                                <div class="basis-1/2">
-                                    <div class="rect rect2"></div>
-                                </div>
-                                <div class="basis-1/2">
-                                    <p class="pl-1">20대</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="basis-1/3">
-                            <div class="flex pr-2">
-                                <div class="basis-1/2">
-                                    <div class="rect rect3"></div>
-                                </div>
-                                <div class="basis-1/2">
-                                    <p class="pl-1">30대</p>
-                                </div>
-                            </div>
-                        </div>
+        <div class="graphbox pt-0 chart_gender_m" style="height: 250px">
+            <div id="age_ratio_pie_chart"></div>
+            <script src="{% static 'js/chart/age_ratio_pie_chart.js'%}"></script>
+                <div class="age_inline_1">
+                    <div class="age_category">
+                        <div class="rect rect1"> </div>
+                        <div class="age_text">10대이하</div>
                     </div>
-                    <div class="flex">
-                        <div class="basis-1/3">
-                            <div class="flex pr-2">
-                                <div class="basis-1/2">
-                                    <div class="rect rect4"></div>
-                                </div>
-                                <div class="basis-1/2">
-                                    <p class="pl-1">40대</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="basis-1/3">
-                            <div class="flex pr-2">
-                                <div class="basis-1/2">
-                                    <div class="rect rect5"></div>
-                                </div>
-                                <div class="basis-1/2">
-                                    <p class="pl-1">50대</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="basis-1/3">
-                            <div class="flex pr-2">
-                                <div class="basis-1/2">
-                                    <div class="rect rect6"></div>
-                                </div>
-                                <div class="basis-1/2">
-                                    <p class="pl-1">60대이상</p>
-                                </div>
-                            </div>
-                        </div>
+
+                    <div class="age_category">
+                        <div class="rect rect2"></div>
+                        <div class="age_text">20대</div>
                     </div>
-            </div>
+
+                    <div class="age_category">
+                        <div class="rect rect3"></div>
+                        <div class="age_text">30대</div>
+                    </div>
+                </div>
+                <div class="age_inline_2">
+                    <div class="age_category">
+                        <div class="rect rect4"></div>
+                        <div class="age_text">40대</div>
+                    </div>
+
+                    <div class="age_category">
+                        <div class="rect rect5"></div>
+                        <div class="age_text">50대</div>
+                    </div>
+                    
+                    <div class="age_category">
+                        <div class="rect rect6"></div>
+                        <div class="age_text">60대이상</div>
+                    </div> 
+                </div>
         </div>
         <ul class="report_ul mt-2 ">
             <li class="rpt_data rpt_pop_age">전체 연령대 중 <b class="color_01">30대</b>가  <b class="color_01">23.0%</b>로 가장 많아요</li>
         </ul>
         <h4 class="mt-2 pt-3">상주·비상주 비율</h4>
         <!-- <div id="population_graph_genderAge" class="chart_genderAge"></div>  -->
-        <div class="graphbox pt-0" style="height: 220px">
+        <div class="graphbox pt-0" style="height: 250px">
 
-                <div id="population_graph_sojn_m" class="chart_sojn" _echarts_instance_="ec_1691744844265" style="user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><div style="position: relative; width: 891px; height: 233px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="891" height="233" style="position: absolute; left: 0px; top: 0px; width: 891px; height: 233px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div></div>
+            <div id="recent_ratio_pie_chart"></div>
+            <script src="{% static 'js/chart/recent_ratio_pie_chart.js'%}"></script>
                 <div class="age_legend">
                 <div class="flex">
                     <div class="basis-1/2">
