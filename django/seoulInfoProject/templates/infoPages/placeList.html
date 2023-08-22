@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-<br>
 {% load static %}
+<br>
 {% block content %}
 <div class="container_list " id="container_list">
     <div class="list_tab">
@@ -11,22 +11,23 @@
         <a id="발달상권" class="srcd_tab_list">발달상권</a>
         <a id="인구밀집지역" class="srcd_tab_list">인구밀집지역</a>                        
     </div>
-    <span class="float-left container_list_total">총 <span id="spotlist_cnt" class="black b">??</span>곳</span>
-    <div class="float-right container_list_sort">
-        <select name="sort" id="sort">
-            <option value="true">혼잡도 높은 순</option>
-            <option value="false">가나다 순</option>
-        </select>
+    <div style="width:100%">
+        <span class="float-left container_list_total">총 <span id="spotlist_cnt" class="black b">??</span>곳</span>
+        <div class="float-right container_list_sort" style="float:right;">
+            <select name="sort" id="sort" style="width:170px;">
+                <option value="true">혼잡도 높은 순</option>
+                <option value="false">가나다 순</option>
+            </select>
+        </div>
     </div>
-
     <div class="select_list srcd_list" id='srcd_list'>
         {% for place in page_obj %}
         <a href="/population" style= "text-decoration: none; color: black;">
-            <img src="../../static/images/s.jpg">
+            <img src="{% static 'images/s.jpg'%}">
             <div>
                 <p>{{place.place_class}}</p>
                 <h4>{{place.name}}</h4>
-                <h5 class="srcd_congest" style="background: #DD1F3D">{{place.population}}</h5>
+                <h5 class="srcd_congest" style="background: #DD1F3D;">{{place.population}}</h5>
             </div>
         </a>
         {% endfor %}
@@ -35,8 +36,9 @@
     <div class="pagination" id="pagination">
         <span class="step-links">
             {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                <a href="?page=1">&laquo; 처음으로</a>
+                &nbsp;
+                <a href="?page={{ page_obj.previous_page_number }}">이전</a>
             {% endif %}
     
             <span class="current">
@@ -44,12 +46,14 @@
             </span>
     
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                <a href="?page={{ page_obj.next_page_number }}">다음</a>
+                &nbsp;
+                <a href="?page={{ page_obj.paginator.num_pages }}">끝으로 &raquo;</a>
             {% endif %}
         </span>
     </div>
 
 </div>
+
 
 {% endblock %}

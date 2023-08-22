@@ -1,0 +1,83 @@
+{% load static %}
+
+{% if congest in "여유"%}
+<h2 class="air_h2">인구혼잡도 <b class="pop_congest rpt_data" style="color: rgb(0, 211, 105);">여유</b>
+    <span>
+        <span class="material-icons help help_icon">help_outline</span>
+        <span class="help_text   fix_1">
+            해당 장소에 사람이 얼마나 붐비는지 나타내는 지표로, 과거 평균 실시간 인구와 면적 대비 인구 수 등을 고려하여 산출합니다.<br>자세한 산출 방법은 데이터 매뉴얼에서 확인 가능합니다.
+        </span>
+    </span>
+</h2>
+<div class="graphic_guage population_graph_gauge">
+    <img src="{% static 'images/graphic_popul_01.jpg'%}">
+</div>
+
+<div class="text_graphic_popul" style="display:flex;">
+    <div class="rpt_on pop_01 on">여유</div>
+    <div class="rpt_on pop_02">보통</div>
+    <div class="rpt_on pop_03">약간 붐빔</div>
+    <div class="rpt_on pop_04">붐빔</div>                        
+</div>
+
+{% elif congest in "보통" %}
+<h2 class="air_h2">인구혼잡도 <b class="pop_congest rpt_data" style="color: rgb(255, 177, 0);">보통</b>
+    <span>
+        <span class="material-icons help help_icon">help_outline</span>
+        <span class="help_text   fix_1">
+            해당 장소에 사람이 얼마나 붐비는지 나타내는 지표로, 과거 평균 실시간 인구와 면적 대비 인구 수 등을 고려하여 산출합니다.<br>자세한 산출 방법은 데이터 매뉴얼에서 확인 가능합니다.
+        </span>
+    </span>
+</h2>
+<div class="graphic_guage population_graph_gauge">
+    <img src="{% static 'images/graphic_popul_02.jpg'%}">
+</div>
+
+<div class="text_graphic_popul" style="display:flex;">
+    <div class="rpt_on pop_01">여유</div>
+    <div class="rpt_on pop_02 on">보통</div>
+    <div class="rpt_on pop_03">약간 붐빔</div>
+    <div class="rpt_on pop_04">붐빔</div>                        
+</div>
+
+{% elif congest in "붐빔" %}
+<h2 class="air_h2">인구혼잡도 <b class="pop_congest rpt_data" style="color: rgb(221, 31, 61);">붐빔</b>
+    <span>
+        <span class="material-icons help help_icon">help_outline</span>
+        <span class="help_text   fix_1">
+            해당 장소에 사람이 얼마나 붐비는지 나타내는 지표로, 과거 평균 실시간 인구와 면적 대비 인구 수 등을 고려하여 산출합니다.<br>자세한 산출 방법은 데이터 매뉴얼에서 확인 가능합니다.
+        </span>
+    </span>
+</h2>
+<div class="graphic_guage population_graph_gauge">
+    <img src="{% static 'images/graphic_popul_04.jpg'%}">
+</div>
+
+<div class="text_graphic_popul" style="display:flex;">
+    <div class="rpt_on pop_01">여유</div>
+    <div class="rpt_on pop_02">보통</div>
+    <div class="rpt_on pop_03">약간 붐빔</div>
+    <div class="rpt_on pop_04 on">붐빔</div>                        
+</div>
+
+{% else %}
+<h2 class="air_h2">인구혼잡도 <b class="pop_congest rpt_data" style="color: rgb(255, 128, 64);">약간 붐빔</b>
+    <span>
+        <span class="material-icons help help_icon">help_outline</span>
+        <span class="help_text   fix_1">
+            해당 장소에 사람이 얼마나 붐비는지 나타내는 지표로, 과거 평균 실시간 인구와 면적 대비 인구 수 등을 고려하여 산출합니다.<br>자세한 산출 방법은 데이터 매뉴얼에서 확인 가능합니다.
+        </span>
+    </span>
+</h2>
+<div class="graphic_guage population_graph_gauge">
+    <img src="{% static 'images/graphic_popul_03.jpg'%}">
+</div>
+
+<div class="text_graphic_popul" style="display:flex;">
+    <div class="rpt_on pop_01">여유</div>
+    <div class="rpt_on pop_02">보통</div>
+    <div class="rpt_on pop_03 on">약간 붐빔</div>
+    <div class="rpt_on pop_04">붐빔</div>                        
+</div>
+
+{% endif %}
