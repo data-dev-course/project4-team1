@@ -29,12 +29,14 @@ else:
         }
     }
 
+
+INSTALLED_APPS += ["storages"]
 if "AWS_ACCESS_KEY_ID" in env:
     AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
     AWS_STORAGE_BUCKET_NAME = "de-3-1-ebdjango"
     AWS_S3_REGION_NAME = "ap-northeast-2"
-    AWS_S3_FILE_OVERWRITE = True
+    AWS_S3_FILE_OVERWRITE = False
     AWS_DEFAULT_ACL = "public-read"
     AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (
         AWS_STORAGE_BUCKET_NAME,
@@ -45,7 +47,6 @@ if "AWS_ACCESS_KEY_ID" in env:
     }
     AWS_LOCATION = "static"
     STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-    # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
     STORAGES = {
         "default": {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"},

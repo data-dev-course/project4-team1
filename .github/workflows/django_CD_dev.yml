@@ -1,0 +1,38 @@
+name: Django to Dev server
+
+on:
+  push:
+    paths:
+      - 'django/seoulInfoProject/**'
+      - '!django/seoulInfoProject/static/**'
+      - '!**.md'
+    branches: [ "develop" ]
+
+jobs:
+  django-to-dev-server:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.11]
+        
+
+    steps:
+    - name: Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DEV_HOST }}
+        username: ${{ secrets.DEV_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        port: 22
+        proxy_host: ${{ secrets.PROXY_HOST }}
+        proxy_username: ${{ secrets.PROXY_USER }}
+        proxy_key: ${{ secrets.SSH_KEY }}
+        proxy_port: 22
+        script: |
+          cd project4-team1
+          git branch -m develop && git reset --hard origin/develop
+          cd django && rm -rf venv
+          python3 -m venv venv && cd seoulInfoProject
+          source /home/ubuntu/project4-team1/django/venv/bin/activate && pip install -r requirements.txt > pip.log
+        #   python manage.py runserver --settings=seoulInfoProject.settings.debug

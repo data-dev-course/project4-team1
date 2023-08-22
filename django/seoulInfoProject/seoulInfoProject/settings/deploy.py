@@ -54,16 +54,16 @@ else:
 
 # aws S3
 INSTALLED_APPS += ["storages"]
-STATIC_ROOT = BASE_DIR / "static/"
-STATICFILES_DIRS = []
+# STATIC_ROOT = BASE_DIR / "static/"
+# STATICFILES_DIRS = []
 
 if "AWS_ACCESS_KEY_ID" in os.environ:
     AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
     AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
     AWS_STORAGE_BUCKET_NAME = "de-3-1-ebdjango"
     AWS_S3_REGION_NAME = "ap-northeast-2"
-    AWS_S3_FILE_OVERWRITE = True
-    # AWS_DEFAULT_ACL = None
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_DEFAULT_ACL = "public-read"
     AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (
         AWS_STORAGE_BUCKET_NAME,
         AWS_S3_REGION_NAME,
