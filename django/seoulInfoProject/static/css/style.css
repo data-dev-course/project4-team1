@@ -555,7 +555,7 @@ small {font-size: 12px}
 .msg_maplist {width:100%; max-width: 600px; background: #ffffff; margin: 20px auto; color: #4C65A7; text-align: center; border-radius: 5px; padding: 8px}
 
 
-.list_tab {background: #ffffff; box-shadow: 2px 2px 4px rgba(0,0,0,0.3); text-align: center; border-radius: 10px; margin: 15px 20px}
+.list_tab {background: #ffffff; box-shadow: 2px 2px 4px rgba(0,0,0,0.3); text-align: center; border-radius: 10px; margin: 5px 5px}
 .list_tab a {display: inline-block; padding: 15px 0 12px; color: #3C4048 ; border-bottom: 3px solid #ffffff; cursor: pointer;margin: 0px 25px}
 .list_tab a.on {color: #4C65A7; border-bottom: 3px solid #4C65A7; font-weight: bold}
 .list_tab a:hover {border-color: #4C65A7}
@@ -609,7 +609,7 @@ small {font-size: 12px}
 .container_report_hide  div {display: none}
 .container_report_hide  h2 {display: none}
 
-.refresh_report {font-size: 13px; text-align: center; color: #818181;;  height: 20px; padding-bottom: 15px}
+.refresh_report {font-size: 13px; text-align: center; color: #818181;;   }
 .refresh_report a {cursor: pointer; color: #4C65A7}
 .refresh_btn {font-size: 16px !important; vertical-align: -4px; cursor: pointer; color: #4C65A7}
 .refresh_report span {font-size: 17px; vertical-align: -4px}
@@ -952,7 +952,7 @@ table th, table td {border-right:1px solid #D2DBE2; text-align: left}
 .rotate_90 {transform: rotate( 90deg ); margin-left:-2px}
 
 
-.report_inner_wrap { display: flex; flex-direction: column; gap:10px; padding: 10px; }
+.report_inner_wrap { display: flex; flex-direction: column; gap:10px; padding: 5px; }
 .report_cell > h2 {text-align: center; font-size: 18px; font-weight: normal; border-bottom: 0px; color: #000000}
 
 .graphic_guage > img {width: 100%; margin-top: 10px}
@@ -966,6 +966,10 @@ table th, table td {border-right:1px solid #D2DBE2; text-align: left}
 .report_ul {font-size: 13px; padding-left: 4px; }
 .report_ul li {color:#535353; padding-bottom: 5px; padding-left: 10px; position: relative}
 .report_ul li:before {content:"Â·";  color: #D1D1D1;position: absolute; margin-left: -10px}
+/* .ico_past{
+	display: flex;
+	align-items: center;
+} */
 .ico_past > img {width: 53px}
 .arr_up::after {content: 'â–²'; margin-left: 2px; font-size: 0.8em}
 .arr_down::after {content: 'â–¼'; margin-left: 2px; font-size: 0.8em}
@@ -1005,8 +1009,8 @@ span.text_rt {color: #9D9D9D; font-size: 12px; float: right; font-weight: normal
 .mb_fix {margin-bottom: 7px !important}
 .mb_fix_2 {margin-bottom: 3px !important}
 .bold {font-weight: bold}
-.icon_temperature {width:18px; display: inline-block}
-.icon_moisture {width:18px; display: inline-block}
+.icon_temperature {width:18px; display: inline-block; vertical-align:center;}
+.icon_moisture {width:18px; display: inline-block;}
 .icon_wind {width:22px; display: inline-block}
 .temperature {text-align: center; font-size: 16px; padding: 10px 0 0}
 .temperature > b {font-size: 18px; margin-right: 4px}
@@ -1109,7 +1113,8 @@ canvas{cursor: default;}
 .chart_img2 p {padding-left: 10px;}
 
 
-.age_legend{     position: absolute;
+.age_legend{     
+	/* position: relative; */
     bottom: 5px;
     width: 90%;
     padding-top: 15px;
@@ -1121,8 +1126,8 @@ canvas{cursor: default;}
 }
 
 .list_tab a{padding: 10px 0;     margin: 0px 15px;}
-.rect {width: 13px; height: 13px; border-radius: 3px; margin-top: 4px; }
-.rect1 {background: #FFE45C }
+.rect {width: 13px; height: 13px; border-radius: 3px; margin-top: 3px; }
+.rect1 {background: #FFE45C}
 .rect2 {background: #FD7B49}
 .rect3 {background: #E8395C}
 .rect4 {background: #B137A3}
@@ -1308,7 +1313,7 @@ canvas{cursor: default;}
     color: #ffffff;
     font-weight: bold;
     text-align: center;
-    line-height: 0;
+    line-height: 12px;
     padding-left: 10px;
 }
 
@@ -1358,7 +1363,7 @@ canvas{cursor: default;}
 	.table_alert_info td:nth-child(1){display: none; }
 	.table_alert_info tr td:nth-child(3){font-size: 12px; width:126px; }
 	.table_basic_div{ overflow-x: scroll !important; }
-	.chart_img{position: inherit;}
+	/* .chart_img{position: inherit;} */
 	.chart_img img{width: 15px;}
 	.age_legend{	bottom: 0px;  padding-top: 5px; }
 	.popup_info{padding:10px; }
@@ -1540,4 +1545,83 @@ a{
 
 .pagination{
 	text-align: center;
+}
+
+.highcharts-figure,
+.highcharts-data-table table {
+    min-width: 320px;
+    max-width: 500px;
+    margin: 1em auto;
+}
+
+#gender_ratio_pie_chart {
+	width: 100%;
+	height: 100%;
+}
+
+#age_ratio_pie_chart {
+	width: 100%;
+	height: 100%;
+}
+
+#congest_bar_chart{
+	width: 100%;
+	height: 100%;
+}
+
+#recent_ratio_pie_chart{
+	width: 100%;
+	height: 100%;
+}
+
+.age_inline_1{
+	position: absolute;
+	display: inline-flex;
+	bottom: 40px;
+	width: 100%;
+}
+.age_inline_2{
+	position: absolute;
+	display: inline-flex;
+	bottom: 20px;
+	width: 100%;
+}
+
+.age_category{
+	display: flex;
+	width: 33%;
+	/* text-align: center; */
+}
+
+.age_text{
+	margin: 0 auto;
+}
+
+#base1_2{
+	width:50%; 
+	text-align:center;
+}
+
+.material-icons {
+	font-family: 'Material Icons';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 24px;
+	line-height: 1;
+	letter-spacing: normal;
+	text-transform: none;
+	display: inline-block;
+	white-space: nowrap;
+	word-wrap: normal;
+	direction: ltr;
+	-webkit-font-feature-settings: 'liga';
+	-webkit-font-smoothing: antialiased;
+}
+
+#flex_report{
+	display: flex;
+}
+
+#step-links a{
+	text-decoration: none;
 }
