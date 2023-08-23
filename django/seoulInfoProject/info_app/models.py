@@ -8,3 +8,7 @@ class Place(models.Model):
     name = models.CharField(max_length=100)
     population = models.CharField(max_length=50)
     place_class = models.CharField(max_length=50)
+
+    class Meta:
+        db_table = "info_app_place"
+        managed = False
