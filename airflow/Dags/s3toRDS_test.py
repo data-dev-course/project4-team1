@@ -183,4 +183,9 @@ move_weather_data_task = PythonOperator(
     dag=dag,
 )
 
-move_congest_data_task >> move_congest_fcst_data_task >> move_weather_data_task >> move_weather_fcst_data_task
+(
+    move_congest_data_task
+    >> move_congest_fcst_data_task
+    >> move_weather_data_task
+    >> move_weather_fcst_data_task
+)
