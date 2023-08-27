@@ -1,33 +1,47 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
-from info_app.models import Place
+from django.core import serializers
+from info_app.filter import *
 
 PATH = ""
 
 
 # Create your views here.
 def placeList(request):
-    template_name = ""
-    place = Place.objects.all()
-    paginator = Paginator(place, 15)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
 
-    context = {
-        "page_obj": page_obj,
-    }
+    if request.method == "GET":
+        q = request.GET.get('q')
+
+        area_obj, categorys = category_filter(q)
+        total_obj_cnt = len(area_obj)
+
+        paginator = Paginator(area_obj, 15)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+         
+        context = {
+            "page_obj": page_obj,
+            "categorys": categorys,
+            "select_category" : q,
+            "total_obj_cnt": total_obj_cnt,
+        }
     return render(request, PATH + "infoPages/placeList.html", context)
 
 
 def population(request):
-    q = [
-        {"dt": "2023-08-20 14:00", "pplt": "3000~4000"},
-        {"dt": "2023-08-20 15:00", "pplt": "5000~6000"},
-        {"dt": "2023-08-20 16:00", "pplt": "4000~5000"},
-    ]
-    q2 = [1, 2, 3, 4, 5]
+    if request.method == "GET":
+        area = request.GET.get('area')
 
-    context = {"q_set": q}
+        congest, congest_fcst, congest_past = population_filter(area)
+
+        congest_json = serializers.serialize('json',congest)
+
+        context = {
+            "congest": congest[0],
+            "congest_fcst" : congest_fcst,
+            "congest_past" : congest_past,
+            "congest_json" : congest_json,
+        }
     return render(request, PATH + "infoPages/population.html", context)
 
 

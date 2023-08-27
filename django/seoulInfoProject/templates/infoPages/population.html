@@ -2,12 +2,11 @@
 {% load static %}
 
 {% block content %}
-{{ q_set|json_script:"q_set_data" }}
-
+{{ congest_json|json_script:"congest" }}
 <div class="area" style="height:50px;  position:block;">
     <div style="text-align: center;">
-        <div class="refresh_report"><span class="rpt_date">2023-08-20 20:11:47 기준</span> <a class="refresh_btn"><span class="material-icons">refresh</span></a></div>
-        <div ><span style="color: #4C65A7; font-size: 25px; font-weight:bold;"> 지금 충정로역은</span></div>
+        <div class="refresh_report"><span class="rpt_date">{{congest.timestamp | date:'Y-m-d H:i'}} 기준</span> <a class="refresh_btn"><span class="material-icons">refresh</span></a></div>
+        <div ><span style="color: #4C65A7; font-size: 25px; font-weight:bold;"> 지금 {{congest.area_nm}}은</span></div>
     </div>
 </div>
 
@@ -20,9 +19,9 @@
 
 <div class="report_inner_wrap">
     <div class="report_cell">
-        <p class="pop_date_right">※ 2023-08-11 17:30 기준</p>
+        <p class="pop_date_right">※ {{congest.timestamp | date:'Y-m-d H:i'}} 기준</p>
         <br>
-        {% include "../partialPages/popul_graphic.html" with congest="보통" %}
+        {% include "../partialPages/popul_graphic.html" with congest="붐빔" %}
         <ul class="report_ul mt-2 rpt_pop_congest_txt2_m rpt_data"><li>사람들이 몰려있을 가능성이 매우 크고  많이 붐빈다고 느낄 수 있어요.</li><li>인구밀도가 높은 구간에서는 도보 이동시 부딪힘이 발생할 수 있어요.</li><li>특정지역에 인구가 집중되어 있을 수 있어요. 인구가 집중된 지역은 우측의 지도에서 히트맵을 통해 확인해주세요.</li></ul>
         <div class="flex mt-2 items-center pt-2 pl-2" style="display: flex; align-items: center;">
             <div class="ico_past">
@@ -50,7 +49,7 @@
     <!-- 혼잡도 추이-->
     <div class="report_cell">
         <h3 class="border-bottom">실시간 인구 및 혼잡도 추이 전망</h3>
-        <p class="pop_date_right">※ 2023-08-11 17:30 기준</p>
+        <p class="pop_date_right">※ {{congest.timestamp | date:'Y-m-d H:i'}} 기준</p>
         <br>
         <div class="graphbox mt-2" style="height: 400px; position: relative">
             <div id="congest_bar_chart"></div>
@@ -71,11 +70,11 @@
     </div>
     <!-- 성별/연령별 -->
     <div class="report_cell">
-        <h3 class="border-bottom">실시간 인구 구성 비율  <span class="text_rt"> <span class="pop_date_right">※ 2023-08-11 17:30 기준</span></span></h3>
+        <h3 class="border-bottom">실시간 인구 구성 비율  <span class="text_rt"> <span class="pop_date_right">※ {{congest.timestamp | date:'Y-m-d H:i'}} 기준</span></span></h3>
         <h4 class="mt-4">성별 비율</h4>                    
         <div class="graphbox pt-0 chart_gender_m" style="height: 250px">
             
-            <div id="gender_ratio_pie_chart"></div>
+            <div id="gender_ratio_pie_chart" list_data="{{congest.area.nm}}"></div>
             <script src="{% static 'js/chart/gender_ratio_pie_chart.js'%}"></script>
             
             <div class="basis-1/2" >

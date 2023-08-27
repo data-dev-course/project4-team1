@@ -3,10 +3,15 @@
 // var test = JSON.parse(document.getElementById('jsonData').textContent);
 // const data =document.currentScript.dataset;
 // const test = data.q_set;
-const test = JSON.parse(
-    document.getElementById('q_set_data').textContent
-);
-console.log(test);
+// const test = JSON.parse(
+//     document.getElementById('q_set_data').textContent
+// );
+
+document.addEventListener("DOMContentLoaded", function() {
+    var el = document.getElementById('gender_ratio_pie_chart');
+    var congest = JSON.parse(el.getAttribute("list_data"));
+    console.log(congest);
+});
 
 Highcharts.chart('congest_bar_chart', {
     chart: {
