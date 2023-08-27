@@ -8,9 +8,8 @@ PATH = ""
 
 # Create your views here.
 def placeList(request):
-
     if request.method == "GET":
-        q = request.GET.get('q')
+        q = request.GET.get("q")
 
         area_obj, categorys = category_filter(q)
         total_obj_cnt = len(area_obj)
@@ -18,11 +17,11 @@ def placeList(request):
         paginator = Paginator(area_obj, 15)
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
-         
+
         context = {
             "page_obj": page_obj,
             "categorys": categorys,
-            "select_category" : q,
+            "select_category": q,
             "total_obj_cnt": total_obj_cnt,
         }
     return render(request, PATH + "infoPages/placeList.html", context)
@@ -30,17 +29,17 @@ def placeList(request):
 
 def population(request):
     if request.method == "GET":
-        area = request.GET.get('area')
+        area = request.GET.get("area")
 
         congest, congest_fcst, congest_past = population_filter(area)
 
-        congest_json = serializers.serialize('json',congest)
+        congest_json = serializers.serialize("json", congest)
 
         context = {
             "congest": congest[0],
-            "congest_fcst" : congest_fcst,
-            "congest_past" : congest_past,
-            "congest_json" : congest_json,
+            "congest_fcst": congest_fcst,
+            "congest_past": congest_past,
+            "congest_json": congest_json,
         }
     return render(request, PATH + "infoPages/population.html", context)
 
