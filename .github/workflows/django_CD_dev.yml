@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'django/seoulInfoProject/**'
-      - '!django/seoulInfoProject/static/**'
+    #   - '!django/seoulInfoProject/static/**'
       - '!**.md'
     branches: [ "develop" ]
 
@@ -30,9 +30,4 @@ jobs:
         proxy_key: ${{ secrets.SSH_KEY }}
         proxy_port: 22
         script: |
-          cd project4-team1
-          git branch -m develop && git reset --hard origin/develop
-          cd django && rm -rf venv
-          python3 -m venv venv && cd seoulInfoProject
-          source /home/ubuntu/project4-team1/django/venv/bin/activate && pip install -r requirements.txt > pip.log
-        #   python manage.py runserver --settings=seoulInfoProject.settings.debug
+          source git-clone-force.sh > git-clone-force.log
