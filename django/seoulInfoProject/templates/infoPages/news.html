@@ -3,6 +3,13 @@
 
 {% block content %}
 
+<div class="area" style="height:50px;  position:block;">
+    <div style="text-align: center;">
+        <div class="refresh_report"><span class="rpt_date">2023-08-20 20:11:47 기준</span> <a class="refresh_btn"><span class="material-icons">refresh</span></a></div>
+        <div ><span style="color: #4C65A7; font-size: 25px; font-weight:bold;"> 지금 충정로역은</span></div>
+    </div>
+</div>
+
 <div class="list_tab">
     <a id="인구" class="srcd_tab_list" href='/population'>인구</a>
     <a id="날씨" class="srcd_tab_list" href='/weather'>날씨·환경</a>
@@ -13,21 +20,30 @@
 <div class="report_inner_wrap">
     <!-- 혼잡도 추이-->
     <div class="report_cell">
-        <h3 class="border-bottom">실시간 인구 및 혼잡도 추이 전망</h3>
-        <p class="pop_date_right">※ 2023-08-11 17:30 기준</p>
+
+        <a href="/">
+        <div class="card" style="height: 20%; cursor: pointer;" onclick="location.href='/'">
+                <div class="card_img" style="width:25%; float: left;"> 
+                    <img src="{% static 'images/s.jpg'%}" style="width: 100%; border-radius: 15px;">
+                </div>
+                <div class="card_title" style="width: 60%; float:left; margin:10px;">
+                    <b>뉴스제목</b>
+                </div>
+                <div class="'card_score" style="width:60%; float:left; margin-left: 10px;"> 
+                    <span>매일신문</span>
+                    <span> | </span>
+                    <span> 성호철 특파원</span>
+                </div>
+                <div class="card_address" style="width:60%; float:left; margin-left:10px;"> 
+                    <div>뉴스요약내용</div>
+                    
+                </div>
+                
+        </div>
+        </a>
+        <!-- <h3 class="border-bottom">실시간 인구 및 혼잡도 추이 전망</h3>
+         <p class="pop_date_right">※ 2023-08-11 17:30 기준</p> -->
     </div>
-    <!-- 성별/연령별 -->
-    <div class="report_cell">
-        <h3 class="border-bottom">실시간 인구 구성 비율  <span class="text_rt"> <span class="pop_date_right">※ 2023-08-11 17:30 기준</span></span></h3>
-        <figure class="highcharts-figure">
-            <div id="container"></div>
-            <p class="highcharts-description">
-                Pie chart showing a hollow semi-circle. This is a compact visualization,
-                often used in dashboards.
-            </p>
-        </figure> 
-    </div>
-    <!-- //성별/연령별 -->     
+                  
 </div>
-<script src="{% static 'js/chart/highchart-custom.js'%}"></script>
 {% endblock %}

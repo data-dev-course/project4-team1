@@ -4,15 +4,12 @@
 {% block content %}
 <div class="container_list " id="container_list">
     <div class="list_tab">
-        <a id="전체보기" class="srcd_tab_list">전체보기</a>
-        <a id="고궁·문화유산" class="srcd_tab_list">고궁·문화유산</a>
-        <a id="공원" class="srcd_tab_list">공원</a>
-        <a id="관광특구" class="srcd_tab_list">관광특구</a>
-        <a id="발달상권" class="srcd_tab_list">발달상권</a>
-        <a id="인구밀집지역" class="srcd_tab_list">인구밀집지역</a>                        
+        {% for category in categorys %}
+        <a id={{category.name}} class="srcd_tab_list{{category.focus}}" href="/?q={{category.name}}">{{category.name}}</a>
+        {% endfor %}                   
     </div>
-    <div style="width:100%">
-        <span class="float-left container_list_total">총 <span id="spotlist_cnt" class="black b">??</span>곳</span>
+    <div>
+        <span class="float-left container_list_total">총 <span id="spotlist_cnt" class="black b">{{total_obj_cnt}}</span>곳</span>
         <div class="float-right container_list_sort" style="float:right;">
             <select name="sort" id="sort" style="width:170px;">
                 <option value="true">혼잡도 높은 순</option>
@@ -21,13 +18,13 @@
         </div>
     </div>
     <div class="select_list srcd_list" id='srcd_list'>
-        {% for place in page_obj %}
-        <a href="/population" style= "text-decoration: none; color: black;">
+        {% for area in page_obj %}
+        <a href="/population/?area={{area.area_cd}}" style= "text-decoration: none; color: black;">
             <img src="{% static 'images/s.jpg'%}">
             <div>
-                <p>{{place.place_class}}</p>
-                <h4>{{place.name}}</h4>
-                <h5 class="srcd_congest" style="background: #DD1F3D;">{{place.population}}</h5>
+                <p>{{area.area_category}}</p>
+                <h4>{{area.area_nm}}</h4>
+                <h5 class="srcd_congest" style="background: #DD1F3D;">{{area.area_congest_lvl}}</h5>
             </div>
         </a>
         {% endfor %}
@@ -36,9 +33,9 @@
     <div class="pagination" id="pagination">
         <span class="step-links">
             {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; 처음으로</a>
+                <a href="?page=1&q={{select_category}}">&laquo; 처음으로</a>
                 &nbsp;
-                <a href="?page={{ page_obj.previous_page_number }}">이전</a>
+                <a href="?page={{ page_obj.previous_page_number }}&q={{select_category}}">이전</a>
             {% endif %}
     
             <span class="current">
@@ -46,9 +43,9 @@
             </span>
     
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">다음</a>
+                <a href="?page={{ page_obj.next_page_number }}&q={{select_category}}">다음</a>
                 &nbsp;
-                <a href="?page={{ page_obj.paginator.num_pages }}">끝으로 &raquo;</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}&q={{select_category}}">끝으로 &raquo;</a>
             {% endif %}
         </span>
     </div>
