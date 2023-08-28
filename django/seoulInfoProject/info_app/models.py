@@ -100,6 +100,7 @@ class Congest(models.Model):
     replace_yn = models.TextField(blank=True, null=True)
     timestamp = models.DateTimeField(blank=True, null=True)
     area_category = models.CharField(max_length=100, blank=True, null=True)
+    image = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -189,6 +190,16 @@ class InfoAppPlace(models.Model):
     class Meta:
         managed = False
         db_table = 'info_app_place'
+
+
+class SeoulDataImage(models.Model):
+    area_nm = models.CharField(max_length=255, blank=True, null=True)
+    image = models.CharField(max_length=255, blank=True, null=True)
+    category = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'seoul_data_image'
 
 
 class Weather(models.Model):

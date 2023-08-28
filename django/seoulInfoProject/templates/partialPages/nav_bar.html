@@ -1,0 +1,30 @@
+
+
+<div class="list_tab">
+    {% if "population" in request.path %}
+    <a id="인구" class="srcd_tab_list on" href='/population?area={{area_info.area_cd}}'>인구</a>
+    <a id="날씨" class="srcd_tab_list" href='/weather?area={{area_info.area_cd}}'>날씨·환경</a>
+    <a id="맛집" class="srcd_tab_list" href='/restaurant?area={{area_info.area_cd}}'>맛집</a>
+    <a id="뉴스" class="srcd_tab_list" href='/news?area={{area_info.area_cd}}'>뉴스</a>                     
+    
+    {% elif "weather" in request.path %}
+    <a id="인구" class="srcd_tab_list" href='/population?area={{area_info.area_cd}}'>인구</a>
+    <a id="날씨" class="srcd_tab_list on" href='/weather?area={{area_info.area_cd}}'>날씨·환경</a>
+    <a id="맛집" class="srcd_tab_list" href='/restaurant?area={{area_info.area_cd}}'>맛집</a>
+    <a id="뉴스" class="srcd_tab_list" href='/news?area={{area_info.area_cd}}'>뉴스</a>                     
+    
+    {% elif "restaurant" in request.path %}
+    <a id="인구" class="srcd_tab_list" href='/population?area={{area_info.area_cd}}'>인구</a>
+    <a id="날씨" class="srcd_tab_list" href='/weather?area={{area_info.area_cd}}'>날씨·환경</a>
+    <a id="맛집" class="srcd_tab_list on" href='/restaurant?area={{area_info.area_cd}}'>맛집</a>
+    <a id="뉴스" class="srcd_tab_list" href='/news?area={{area_info.area_cd}}'>뉴스</a>  
+
+    {% elif "news" in request.path %}
+    <a id="인구" class="srcd_tab_list" href='/population?area={{area_info.area_cd}}'>인구</a>
+    <a id="날씨" class="srcd_tab_list" href='/weather?area={{area_info.area_cd}}'>날씨·환경</a>
+    <a id="맛집" class="srcd_tab_list" href='/restaurant?area={{area_info.area_cd}}'>맛집</a>
+    <a id="뉴스" class="srcd_tab_list on" href='/news?area={{area_info.area_cd}}'>뉴스</a>
+
+    {% endif %}
+
+</div>
