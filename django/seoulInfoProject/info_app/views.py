@@ -31,26 +31,45 @@ def population(request):
     if request.method == "GET":
         area = request.GET.get("area")
 
-        congest, congest_fcst, congest_past = population_filter(area)
-
-        congest_json = serializers.serialize("json", congest)
+        congest_json, congest_fcst_json, congest_past_json = population_filter(area)
+        area_info = get_area_info(area)
 
         context = {
-            "congest": congest[0],
-            "congest_fcst": congest_fcst,
-            "congest_past": congest_past,
+            "area_info": area_info,
             "congest_json": congest_json,
+            "congest_fcst_json": congest_fcst_json,
+            "congest_past_json": congest_past_json,
         }
     return render(request, PATH + "infoPages/population.html", context)
 
 
 def weather(request):
-    return render(request, PATH + "infoPages/weather.html")
+    if request.method == "GET":
+        area = request.GET.get("area")
+        area_info = get_area_info(area)
+        context = {
+            "area_info": area_info,
+        }
+
+    return render(request, PATH + "infoPages/weather.html", context)
 
 
 def restaurant(request):
-    return render(request, PATH + "infoPages/restaurant.html")
+    if request.method == "GET":
+        area = request.GET.get("area")
+        area_info = get_area_info(area)
+
+        context = {
+            "area_info": area_info,
+        }
+    return render(request, PATH + "infoPages/restaurant.html", context)
 
 
 def news(request):
-    return render(request, PATH + "infoPages/news.html")
+    if request.method == "GET":
+        area = request.GET.get("area")
+        area_info = get_area_info(area)
+        context = {
+            "area_info": area_info,
+        }
+    return render(request, PATH + "infoPages/news.html", context)

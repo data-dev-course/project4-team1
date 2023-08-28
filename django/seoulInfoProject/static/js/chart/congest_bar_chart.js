@@ -3,9 +3,61 @@
 // var test = JSON.parse(document.getElementById('jsonData').textContent);
 // const data =document.currentScript.dataset;
 // const test = data.q_set;
-// const test = JSON.parse(
-//     document.getElementById('q_set_data').textContent
-// );
+var congest_fcst_json = JSON.parse(
+    document.getElementById('congest_fcst').textContent
+);
+var congest_past_json = JSON.parse(
+    document.getElementById('congest_past').textContent
+);
+
+var congest_fcst = JSON.parse(congest_fcst_json)
+var congest_past = JSON.parse(congest_past_json)
+
+console.log(congest_fcst)
+console.log(congest_past)
+
+var color_list =[]
+var data_list = []
+
+for (num in congest_past){
+    console.log(congest_past[num]['fields'])
+    past_data = congest_past[num]['fields']
+    if (past_data['area_congest_lvl'] == '여유'){
+        color_list.push("#00d369")
+    } else if (past_data['area_congest_lvl'] == '보통'){
+        color_list.push("#ffb100")
+    } else if (past_data['area_congest_lvl'] == '약간 붐빔'){
+        color_list.push("#ff8040")
+    } else if (past_data['area_congest_lvl'] == '붐빔'){
+        color_list.push("#dd1f3d")
+    }
+
+    data_list.push([
+        past_data['timestamp'],
+        past_data['area_ppltn_max']
+    ])
+}
+
+for (num in congest_fcst){
+    fcst_data = congest_fcst[num]['fields']
+    if (fcst_data['fcst_congest_lvl'] == '여유'){
+        color_list.push("#00d369")
+    } else if (fcst_data['fcst_congest_lvl'] == '보통'){
+        color_list.push("#ffb100")
+    } else if (fcst_data['fcst_congest_lvl'] == '약간 붐빔'){
+        color_list.push("#ff8040")
+    } else if (fcst_data['fcst_congest_lvl'] == '붐빔'){
+        color_list.push("#dd1f3d")
+    }
+
+    data_list.push([
+        fcst_data['fcst_time'],
+        fcst_data['fcst_ppltn_max']
+    ])
+}
+
+console.log(color_list)
+console.log(data_list)
 
 document.addEventListener("DOMContentLoaded", function() {
     var el = document.getElementById('gender_ratio_pie_chart');
@@ -48,43 +100,17 @@ Highcharts.chart('congest_bar_chart', {
     },
     series: [{
         name: 'Population',
-        colors: [
-            '#9b20d9', '#9215ac', '#861ec9', '#7a17e6', '#7010f9', '#691af3',
-            '#6225ed', '#5b30e7', '#533be1', '#4c46db', '#4551d5', '#3e5ccf',
-            '#3667c9', '#2f72c3', '#277dbd', '#1f88b7', '#1693b1', '#0a9eaa',
-            '#03c69b',  '#00f194'
-        ],
+        colors: color_list,
         colorByPoint: true,
         groupPadding: 0,
-        data: [
-            ['Tokyo', 37.33],
-            ['Delhi', 31.18],
-            ['Shanghai', 27.79],
-            ['Sao Paulo', 22.23],
-            ['Mexico City', 21.91],
-            ['Dhaka', 21.74],
-            ['Cairo', 21.32],
-            ['Beijing', 20.89],
-            ['Mumbai', 20.67],
-            ['Osaka', 19.11],
-            ['Karachi', 16.45],
-            ['Chongqing', 16.38],
-            ['Istanbul', 15.41],
-            ['Buenos Aires', 15.25],
-            ['Kolkata', 14.974],
-            ['Kinshasa', 14.970],
-            ['Lagos', 14.86],
-            ['Manila', 14.16],
-            ['Tianjin', 13.79],
-            ['Guangzhou', 13.64],
-            ['Guangzhou2', 13.64],
-        ],
+        data: data_list
+        ,
         dataLabels: {
             enabled: true,
             rotation: -90,
             color: '#FFFFFF',
             align: 'right',
-            format: '{point.y:.1f}', // one decimal
+            //format: '{point.y:}', // one decimal
             y: 10, // 10 pixels down from the top
             style: {
                 fontSize: '13px',
