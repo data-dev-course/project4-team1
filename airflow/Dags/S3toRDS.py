@@ -3,7 +3,6 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.exceptions import AirflowException
 import pandas as pd
-import psycopg2
 import boto3
 import io
 from sqlalchemy import create_engine, Integer, Float, DateTime, Text, String
@@ -72,6 +71,19 @@ def df_to_rds(**kwargs):
         # DataFrame을 RDS 테이블로 적재
         df.to_sql(table_name, con=engine, if_exists='replace', index_label='id', dtype=data_type)
         with engine.connect() as con:
+            if table_name == 'congest':
+                create_query = """
+                CREATE TABLE congest_temp AS(
+                SELECT a.*, b.image
+                FROM congest a INNER JOIN (SELECT category, image FROM seoul_data_image) b
+                ON a.area_cd = b.category
+                );
+                """
+                
+                con.execute(create_query)
+                con.execute("DROP TABLE congest;")
+                con.execute("ALTER TABLE congest_temp RENAME TO congest;")
+
             con.execute(f"ALTER TABLE {table_name} ADD PRIMARY KEY (id);")
 
     except ValueError as e:
@@ -225,5 +237,4 @@ congest_s3_to_rds
 weather_s3_to_rds 
 weather_fcst_s3_to_rds
 weather_news_s3_to_rds
-
 
