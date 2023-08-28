@@ -1,3 +1,9 @@
+var get_json = JSON.parse(
+    document.getElementById('congest').textContent
+);
+var congest = JSON.parse(get_json)[0]['fields']
+console.log(congest)
+
 Highcharts.chart('gender_ratio_pie_chart', {
     chart: {
         plotBackgroundColor: null,
@@ -43,8 +49,8 @@ Highcharts.chart('gender_ratio_pie_chart', {
             '#6957CB', '#FF607F',
         ],
         data: [
-            [ '남성',73.86],
-            [ '여성',26.14],
+            [ '남성',congest['male_ppltn_rate']],
+            [ '여성',congest['female_ppltn_rate']],
             // {
             //     name: 'Other',
             //     y: 3.77,

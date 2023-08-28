@@ -1,3 +1,7 @@
+var get_json = JSON.parse(
+    document.getElementById('congest').textContent
+);
+var congest = JSON.parse(get_json)[0]['fields']
 
 Highcharts.chart('age_ratio_pie_chart', {
     chart: {
@@ -44,19 +48,13 @@ Highcharts.chart('age_ratio_pie_chart', {
             '#FFE45C', '#FD7B49','#E8395C','#B137A3','#6957CB','#43ABAF'
         ],
         data: [
-            ['10대이상', 16.00],
-            ['20대', 16.00],
-            ['30대', 16.00],
-            ['40대', 16.00],
-            ['50대', 16.00],
-            ['60대이상', 16.00],
-            // {
-            //     name: 'Other',
-            //     y: 3.77,
-            //     dataLabels: {
-            //         enabled: false
-            //     }
-            // }
+            ['10대이상', congest['ppltn_rate_0'] + congest['ppltn_rate_10']],
+            ['20대', congest['ppltn_rate_20']],
+            ['30대', congest['ppltn_rate_30']],
+            ['40대', congest['ppltn_rate_40']],
+            ['50대', congest['ppltn_rate_50']],
+            ['60대이상', congest['ppltn_rate_60']+congest['ppltn_rate_70']],
+
         ]
     }]
 });
