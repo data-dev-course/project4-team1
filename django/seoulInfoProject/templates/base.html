@@ -23,6 +23,9 @@
             <h4> 실시간서울정보 </h4>
         </div>
     </div>
+    {% if request.path != "/"  %}
+        {% include "partialPages/top_area.html" with area_nm=area_info.area_nm timestamp=area_info.timestamp%}
+    {% endif %}
 
     {% block content %}
     {% endblock %}

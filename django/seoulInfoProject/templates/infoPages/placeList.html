@@ -20,7 +20,7 @@
     <div class="select_list srcd_list" id='srcd_list'>
         {% for area in page_obj %}
         <a href="/population/?area={{area.area_cd}}" style= "text-decoration: none; color: black;">
-            <img src="{% static 'images/s.jpg'%}">
+            <img src="{{area.image}}">
             <div>
                 <p>{{area.area_category}}</p>
                 <h4>{{area.area_nm}}</h4>

@@ -2,7 +2,7 @@ var get_json = JSON.parse(
     document.getElementById('congest').textContent
 );
 var congest = JSON.parse(get_json)[0]['fields']
-console.log(congest)
+// console.log(congest)
 
 Highcharts.chart('gender_ratio_pie_chart', {
     chart: {

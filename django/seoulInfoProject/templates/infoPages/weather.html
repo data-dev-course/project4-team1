@@ -2,19 +2,7 @@
 {% load static %}
 {% block content%}
 
-<div class="area" style="height:50px;  position:block;">
-    <div style="text-align: center;">
-        <div class="refresh_report"><span class="rpt_date">2023-08-20 20:11:47 기준</span> <a class="refresh_btn"><span class="material-icons">refresh</span></a></div>
-        <div ><span style="color: #4C65A7; font-size: 25px; font-weight:bold;"> 지금 충정로역은</span></div>
-    </div>
-</div>
-
-<div class="list_tab">
-    <a id="인구" class="srcd_tab_list" href='/population'>인구</a>
-    <a id="날씨" class="srcd_tab_list on" href='/weather'>날씨·환경</a>
-    <a id="맛집" class="srcd_tab_list" href='/restaurant'>맛집</a>
-    <a id="뉴스" class="srcd_tab_list" href='/news'>뉴스</a>                      
-</div>
+{% include "../partialPages/nav_bar.html" %}
 
 <div class="report_inner_wrap">
     <!-- 실시간 날씨 현황 -->
