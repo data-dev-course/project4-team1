@@ -51,8 +51,8 @@ def weather(request):
         weather, weather_fcst = weather_filter(area)
         context = {
             "area_info": area_info,
-            "weather" : weather[0],
-            "weather_fcst" : weather_fcst,
+            "weather": weather[0],
+            "weather_fcst": weather_fcst,
         }
     return render(request, PATH + "infoPages/weather.html", context)
 

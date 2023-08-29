@@ -45,6 +45,7 @@ def get_area_info(area):
     area = Congest.objects.get(area_cd=area)
     return area
 
+
 def weather_filter(area):
     weather = Weather.objects.filter(area_cd=area)
 
