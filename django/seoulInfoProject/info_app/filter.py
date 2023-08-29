@@ -52,3 +52,4 @@ def weather_filter(area):
     weather_fcst = WeatherFcst.objects.filter(area_cd=area)
 
     return weather, weather_fcst
+  
