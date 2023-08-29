@@ -1,38 +1,49 @@
-{% extends 'base.html'%}
+{% extends '../base.html'%}
 {% load static %}
-{% block content%}
 
+{% block content%}
 {% include "../partialPages/nav_bar.html" %}
 
 <div class="report_inner_wrap">
     <!-- 실시간 날씨 현황 -->
     <div class="report_cell">
-        <h3 class="border-bottom">실시간 날씨 현황 <span class="text_rt">※ <span class="weather_lastdate">2023-08-12 17:10</span> 기준</span></h3>
+        <h3 class="border-bottom">실시간 날씨 현황 <span class="text_rt">※ <span class="weather_lastdate">
+                    {{area_info.timestamp | date:'Y-m-d H:i'}}</span> 기준</span></h3>
         <!-- 기온 -->
         <div style="text-align:center;">
-        <div class="temperature" style="display: flex; align-items: center; justify-content: center;">
-            <img src="{% static 'images/icon_temperature.png'%}" class="icon_temperature">
-            <b class="rpt_temp1 rpt_data color_01">23.8℃</b> 체감 <span class="rpt_temp2 rpt_data">26.5℃</span>
-        </div>
+            <div class="temperature" style="display: flex; align-items: center; justify-content: center;">
+                <img src="{% static 'images/icon_temperature.png'%}" class="icon_temperature">
+                <b class="rpt_temp1 rpt_data color_01">{{ weather.temp }}
+                    ℃</b> 체감 <span class="rpt_temp2 rpt_data">{{weather.sensible_temp}}℃</span>
+            </div>
         </div>
         <!-- 습도 바람 -->
-        <div class="moisture flex mt-3" style="display: flex; align-items: center; justify-content: center; margin-bottom:10px;">
-            <div class="base1_2" style="display: flex; align-items: center; justify-content: center; width:50%;text-align:right; margin-right: 30px;"><img src="{% static 'images/icon_moisture.png'%}" class="icon_moisture"> 습도 <b class="rpt_humidity rpt_data">91%</b></div>
-            <div class="base1_2" style="display: flex; align-items: center; justify-content: center; width:50%;text-align:left; margin-left: 30px;"><img src="{% static 'images/icon_wind.png'%}" class="icon_wind"> 바람 <b class="rpt_wind rpt_data">3.1m/s</b></div>
+        <div class="moisture flex mt-3"
+            style="display: flex; align-items: center; justify-content: center; margin-bottom:10px;">
+            <div class="base1_2"
+                style="display: flex; align-items: center; justify-content: center; width:50%;text-align:right; margin-right: 30px;">
+                <img src="{% static 'images/icon_moisture.png'%}" class="icon_moisture"> 습도 <b
+                    class="rpt_humidity rpt_data">{{weather.humidity}}%</b>
+            </div>
+            <div class="base1_2"
+                style="display: flex; align-items: center; justify-content: center; width:50%;text-align:left; margin-left: 30px;">
+                <img src="{% static 'images/icon_wind.png'%}" class="icon_wind"> 바람 <b
+                    class="rpt_wind rpt_data">{{weather.wind_spd}}m/s</b>
+            </div>
         </div>
         <!-- 최저최고 일출일몰 -->
         <div class="flex weather_box  items-center mt-2" style="display:flex;">
-            <div class="base1_2" >
-                최저기온 <b class="color_bk rpt_tmp_low rpt_data">24℃</b>
-            </div>
-            <div class="base1_2" >
-                최고기온 <b class="color_bk rpt_tmp_high rpt_data">32℃</b>
-            </div>
-            <div class="base1_2" >
-                일출 <b class="rpt_sunrise rpt_data">05:45</b>
+            <div class="base1_2">
+                최저기온 <b class="color_bk rpt_tmp_low rpt_data">{{weather.min_temp}}℃</b>
             </div>
             <div class="base1_2">
-                일몰 <b class="rpt_sunset rpt_data">19:29</b>
+                최고기온 <b class="color_bk rpt_tmp_high rpt_data">{{weather.max_temp}}℃</b>
+            </div>
+            <div class="base1_2">
+                일출 <b class="rpt_sunrise rpt_data">{{weather.sunrise}}</b>
+            </div>
+            <div class="base1_2">
+                일몰 <b class="rpt_sunset rpt_data">{{weather.sunset}}</b>
             </div>
         </div>
         <h4 class="border-bottom mt-2 pt-3 pb-2" id="weather_special_title">기상 특보</h4>
@@ -40,99 +51,81 @@
         <div class="rpt_data_empty rpt_weather_special"></div>
         <!-- 강수량 / 자외선 -->
         <div class="flex weather_03 border-bottom">
-            <div class="mr-3 vertical-center"><img src="/SeoulRtd/images/icon/weather/ico_weather_rain.png" class="ico_weather_rain"></div>
+            <div class="mr-3 vertical-center"><img src="/static/images/weather/ico_weather_rain.png"
+                    class="ico_weather_rain"></div>
             <div class="mw-77 basis-1/4 border-right vertical-center">
                 강수량<br>
-                    <b class="color_bk rpt_rain rpt_data">-</b>
+                <b class="color_bk rpt_rain rpt_data">{{weather.precipitation}}</b>
             </div>
-            <div class="pl-4 rpt_wAll_msgRain  rpt_data vertical-center">비 또는 눈 소식이 없어요.</div>
+            <div class="pl-4 rpt_wAll_msgRain  rpt_data vertical-center">{{weather.pcp_msg}}</div>
         </div>
         <div class="flex weather_03">
-            <div class=" mr-3 vertical-center"><img src="/SeoulRtd/images/icon/weather/ico_weather_uv.png" class="ico_weather_uv"></div>
+            <div class=" mr-3 vertical-center"><img src="/static/images/weather/ico_weather_uv.png"
+                    class="ico_weather_uv"></div>
             <div class="mw-77 pr-5 basis-2/4 border-right vertical-center">
                 자외선지수<br>
-                <b class="color_bk rpt_ray2 rpt_data"><span class="color_soso"> 보통</span></b>
+                <b class="color_bk rpt_ray2 rpt_data"><span class="color_soso">{{weather.uv_index}}</span></b>
             </div>
-            <ul class="pl-4 rpt_wAll_msgRay  rpt_data vertical-center"><li><b class="color_bk">2-3시간</b> 햇볕에 노출 시 피부 화상을 입을 수 있어요.</li><li>외출시 모자나 선글라스를 착용해주세요.</li><li>자외선 차단제를 발라주세요.</li></ul>
+            <ul class="pl-4 rpt_wAll_msgRay  rpt_data vertical-center">{{weather.uv_msg}}</ul>
         </div>
         <!-- 예보 테이블 -->
         <h4 class="mt-2">24시간 날씨 예보 </h4>
         <div class="wrap_table_wf">
             <table class="table_wehather_forecast table_wehather_forecast_l">
                 <tbody>
-                    <tr><th>시간</th><td>15시</td><td>16시</td><td>17시</td><td>18시</td><td>19시</td><td>20시</td><td>21시</td><td>22시</td><td>23시</td><td>24시</td><td>01시</td><td>02시</td><td>03시</td><td>04시</td><td>05시</td><td>06시</td><td>07시</td><td>08시</td><td>09시</td><td>10시</td><td>11시</td><td>12시</td><td>13시</td><td>14시</td></tr>
-                    <tr><th>날씨</th><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_rain.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_halfsun.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_clear_night.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_clear_night.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td><td><img src="/SeoulRtd/images/icon/weather/ico_w_cloudy.png"></td></tr><tr><th>기온</th><td>27℃</td><td>27℃</td><td>24℃</td><td>23℃</td><td>24℃</td><td>25℃</td><td>26℃</td><td>26℃</td><td>25℃</td><td>25℃</td><td>25℃</td><td>25℃</td><td>25℃</td><td>24℃</td><td>24℃</td><td>24℃</td><td>24℃</td><td>25℃</td><td>26℃</td><td>27℃</td><td>28℃</td><td>29℃</td><td>30℃</td><td>30℃</td></tr><tr><th>강수량(mm)</th><td>-</td><td>-</td><td>빗방울</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr><tr><th>강수확률</th><td>30%</td><td>30%</td><td>30%</td><td>20%</td><td>20%</td><td>20%</td><td>20%</td><td>20%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td><td>30%</td></tr></tbody></table>
+                    <tr>
+                        <th>시간</th>
+                        {% for fcst in weather_fcst%}
+                        <td>{{ fcst.fcst_dt|date:'H' }}시</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th>날씨</th>
+                        {% for fcst in weather_fcst %}
+                        <td>
+                            {% if fcst.sky_stts == "흐림" %}
+                            <img src="/static/images/weather/ico_w_cloudy.png">
+                            {% elif fcst.sky_stts == "맑음" %}
+                            <img src="/static/images/weather/ico_w_sunny.png">
+                            {% elif fcst.sky_stts == "구름많음" %}
+                            <img src="/static/images/weather/ico_w_cloud_and_sun.png">
+                            {# 여기에 추가적인 날씨 상태에 따른 이미지 지정 #}
+                            {% elif fcst.sky_stts == "흐림" and fcst.precpt_type == "비" or fcst.precpt_type == "빗방울"%}
+                            <img src="/static/images/weather/ico_w_rain.png">
+                            {% else %}
+                            <img src="/static/images/weather/ico_w_sunny.png">
+                            {% endif %}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th>기온</th>
+                        {% for fcst in weather_fcst %}
+                        <td>{{ fcst.temp }}℃</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th>강수량(mm)</th>
+                        {% for fcst in weather_fcst %}
+                        <td>{{ fcst.precipitation }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th>강수확률</th>
+                        {% for fcst in weather_fcst %}
+                        <td>{{ fcst.rain_chance }}%</td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-    <!-- 대기오염현황 -->
-    <div class="report_cell">
-        <h3 class="border-bottom">대기오염 현황 <span class="text_rt">※ <span class="weather_lastdate">2023-08-12 17:10</span> 기준</span></h3>
-        
-        <h2 class="air_h2">통합대기환경지수 <b class="rpt_wAll rpt_data"><span class="wAll_color_soso">보통</span></b>
-            <span>
-                <span class="material-icons help help_icon">help_outline</span>
-                <span class="help_text fix_1 " id="weather_air_help">
-                    <table class="table_legend table_pm">
-                        <tbody><tr>
-                            <th class="pm_good_border">좋음<br>(0~ 50)</th>
-                            <th class="pm_soso_border">보통<br>(51 ~ 100)</th>
-                            <th class="pm_bad_border">나쁨<br>(101 ~ 250)</th>
-                            <th class="pm_terrible_border">매우나쁨<br>(251~ 550)</th>
-                        </tr>
-
-                        </tbody>
-                    </table>
-                    지수 기준 : 측정 시  6개 대기오염물질별로 통합대기환경지수 점수를 산정하며 가장 높은 점수를 통합 지수값으로 사용<br>
-                    결정지수 : 미세먼지
-                </span>
-            </span>
-        </h2>
-        
-        <ul class="report_ul mt-2 rpt_wAll_msgAll  rpt_data"><li>호흡기가 예민하신 분들은 몸상태 유의하며 활동해주세요.</li></ul>
-        
-        <div class="flex infobox_1 infobox_pm" style="display:flex;">
-            <div class="basis-1/2" style="width:50%; text-align:center;">
-                미세먼지<br><b class="PM10  PM10_color rpt_data good">14㎍/㎥ 좋음</b>
-            </div>
-            <div class="basis-1/2" style="width:50%; text-align:center;">
-                초미세먼지<br><b class="PM25 PM25_color  rpt_data good">8㎍/㎥ 좋음</b>
-            </div>
-        </div>
-        
-        
-            <!-- row -->
-        <div class="weather_02" style="display:flex;">
-
-            <div class="base1_2" style="width:50%;text-align:center;" >
-                <p class="size-default">오존농도</p>
-                <span class="O3 rpt_data color_soso">0.032ppm 보통</span>
-            </div>
-
-            <div class="base1_2" style="width:50%;text-align:center;" >
-                <p class="size-default">이산화질소</p>
-                <span class="NO2 rpt_data color_good">0.022ppm 좋음</span>
-            </div>
-            <div class="base1_2" style="width:50%;text-align:center;">
-                <p class="size-default">일산화탄소</p>
-                <span class="CO rpt_data color_good">0.2ppm 좋음</span>
-            </div>
-            <div class="base1_2" style="width:50%;text-align:center;">
-                <p class="size-default">아황산가스</p>
-                <span class="SO2 rpt_data color_good">0.002ppm 좋음</span>
-            </div>
-
-        </div>
-        <!-- //row  -->
-    </div>
-    <!-- //대기오염현황 -->
 </div>
-
-
 
 
 <!--  로딩중 -->
 <div id="loading" class="display-none" style="display: none;">
-        <h1 id="loading-msg">데이터를 수신하고 있습니다.조금만 기다려주세요.</h1>
+    <h1 id="loading-msg">데이터를 수신하고 있습니다.조금만 기다려주세요.</h1>
 </div>
 
 
