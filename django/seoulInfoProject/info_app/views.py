@@ -47,10 +47,13 @@ def weather(request):
     if request.method == "GET":
         area = request.GET.get("area")
         area_info = get_area_info(area)
+
+        weather, weather_fcst = weather_filter(area)
         context = {
             "area_info": area_info,
+            "weather" : weather[0],
+            "weather_fcst" : weather_fcst,
         }
-
     return render(request, PATH + "infoPages/weather.html", context)
 
 
