@@ -53,6 +53,7 @@ def weather_filter(area):
 
     return weather, weather_fcst
 
+
 def restaurant_filter(area):
     restaurant = Restaurant.objects.filter(area_cd=area)
 

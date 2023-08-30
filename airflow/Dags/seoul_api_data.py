@@ -184,8 +184,15 @@ async def weather_newslist_data(data, area_nm, current_date):
                 data2 = [data2]
             df2 = pd.DataFrame(data2)
         else:
-            columns = ['WARN_VAL', 'WARN_STRESS', 'ANNOUNCE_TIME', 'COMMAND', 'CANCEL_YN', 'WARN_MSG']
-            none_data = {col: ['정보없음'] for col in columns}
+            columns = [
+                "WARN_VAL",
+                "WARN_STRESS",
+                "ANNOUNCE_TIME",
+                "COMMAND",
+                "CANCEL_YN",
+                "WARN_MSG",
+            ]
+            none_data = {col: ["정보없음"] for col in columns}
             df2 = pd.DataFrame(none_data)
 
     except KeyError:
