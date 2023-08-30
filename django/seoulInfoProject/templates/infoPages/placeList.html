@@ -2,6 +2,8 @@
 {% load static %}
 <br>
 {% block content %}
+
+
 <div class="container_list " id="container_list">
     <div class="list_tab">
         {% for category in categorys %}
@@ -10,12 +12,21 @@
     </div>
     <div>
         <span class="float-left container_list_total">총 <span id="spotlist_cnt" class="black b">{{total_obj_cnt}}</span>곳</span>
-        <div class="float-right container_list_sort" style="float:right;">
-            <select name="sort" id="sort" style="width:170px;">
-                <option value="true">혼잡도 높은 순</option>
-                <option value="false">가나다 순</option>
-            </select>
-        </div>
+        <form action="{% url 'placeList' %}" method="get" id="selected">
+            <div class="float-right container_list_sort" style="float:right;">
+                <select name="selected_option" onchange="submitForm()" style="width:170px;">
+                    <option value="option1" {% if selected_option == 'option1' %}selected{% endif %}>혼잡도 높은 순</option>
+                    <option value="option2" {% if selected_option == 'option2' %}selected{% endif %}>가나다 순</option>
+                </select>
+            </div>
+            <input type="hidden" name="q" value="{{select_category}}">
+        </form>
+
+        <script>
+            function submitForm() {
+                document.getElementById("selected").submit();
+            }
+        </script>
     </div>
     <div class="select_list srcd_list" id='srcd_list'>
         {% for area in page_obj %}
@@ -24,7 +35,14 @@
             <div>
                 <p>{{area.area_category}}</p>
                 <h4>{{area.area_nm}}</h4>
-                <h5 class="srcd_congest" style="background: #DD1F3D;">{{area.area_congest_lvl}}</h5>
+                <h5 class="srcd_congest" style=
+                    {% if area.area_congest_lvl == '붐빔'%}"background: #DD1F3D;">
+                    {% elif area.area_congest_lvl == '약간 붐빔'%} "background: #FF8040;">
+                    {% elif area.area_congest_lvl == '보통'%} "background: #FFB100;">
+                    {% elif area.area_congest_lvl == '여유'%} "background: #00D369;">
+                    {% endif %}
+                    {{area.area_congest_lvl}}
+                </h5>
             </div>
         </a>
         {% endfor %}
@@ -32,21 +50,15 @@
     
     <div class="pagination" id="pagination">
         <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1&q={{select_category}}">&laquo; 처음으로</a>
-                &nbsp;
-                <a href="?page={{ page_obj.previous_page_number }}&q={{select_category}}">이전</a>
-            {% endif %}
-    
-            <span class="current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-            </span>
-    
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}&q={{select_category}}">다음</a>
-                &nbsp;
-                <a href="?page={{ page_obj.paginator.num_pages }}&q={{select_category}}">끝으로 &raquo;</a>
-            {% endif %}
+            {% for page in page_obj.paginator.page_range %}
+                <a href="?page={{ forloop.counter}}&q={{select_category}}&selected_option={{selected_option}}" style="color: #4C65A7;">
+                    {% if forloop.counter == page_obj.number %}
+                        &nbsp;&nbsp;<b>{{ forloop.counter }}</b>
+                    {% else %}
+                        &nbsp;&nbsp;{{ forloop.counter }}
+                    {% endif %}
+                </a>
+            {% endfor %}
         </span>
     </div>
 

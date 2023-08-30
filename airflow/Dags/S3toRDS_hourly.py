@@ -11,7 +11,7 @@ from airflow.models import Variable
 default_args = {
     "owner": "ptj",
     "depends_on_past": False,
-    "start_date": datetime(2023, 8, 23),
+    "start_date": datetime(2023, 8, 29, 13, 0, 0),
     "retries": 1,
     "retry_delay": timedelta(seconds=1),
 }
@@ -108,7 +108,6 @@ def df_to_rds(**kwargs):
                 WHERE row_num > 12
                 );
                 """
-                con.execute(f"ALTER TABLE {table_name} ADD PRIMARY KEY (id);")
                 con.execute(del_query)
         else:
             with engine.connect() as con:
