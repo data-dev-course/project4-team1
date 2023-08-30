@@ -13,29 +13,29 @@ class AuthGroup(models.Model):
 
     class Meta:
         managed = False
-        db_table = "auth_group"
+        db_table = 'auth_group'
 
 
 class AuthGroupPermissions(models.Model):
     id = models.BigAutoField(primary_key=True)
     group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
-    permission = models.ForeignKey("AuthPermission", models.DO_NOTHING)
+    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
 
     class Meta:
         managed = False
-        db_table = "auth_group_permissions"
-        unique_together = (("group", "permission"),)
+        db_table = 'auth_group_permissions'
+        unique_together = (('group', 'permission'),)
 
 
 class AuthPermission(models.Model):
     name = models.CharField(max_length=255)
-    content_type = models.ForeignKey("DjangoContentType", models.DO_NOTHING)
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
     codename = models.CharField(max_length=100)
 
     class Meta:
         managed = False
-        db_table = "auth_permission"
-        unique_together = (("content_type", "codename"),)
+        db_table = 'auth_permission'
+        unique_together = (('content_type', 'codename'),)
 
 
 class AuthUser(models.Model):
@@ -52,7 +52,7 @@ class AuthUser(models.Model):
 
     class Meta:
         managed = False
-        db_table = "auth_user"
+        db_table = 'auth_user'
 
 
 class AuthUserGroups(models.Model):
@@ -62,8 +62,8 @@ class AuthUserGroups(models.Model):
 
     class Meta:
         managed = False
-        db_table = "auth_user_groups"
-        unique_together = (("user", "group"),)
+        db_table = 'auth_user_groups'
+        unique_together = (('user', 'group'),)
 
 
 class AuthUserUserPermissions(models.Model):
@@ -73,8 +73,8 @@ class AuthUserUserPermissions(models.Model):
 
     class Meta:
         managed = False
-        db_table = "auth_user_user_permissions"
-        unique_together = (("user", "permission"),)
+        db_table = 'auth_user_user_permissions'
+        unique_together = (('user', 'permission'),)
 
 
 class Congest(models.Model):
@@ -100,11 +100,12 @@ class Congest(models.Model):
     replace_yn = models.TextField(blank=True, null=True)
     timestamp = models.DateTimeField(blank=True, null=True)
     area_category = models.CharField(max_length=100, blank=True, null=True)
+    congest_lvl_one_hot = models.IntegerField(blank=True, null=True)
     image = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = "congest"
+        db_table = 'congest'
 
 
 class CongestFcst(models.Model):
@@ -116,13 +117,11 @@ class CongestFcst(models.Model):
     fcst_congest_lvl = models.CharField(max_length=20, blank=True, null=True)
     fcst_ppltn_min = models.IntegerField(blank=True, null=True)
     fcst_ppltn_max = models.IntegerField(blank=True, null=True)
-    number_0 = models.FloatField(
-        db_column="0", blank=True, null=True
-    )  # Field renamed because it wasn't a valid Python identifier.
+    number_0 = models.FloatField(db_column='0', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
 
     class Meta:
         managed = False
-        db_table = "congest_fcst"
+        db_table = 'congest_fcst'
 
 
 class CongestPast(models.Model):
@@ -135,7 +134,7 @@ class CongestPast(models.Model):
 
     class Meta:
         managed = False
-        db_table = "congest_past"
+        db_table = 'congest_past'
 
 
 class DjangoAdminLog(models.Model):
@@ -144,14 +143,12 @@ class DjangoAdminLog(models.Model):
     object_repr = models.CharField(max_length=200)
     action_flag = models.SmallIntegerField()
     change_message = models.TextField()
-    content_type = models.ForeignKey(
-        "DjangoContentType", models.DO_NOTHING, blank=True, null=True
-    )
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
     user = models.ForeignKey(AuthUser, models.DO_NOTHING)
 
     class Meta:
         managed = False
-        db_table = "django_admin_log"
+        db_table = 'django_admin_log'
 
 
 class DjangoContentType(models.Model):
@@ -160,8 +157,8 @@ class DjangoContentType(models.Model):
 
     class Meta:
         managed = False
-        db_table = "django_content_type"
-        unique_together = (("app_label", "model"),)
+        db_table = 'django_content_type'
+        unique_together = (('app_label', 'model'),)
 
 
 class DjangoMigrations(models.Model):
@@ -172,7 +169,7 @@ class DjangoMigrations(models.Model):
 
     class Meta:
         managed = False
-        db_table = "django_migrations"
+        db_table = 'django_migrations'
 
 
 class DjangoSession(models.Model):
@@ -182,7 +179,7 @@ class DjangoSession(models.Model):
 
     class Meta:
         managed = False
-        db_table = "django_session"
+        db_table = 'django_session'
 
 
 class InfoAppPlace(models.Model):
@@ -193,7 +190,28 @@ class InfoAppPlace(models.Model):
 
     class Meta:
         managed = False
-        db_table = "info_app_place"
+        db_table = 'info_app_place'
+
+
+class Restaurant(models.Model):
+    restaurant_id = models.AutoField(primary_key=True)
+    area_nm = models.CharField(max_length=255, blank=True, null=True)
+    area_cd = models.CharField(max_length=255, blank=True, null=True)
+    restaurant_nm = models.CharField(max_length=255, blank=True, null=True)
+    category_nm = models.CharField(max_length=255, blank=True, null=True)
+    rating = models.FloatField(blank=True, null=True)
+    review_count = models.IntegerField(blank=True, null=True)
+    blog_review_count = models.IntegerField(blank=True, null=True)
+    road_address_nm = models.CharField(max_length=255, blank=True, null=True)
+    address_nm = models.CharField(max_length=255, blank=True, null=True)
+    phone = models.CharField(max_length=255, blank=True, null=True)
+    place_url = models.CharField(max_length=255, blank=True, null=True)
+    homepage_url = models.CharField(max_length=255, blank=True, null=True)
+    image_url = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'restaurant'
 
 
 class SeoulDataImage(models.Model):
@@ -203,7 +221,7 @@ class SeoulDataImage(models.Model):
 
     class Meta:
         managed = False
-        db_table = "seoul_data_image"
+        db_table = 'seoul_data_image'
 
 
 class Weather(models.Model):
@@ -237,7 +255,7 @@ class Weather(models.Model):
 
     class Meta:
         managed = False
-        db_table = "weather"
+        db_table = 'weather'
 
 
 class WeatherFcst(models.Model):
@@ -254,7 +272,7 @@ class WeatherFcst(models.Model):
 
     class Meta:
         managed = False
-        db_table = "weather_fcst"
+        db_table = 'weather_fcst'
 
 
 class WeatherNews(models.Model):
@@ -270,4 +288,4 @@ class WeatherNews(models.Model):
 
     class Meta:
         managed = False
-        db_table = "weather_news"
+        db_table = 'weather_news'

@@ -62,10 +62,13 @@ def restaurant(request):
     if request.method == "GET":
         area = request.GET.get("area")
         area_info = get_area_info(area)
+        restaurant_info = restaurant_filter(area)
 
         context = {
             "area_info": area_info,
+            "restaurant_info" : restaurant_info,
         }
+        print(context)
     return render(request, PATH + "infoPages/restaurant.html", context)
 
 
