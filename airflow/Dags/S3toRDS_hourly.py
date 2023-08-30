@@ -3,6 +3,7 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.exceptions import AirflowException
 import pandas as pd
+import psycopg2
 import boto3
 import io
 from sqlalchemy import create_engine, inspect, Integer, Float, DateTime, Text, String
@@ -11,7 +12,7 @@ from airflow.models import Variable
 default_args = {
     "owner": "ptj",
     "depends_on_past": False,
-    "start_date": datetime(2023, 8, 23),
+    "start_date": datetime(2023, 8, 29, 13,0, 0),
     "retries": 1,
     "retry_delay": timedelta(seconds=1),
 }
@@ -86,7 +87,6 @@ def df_to_rds(**kwargs):
                 WHERE row_num > 12
                 );
                 """
-                con.execute(f"ALTER TABLE {table_name} ADD PRIMARY KEY (id);")
                 con.execute(del_query)
         else:
             with engine.connect() as con:
@@ -116,7 +116,7 @@ def df_to_rds(**kwargs):
 
 
 dag = DAG(
-    "s3_to_rds_hourly",
+    "s3_to_rds_hourly_dev",
     default_args=default_args,
     schedule_interval=timedelta(hours=1),
     catchup=False,
@@ -143,3 +143,4 @@ congest_past_s3_to_rds = PythonOperator(
 
 
 congest_past_s3_to_rds
+

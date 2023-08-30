@@ -3,6 +3,7 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.exceptions import AirflowException
 import pandas as pd
+import psycopg2
 import boto3
 import io
 from sqlalchemy import create_engine, Integer, Float, DateTime, Text, String
@@ -56,14 +57,20 @@ def df_to_rds(**kwargs):
 
         if table_name == 'weather_news':
             file_name = table_name + 'list'
+            
         else:
             file_name = table_name
 
         # s3에서 df형태로 데이터 가져오기
         df = s3_to_df(file_name)
+
         # 컬럼명 소문자로 변경 (psql 컬럼명은 소문자 기준)
         df.columns = df.columns.str.lower()
-
+        
+        # 혼잡도 레벨 one-hot encoding
+        if table_name == 'congest':
+            mapping = {'붐빔': 0, '약간 붐빔': 1, '보통': 2, '여유':3}
+            df['congest_lvl_one_hot'] = df['area_congest_lvl'].map(mapping)
 
         # SQLAlchemy를 사용하여 RDS에 연결
         engine = create_engine(f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}")
@@ -85,9 +92,14 @@ def df_to_rds(**kwargs):
                 con.execute("ALTER TABLE congest_temp RENAME TO congest;")
 
             con.execute(f"ALTER TABLE {table_name} ADD PRIMARY KEY (id);")
+            
+
+
 
     except ValueError as e:
         print(kwargs)
+        print(df[df.duplicated(subset='area_cd',keep=False)])
+        
         raise AirflowException(f"df_to_rds ValueError 오류 발생. {e}")
 
     except Exception as e:
@@ -95,7 +107,7 @@ def df_to_rds(**kwargs):
 
 
 dag = DAG(
-    "s3_to_rds",
+    "s3_to_rds_dev",
     default_args=default_args,
     schedule_interval='*/5 * * * *',
     catchup=False,
@@ -110,6 +122,7 @@ congest_s3_to_rds = PythonOperator(
             "area_nm": String(100),
             "area_cd": String(20),
             "area_congest_lvl": String(20),
+            "congest_lvl_one_hot": Integer(),
             "area_congest_msg": Text(),
             "area_ppltn_min": Integer(),
             "area_ppltn_max": Integer(),
@@ -237,4 +250,3 @@ congest_s3_to_rds
 weather_s3_to_rds 
 weather_fcst_s3_to_rds
 weather_news_s3_to_rds
-

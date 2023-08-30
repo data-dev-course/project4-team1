@@ -105,7 +105,7 @@ small {font-size: 12px}
 
 .map_list img {display: inline}
 .color_01 {color: #4C65A7 !important}
-.color_02 {color: #3E3E3E !important}
+.color_02 {color: #FF607F !important}
 .color_k {color: #000000 !important}
 
 
@@ -965,7 +965,7 @@ table th, table td {border-right:1px solid #D2DBE2; text-align: left}
 
 .report_ul {font-size: 13px; padding-left: 4px; }
 .report_ul li {color:#535353; padding-bottom: 5px; padding-left: 10px; position: relative}
-.report_ul li:before {content:"Â·";  color: #D1D1D1;position: absolute; margin-left: -10px}
+/* .report_ul li:before {content:"·";  color: #D1D1D1;position: absolute; margin-left: -10px} */
 /* .ico_past{
 	display: flex;
 	align-items: center;
