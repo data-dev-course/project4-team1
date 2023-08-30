@@ -224,37 +224,6 @@ class SeoulDataImage(models.Model):
         db_table = 'seoul_data_image'
 
 
-class Restaurant(models.Model):
-    restaurant_id = models.AutoField(primary_key=True)
-    area_nm = models.CharField(max_length=255, blank=True, null=True)
-    area_cd = models.CharField(max_length=255, blank=True, null=True)
-    restaurant_nm = models.CharField(max_length=255, blank=True, null=True)
-    category_nm = models.CharField(max_length=255, blank=True, null=True)
-    rating = models.FloatField(blank=True, null=True)
-    review_count = models.IntegerField(blank=True, null=True)
-    blog_review_count = models.IntegerField(blank=True, null=True)
-    road_address_nm = models.CharField(max_length=255, blank=True, null=True)
-    address_nm = models.CharField(max_length=255, blank=True, null=True)
-    phone = models.CharField(max_length=255, blank=True, null=True)
-    place_url = models.CharField(max_length=255, blank=True, null=True)
-    homepage_url = models.CharField(max_length=255, blank=True, null=True)
-    image_url = models.CharField(max_length=255, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = "restaurant"
-
-
-class SeoulDataImage(models.Model):
-    area_nm = models.CharField(max_length=255, blank=True, null=True)
-    image = models.CharField(max_length=255, blank=True, null=True)
-    category = models.CharField(max_length=255, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = "seoul_data_image"
-
-
 class Weather(models.Model):
     id = models.BigIntegerField(primary_key=True)
     area_nm = models.CharField(max_length=100, blank=True, null=True)

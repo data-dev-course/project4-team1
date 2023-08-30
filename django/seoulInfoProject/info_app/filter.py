@@ -34,7 +34,6 @@ def category_filter(category, selected_option):
     return congest_obj, categorys
 
 
-<<<<<<< HEAD
 
 def population_filter(area):
     congest = Congest.objects.filter(area_cd = area)
@@ -125,3 +124,4 @@ def weather_filter(area):
 
 def restaurant_filter(area):
     restaurant = Restaurant.objects.filter(area_cd=area)
+    return restaurant

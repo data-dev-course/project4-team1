@@ -85,6 +85,7 @@ def restaurant(request):
     return render(request, PATH + "infoPages/restaurant.html",context)
 
 
+
 def news(request):
     if request.method == "GET":
         area = request.GET.get('area')
