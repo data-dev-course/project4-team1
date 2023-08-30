@@ -1,0 +1,1 @@
+sudo find /var/app/current/data/news -name '*.json' -mtime +2 -delete

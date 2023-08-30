@@ -2,46 +2,48 @@
 {% load static %}
 
 {% block content %}
-
-
-
 {% include "../partialPages/nav_bar.html" %}
 
 <div class="report_inner_wrap">
-    <!-- 혼잡도 추이-->
+    {% for restaurant in restaurant_info %}
     <div class="report_cell">
-
         <div class="card" style="height: 20%;">
             <div class="card_img" style="width:25%; float: left;"> 
-                <img src="{% static 'images/s.jpg'%}" style="width: 100%; border-radius: 15px;">
+                <img src="{{ restaurant.image_url }}" style="width: 100%; border-radius: 15px;">
             </div>
             <div class="card_title" style="width: 60%; float:left; margin:10px;">
-                <span><a><b>유즈라멘 만리동점</b></a></span>
-                <span> <small>일본식라면</small></span>
+                <span><a><b>{{ restaurant.restaurant_nm }}</b></a></span>
+                <span> <small>{{ restaurant.category_nm }}</small></span>
             </div>
             <div class="'card_score" style="width:60%; float:left; margin-left: 10px;"> 
-                <span>4.2</span>
-                <span>361건</span>
-                <span> | </span>
-                <span>리뷰 459</span>
+                {% if restaurant.rating %}
+                    <span>{{ restaurant.rating }}</span>
+                {% endif %}
+                {% if restaurant.review_count %}
+                    <span>({{ restaurant.review_count }}건)</span>
+                {% endif %}
+                {% if restaurant.rating or restaurant.review_count%}
+                    <span> | </span>
+                {% endif %}
+                <span>리뷰 {{ restaurant.blog_review_count }}</span>
             </div>
             <div class="card_address" style="width:60%; float:left; margin-left:10px;"> 
-                <div>서울 중구 만리재로 217 경김회관</div>
-                <div>(지번) 만리동1가 53-8</div>
-            </div>
-            <div class="card_work_time" style="width:60%; float:left; margin-left:10px;"> 
-                <div>화~금 11:00 ~ 21:00 · 휴게시간 화~금 15:00 ~ 17:00</div>
+                {% if restaurant.road_address_nm %}
+                    <div>{{ restaurant.road_address_nm }}</div>
+                {% endif %}
+                <div>(지번) {{ restaurant.address_nm }}</div>
             </div>
             <div class="card_info_etc" style="width:60%; float:left; margin-left:10px; overflow: hidden;"> 
-                <span>070-4177-0365</span>
-                <span><a>상세보기</a></span>
-                <span><a>홈페이지</a></span>
+                {% if restaurant.phone %}
+                    <span>{{ restaurant.phone }}</span>
+                {% endif %}
+                <span><a href="{{ restaurant.place_url }}">상세보기</a></span>
+                {% if restaurant.homepage_url %}
+                <span><a href="{{ restaurant.homepage_url }}">홈페이지</a></span>
+                {% endif %}
             </div>
-
         </div>
-        <!-- <h3 class="border-bottom">실시간 인구 및 혼잡도 추이 전망</h3>
-         <p class="pop_date_right">※ 2023-08-11 17:30 기준</p> -->
     </div>
-                  
+    {% endfor %}
 </div>
 {% endblock %}

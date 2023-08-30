@@ -3,7 +3,6 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.exceptions import AirflowException
 import pandas as pd
-import psycopg2
 import boto3
 import io
 from sqlalchemy import create_engine, Integer, Float, DateTime, Text, String

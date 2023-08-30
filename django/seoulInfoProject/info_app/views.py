@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
+from django.conf import settings
 from info_app.filter import *
+from .view.news import *
 
 PATH = ""
 
@@ -58,9 +60,12 @@ def weather(request):
     if request.method == "GET":
         area = request.GET.get('area')
         area_info, jongseong = get_area_info(area)
+        weather, weather_fcst = weather_filter(area)
         context = {
             "area_info" : area_info,
             "jongseong" : jongseong,
+            "weather": weather[0],
+            "weather_fcst": weather_fcst,
         }
 
     return render(request, PATH + "infoPages/weather.html", context)
@@ -68,12 +73,14 @@ def weather(request):
 
 def restaurant(request):
     if request.method == "GET":
+
         area = request.GET.get('area')
         area_info, jongseong = get_area_info(area)
-
+        restaurant_info = restaurant_filter(area)
         context = {
             "area_info" : area_info,
             "jongseong" : jongseong,
+            "restaurant_info": restaurant_info,
         }
     return render(request, PATH + "infoPages/restaurant.html",context)
 
@@ -86,4 +93,17 @@ def news(request):
             "area_info" : area_info,
             "jongseong" : jongseong,
         }
-    return render(request, PATH + "infoPages/news.html",context)
+
+
+        str_area_nm = area_info.area_nm
+
+        data_path = getattr(settings, "DATA_DIR", None)
+        news_area = news_data(str_area_nm, f"{data_path}/news")
+        context = {
+            "area_info" : area_info,
+            "jongseong" : jongseong,
+        }
+        context += news_area
+
+    return render(request, PATH + "infoPages/news.html", context)
+

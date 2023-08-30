@@ -9,7 +9,10 @@ def category_filter(category, selected_option):
     if category == '전체보기':
         congest_obj = Congest.objects.all()
     else:
-        congest_obj = Congest.objects.filter(area_category = category)
+        print(category)
+        congest_obj = Congest.objects.filter(
+            area_category=category
+        )  
 
     if selected_option == 'option2':
         congest_obj = congest_obj.order_by('area_nm')
@@ -25,12 +28,13 @@ def category_filter(category, selected_option):
         if category == ca:
             ca_dic['focus'] = ' on'
         else:
-            ca_dic['focus'] = ''    
+            ca_dic["focus"] = ""
         categorys.append(ca_dic)
         
     return congest_obj, categorys
 
 
+<<<<<<< HEAD
 
 def population_filter(area):
     congest = Congest.objects.filter(area_cd = area)
@@ -110,3 +114,14 @@ def has_jongseong(character):
     else:
         return "는"
 
+
+def weather_filter(area):
+    weather = Weather.objects.filter(area_cd=area)
+
+    weather_fcst = WeatherFcst.objects.filter(area_cd=area)
+
+    return weather, weather_fcst
+
+
+def restaurant_filter(area):
+    restaurant = Restaurant.objects.filter(area_cd=area)
