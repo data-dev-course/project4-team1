@@ -10,27 +10,37 @@
     <div class="report_cell">
 
         <a href="/">
+        {% for item in items %}
         <div class="card" style="height: 20%; cursor: pointer;" onclick="location.href='/'">
                 <div class="card_img" style="width:25%; float: left;"> 
                     <img src="{% static 'images/s.jpg'%}" style="width: 100%; border-radius: 15px;">
                 </div>
                 <div class="card_title" style="width: 60%; float:left; margin:10px;">
-                    <b>뉴스제목</b>
+                    <b>{{ item.title }}</b>
                 </div>
                 <div class="'card_score" style="width:60%; float:left; margin-left: 10px;"> 
-                    <span>매일신문</span>
-                    <span> | </span>
-                    <span> 성호철 특파원</span>
+                    <span> 기사 발행일 : {{ item.pubDate }}</span>
                 </div>
                 <div class="card_address" style="width:60%; float:left; margin-left:10px;"> 
-                    <div>뉴스요약내용</div>
+                    <div>{{ item.description }}</div>
                     
                 </div>
-                
+             
         </div>
         </a>
-        <!-- <h3 class="border-bottom">실시간 인구 및 혼잡도 추이 전망</h3>
-         <p class="pop_date_right">※ 2023-08-11 17:30 기준</p> -->
+        {% endfor %}
+        
+        {% comment %} {% for item in items %}
+        <p class="highcharts-description">
+            <h1> {{ item.title }} </h1> <br><br>
+            <a href="{{ item.originallink }}">기사 링크</a><br><br>
+            <!-- originallink : {{ item.originallink }} <br><br> -->
+            <!-- link : {{ item.link }} <br><br> -->
+            요약 : {{ item.description }} <br><br>
+            기사 발행일 : {{ item.pubDate }} <br>
+            ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ <br>
+        </p>
+        {% endfor %} {% endcomment %}
     </div>
                   
 </div>
