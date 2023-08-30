@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.core import serializers
+from django.conf import settings
+
 from info_app.filter import *
+from .view.news import *
 
 PATH = ""
 
@@ -73,7 +76,14 @@ def news(request):
     if request.method == "GET":
         area = request.GET.get("area")
         area_info = get_area_info(area)
+
+        str_area_nm = area_info.area_nm
+
+        data_path = getattr(settings, "DATA_DIR", None)
+        news_area = news_data(str_area_nm, f"{data_path}/news")
         context = {
             "area_info": area_info,
         }
+        context += news_area
+
     return render(request, PATH + "infoPages/news.html", context)
