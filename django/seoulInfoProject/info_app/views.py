@@ -71,7 +71,6 @@ def restaurant(request):
             "area_info": area_info,
             "restaurant_info": restaurant_info,
         }
-        print(context)
     return render(request, PATH + "infoPages/restaurant.html", context)
 
 
