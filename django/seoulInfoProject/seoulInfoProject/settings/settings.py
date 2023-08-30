@@ -24,6 +24,7 @@ SECRET_KEY = ""
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+DATA_DIR = BASE_DIR / "data"
 ALLOWED_HOSTS = []
 
 
