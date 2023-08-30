@@ -13,51 +13,99 @@ var congest_past_json = JSON.parse(
 var congest_fcst = JSON.parse(congest_fcst_json)
 var congest_past = JSON.parse(congest_past_json)
 
-console.log(congest_fcst)
-console.log(congest_past)
-
 var color_list =[]
 var data_list = []
+var category_list = []
 
 for (num in congest_past){
-    console.log(congest_past[num]['fields'])
-    past_data = congest_past[num]['fields']
+    var past_data = congest_past[num]['fields']
+    var date = new Date(past_data['timestamp'])
+
     if (past_data['area_congest_lvl'] == '여유'){
-        color_list.push("#00d369")
+        color = "#00d369"
     } else if (past_data['area_congest_lvl'] == '보통'){
-        color_list.push("#ffb100")
+        color = "#ffb100"
     } else if (past_data['area_congest_lvl'] == '약간 붐빔'){
-        color_list.push("#ff8040")
+        color = "#ff8040"
     } else if (past_data['area_congest_lvl'] == '붐빔'){
-        color_list.push("#dd1f3d")
+        color = "#dd1f3d"
+    }
+    color_list.push(color)
+    int_num= parseInt(num)
+    ppltn_max = parseInt(past_data['area_ppltn_max']).toLocaleString()
+    ppltn_min = parseInt(past_data['area_ppltn_min']).toLocaleString()
+
+    if (int_num === congest_past.length-1){
+        time = '현재'
+        past_congest_lvl = '혼잡도: '+ past_data['area_congest_lvl']
+        ppltn_range = '인구수: '
+    }else if(int_num === 0 || int_num === Math.floor(congest_past.length / 2)){
+        console.log(Math.floor(congest_past.length / 2))
+        time = date.getHours()+'시'
+        past_congest_lvl = '과거 혼잡도: '+ past_data['area_congest_lvl']
+        ppltn_range = '과거 인구수: '
+    }else{
+        time = ''
+        past_congest_lvl = '과거 혼잡도: '+ past_data['area_congest_lvl']
+        ppltn_range = '과거 인구수: '
     }
 
-    data_list.push([
-        past_data['timestamp'],
-        past_data['area_ppltn_max']
-    ])
+    category_list.push(time)
+    data_list.push({
+        'y': past_data['area_ppltn_max'],
+        'custom': {
+            'time' : date.getHours()+'시',
+            'congest_lvl' : past_congest_lvl,
+            'ppltn_range' : ppltn_range,
+            'color' : color,
+            'ppltn_max' : ppltn_max,
+            'ppltn_min' : ppltn_min,
+        }
+    })
 }
 
 for (num in congest_fcst){
     fcst_data = congest_fcst[num]['fields']
+    var date = new Date(fcst_data['fcst_time'])
     if (fcst_data['fcst_congest_lvl'] == '여유'){
-        color_list.push("#00d369")
+        color = "#00d369"
     } else if (fcst_data['fcst_congest_lvl'] == '보통'){
-        color_list.push("#ffb100")
+        color = "#ffb100"
     } else if (fcst_data['fcst_congest_lvl'] == '약간 붐빔'){
-        color_list.push("#ff8040")
+        color = "#ff8040"
     } else if (fcst_data['fcst_congest_lvl'] == '붐빔'){
-        color_list.push("#dd1f3d")
+        color = "#dd1f3d"
     }
+    color_list.push(color)
+    ppltn_max = parseInt(fcst_data['fcst_ppltn_max']).toLocaleString()
+    ppltn_min = parseInt(fcst_data['fcst_ppltn_min']).toLocaleString()
 
-    data_list.push([
-        fcst_data['fcst_time'],
-        fcst_data['fcst_ppltn_max']
-    ])
+
+    if((parseInt(num)+1) % 6 === 0){
+        time = date.getHours()+'시'
+    }else{
+        time = ''
+    }
+    category_list.push(time)
+    data_list.push({
+        'y':fcst_data['fcst_ppltn_max'],
+        'custom' : {
+            'time' : date.getHours()+'시',
+            'congest_lvl' : '예상 혼잡도: '+fcst_data['fcst_congest_lvl'],
+            'ppltn_range' : '예상 인구수: ' ,
+            'ppltn_max' : ppltn_max,
+            'ppltn_min' : ppltn_min,
+            'color' : color,
+        }
+    })
 }
+console.log(Math.floor(congest_past.length / 2))
+var timestamp1 = data_list[0][0]
+var timestamp2 = "2023-08-29T15:30:00Z";
 
-console.log(color_list)
-console.log(data_list)
+var date = new Date(timestamp1);
+var hours =  date.getHours();
+
 
 document.addEventListener("DOMContentLoaded", function() {
     var el = document.getElementById('gender_ratio_pie_chart');
@@ -70,13 +118,14 @@ Highcharts.chart('congest_bar_chart', {
         type: 'column'
     },
     title: {
-        text: 'World\'s largest cities per 2021'
+        text: ''
     },
     // subtitle: {
     //     text: 'Source: <a href="https://worldpopulationreview.com/world-cities" target="_blank">World Population Review</a>'
     // },
     xAxis: {
-        type: 'category',
+        //type: 'category',
+        categories: category_list,
         labels: {
             autoRotation: [-45, -90],
             style: {
@@ -89,14 +138,18 @@ Highcharts.chart('congest_bar_chart', {
     yAxis: {
         min: 0,
         title: {
-            text: 'Population (millions)'
+            text: 'Population (thousand)'
         }
     },
     legend: {
         enabled: false
     },
     tooltip: {
-        pointFormat: 'Population in 2021: <b>{point.y:.1f} millions</b>'
+        headerFormat: '',
+        pointFormat: '{point.custom.time}<br> \
+                        <span class="text">{point.custom.congest_lvl}</span>\
+                        <div style="display:inline-block;width: 20px;height: 20px;border-radius: 50%;background-color: {point.custom.color};"></div><br>\
+                        {point.custom.ppltn_range} <b>{point.custom.ppltn_min} ~ {point.custom.ppltn_max}</b>'
     },
     series: [{
         name: 'Population',

@@ -14,7 +14,11 @@
         <p class="pop_date_right">※ {{area_info.timestamp | date:'Y-m-d H:i'}} 기준</p>
         <br>
         {% include "../partialPages/popul_graphic.html" with congest=area_info.area_congest_lvl %}
-        <ul class="report_ul mt-2 rpt_pop_congest_txt2_m rpt_data"><li>사람들이 몰려있을 가능성이 매우 크고  많이 붐빈다고 느낄 수 있어요.</li><li>인구밀도가 높은 구간에서는 도보 이동시 부딪힘이 발생할 수 있어요.</li><li>특정지역에 인구가 집중되어 있을 수 있어요. 인구가 집중된 지역은 우측의 지도에서 히트맵을 통해 확인해주세요.</li></ul>
+        <ul class="report_ul mt-2 rpt_pop_congest_txt2_m rpt_data">
+            {% for msg in congest_msg %}
+            <li>{{msg}}.</li>
+            {% endfor %}
+        </ul>
         <div class="flex mt-2 items-center pt-2 pl-2" style="display: flex; align-items: center;">
             <div class="ico_past">
                 <img src="{% static 'images/ico_past.png'%}">
@@ -40,8 +44,7 @@
     </div>
     <!-- 혼잡도 추이-->
     <div class="report_cell">
-        <h3 class="border-bottom">실시간 인구 및 혼잡도 추이 전망</h3>
-        <p class="pop_date_right">※ {{area_info.timestamp | date:'Y-m-d H:i'}} 기준</p>
+        <h3 class="border-bottom">실시간 인구 및 혼잡도 추이 전망  <span class="text_rt"> <span class="pop_date_right">※ {{area_info.timestamp | date:'Y-m-d H:i'}} 기준</span></span></h3>
         <br>
         <div class="graphbox mt-2" style="height: 400px; position: relative">
             <div id="congest_bar_chart"></div>
@@ -62,7 +65,7 @@
     </div>
     <!-- 성별/연령별 -->
     <div class="report_cell">
-        <h3 class="border-bottom">실시간 인구 구성 비율  <span class="text_rt"> <span class="pop_date_right">※ {{congest.timestamp | date:'Y-m-d H:i'}} 기준</span></span></h3>
+        <h3 class="border-bottom">실시간 인구 구성 비율  <span class="text_rt"> <span class="pop_date_right">※ {{area_info.timestamp | date:'Y-m-d H:i'}} 기준</span></span></h3>
         <h4 class="mt-4">성별 비율</h4>                    
         <div class="graphbox pt-0 chart_gender_m" style="height: 250px">
             
@@ -85,7 +88,13 @@
             
         </div>
         <ul class="report_ul mt-2">
-            <li class="rpt_data rpt_pop_gender"><b class="color_01">남성</b>이 여성보다 <b class="color_01">17.8%</b> 많아요</li>
+            <li class="rpt_data rpt_pop_gender">
+                {% if ppltn_cal.gender in "남성" %}
+                <b class="color_01">남성</b>이 여성보다 <b class="color_01">{{ppltn_cal.gender_val}}%</b> 많아요
+                {% else %}               
+                <b class="color_02">여성</b>이 남성보다 <b class="color_02">{{ppltn_cal.gender_val}}%</b> 많아요
+                {% endif %}
+            </li>
         </ul>
         <h4 class="mt-2 pt-3">연령대별 비율</h4>
         <div class="graphbox pt-0 chart_gender_m" style="height: 250px">
@@ -125,7 +134,7 @@
                 </div>
         </div>
         <ul class="report_ul mt-2 ">
-            <li class="rpt_data rpt_pop_age">전체 연령대 중 <b class="color_01">30대</b>가  <b class="color_01">23.0%</b>로 가장 많아요</li>
+            <li class="rpt_data rpt_pop_age">전체 연령대 중 <b class="color_01">{{ppltn_cal.age}}</b>가  <b class="color_01">{{ppltn_cal.age_val}}%</b>로 가장 많아요</li>
         </ul>
         <h4 class="mt-2 pt-3">상주·비상주 비율</h4>
         <!-- <div id="population_graph_genderAge" class="chart_genderAge"></div>  -->
@@ -156,7 +165,13 @@
         </div>
         <ul class="report_ul mt-2">
             <!-- <li class="rpt_data rpt_pop_genderAge"></li>   -->
-            <li class="rpt_data rpt_pop_sojn"><b class="color_01">비상주</b> 인구가 상주 인구보다 <b class="color_01">89.2%</b> 더 많아요.</li>
+            <li class="rpt_data rpt_pop_sojn">
+                {% if ppltn_cal.resnt in '비상주' %}
+                <b class="color_01">비상주</b> 인구가 상주 인구보다 <b class="color_01">{{ppltn_cal.resnt_val}}%</b> 더 많아요.
+                {% else %}
+                <b class="color_01">상주</b> 인구가 비상주 인구보다 <b class="color_01">{{ppltn_cal.resnt_val}}%</b> 더 많아요.
+                {% endif %}
+            </li>
         </ul>
         <div class="report_sub_etc mt-2">
             ※ 상주 인구는 '전월 가장 오래 체류했던 장소'에 존재하고 있는 인구입니다. (전월 일 4시간 이상, 최소 10일 이상 연속 체류한 장소 기준)
@@ -164,4 +179,5 @@
     </div>
     <!-- //성별/연령별 -->                
 </div>
+
 {% endblock %}

@@ -48,7 +48,7 @@ Highcharts.chart('age_ratio_pie_chart', {
             '#FFE45C', '#FD7B49','#E8395C','#B137A3','#6957CB','#43ABAF'
         ],
         data: [
-            ['10대이상', congest['ppltn_rate_0'] + congest['ppltn_rate_10']],
+            ['10대이하', congest['ppltn_rate_0'] + congest['ppltn_rate_10']],
             ['20대', congest['ppltn_rate_20']],
             ['30대', congest['ppltn_rate_30']],
             ['40대', congest['ppltn_rate_40']],
