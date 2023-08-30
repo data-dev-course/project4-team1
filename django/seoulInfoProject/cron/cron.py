@@ -37,7 +37,9 @@ def download_data_news():
             file_name = f"{area}-{today}.json"  # 파일 이름
             bucket_path = f"area_news/{area}"  # 버켓 주소
 
-            bucket.download_file(f"{bucket_path}/{file_name}", f"{file_path}/{file_name}")
+            bucket.download_file(
+                f"{bucket_path}/{file_name}", f"{file_path}/{file_name}"
+            )
         except Exception as e:
             print(f"실패 장소: {area} | error message: {e}")
 
@@ -56,7 +58,9 @@ def rm_news():
     import subprocess
 
     print("=" * 10 + "rm_news" + "=" * 10)
-    rm = subprocess.run(["sh", "cron/rm_news.sh"], capture_output=True, encoding="utf-8")
+    rm = subprocess.run(
+        ["sh", "cron/rm_news.sh"], capture_output=True, encoding="utf-8"
+    )
     if rm.stdout:
         print(rm.stdout)
     else:
