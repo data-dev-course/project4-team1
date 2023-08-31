@@ -18,44 +18,43 @@ def category_filter(category, selected_option):
         )
         congest_obj = congest_obj.order_by(ko_kr.asc())
     else:
-        congest_obj = congest_obj.order_by('congest_lvl_one_hot','-area_ppltn_max')
-        
-    category_class = ["전체보기","고궁·문화유산","공원","관광특구","발달상권","인구밀집지역"]
+        congest_obj = congest_obj.order_by("congest_lvl_one_hot", "-area_ppltn_max")
+
+    category_class = ["전체보기", "고궁·문화유산", "공원", "관광특구", "발달상권", "인구밀집지역"]
     categorys = []
     for ca in category_class:
         ca_dic = {}
         ca_dic["name"] = ca
-        
+
         if category == ca:
-            ca_dic['focus'] = ' on'
+            ca_dic["focus"] = " on"
         else:
             ca_dic["focus"] = ""
         categorys.append(ca_dic)
-        
+
     return congest_obj, categorys
 
 
-
 def population_filter(area):
-    congest = Congest.objects.filter(area_cd = area)
-    congest_json = serializers.serialize('json',congest)
+    congest = Congest.objects.filter(area_cd=area)
+    congest_json = serializers.serialize("json", congest)
 
-    congest_fcst = CongestFcst.objects.filter(area_cd = area)
-    congest_fcst_json = serializers.serialize('json',congest_fcst)
+    congest_fcst = CongestFcst.objects.filter(area_cd=area)
+    congest_fcst_json = serializers.serialize("json", congest_fcst)
 
-    congest_past = CongestPast.objects.filter(area_cd = area).order_by('timestamp')
-    congest_past_json = serializers.serialize('json',congest_past)
-
+    congest_past = CongestPast.objects.filter(area_cd=area).order_by("timestamp")
+    congest_past_json = serializers.serialize("json", congest_past)
 
     return congest_json, congest_fcst_json, congest_past_json
 
+
 def cal_past_population(area):
-    #congest = Congest.objects.get(area_cd = area)
-    congest_past =CongestPast.objects.filter(area_cd = area)
-    max_price = congest_past.aggregate(Max('area_ppltn_max'))['area_ppltn_max__max']
-    congest_max = congest_past.filter(area_ppltn_max = max_price).first()
+    # congest = Congest.objects.get(area_cd = area)
+    congest_past = CongestPast.objects.filter(area_cd=area)
+    max_price = congest_past.aggregate(Max("area_ppltn_max"))["area_ppltn_max__max"]
+    congest_max = congest_past.filter(area_ppltn_max=max_price).first()
     return congest_max
-    
+
 
 def cal_past_population(area):
     # congest = Congest.objects.get(area_cd = area)
@@ -128,7 +127,7 @@ def cal_congest(area_info):
 
     return result
 
-    
+
 def has_jongseong(character):
     # 한글의 유니코드 범위: 0xAC00 ~ 0xD7A3
     # 받침이 있는 경우 유니코드 코드 포인트는 0x11A7 ~ 0x11C2
