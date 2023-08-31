@@ -29,13 +29,15 @@ def news_data(area, data_path) -> json:
         with open(json_path, "w") as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
 
+    return data
+
 
 def area_replace(area) -> str:
     area = str(area)
     new_area = area.replace("·", " ")
     return new_area
 
-  
+
 def get_meta_og_image(url):
     from bs4 import BeautifulSoup
     import requests
