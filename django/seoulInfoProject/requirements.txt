@@ -13,6 +13,6 @@ typing_extensions==4.7.1
 tzdata==2023.3
 urllib3==1.26.16
 requests==2.31.0
-
+bs4==0.0.1
 # local test
 django-environ==0.10.0

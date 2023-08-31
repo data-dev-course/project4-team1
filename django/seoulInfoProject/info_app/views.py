@@ -86,19 +86,14 @@ def news(request):
     if request.method == "GET":
         area = request.GET.get("area")
         area_info, jongseong = get_area_info(area)
-        context = {
-            "area_info": area_info,
-            "jongseong": jongseong,
-        }
-
         str_area_nm = area_info.area_nm
-
         data_path = getattr(settings, "DATA_DIR", None)
         news_area = news_data(str_area_nm, f"{data_path}/news")
+
         context = {
             "area_info": area_info,
             "jongseong": jongseong,
         }
-        context += news_area
+        context.update(news_area)
 
     return render(request, PATH + "infoPages/news.html", context)
