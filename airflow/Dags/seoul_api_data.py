@@ -176,9 +176,6 @@ async def weather_newslist_data(data, area_nm, current_date):
     df1 = pd.DataFrame([extracted_data])
 
     try:
-        #data2 = data["SeoulRtd.citydata"]["CITYDATA"]["WEATHER_STTS"]["WEATHER_STTS"][
-        #    "NEWS_LIST"
-        #]["NEWS_LIST"]
         data2 = data1.get("WEATHER_STTS", {}).get("WEATHER_STTS", {}).get("NEWS_LIST")
         if data2:
             if data2 == "None":
@@ -190,11 +187,6 @@ async def weather_newslist_data(data, area_nm, current_date):
             columns = ['WARN_VAL', 'WARN_STRESS', 'ANNOUNCE_TIME', 'COMMAND', 'CANCEL_YN', 'WARN_MSG']
             none_data = {col: ['정보없음'] for col in columns}
             df2 = pd.DataFrame(none_data)
-            #df2 = pd.DataFrame([None])
-        # if data2:
-        #    df2 = pd.DataFrame(data2)
-        # else:
-        #    df2 = pd.DataFrame([None])
     except KeyError:
         df2 = pd.DataFrame([None])
 
