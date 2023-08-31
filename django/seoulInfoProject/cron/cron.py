@@ -11,13 +11,13 @@ from datetime import datetime
 def download_data_news():
     import boto3
 
-    print("=" * 10 + "download_data_news" + "=" * 10)
+    today, time = datetime.now().strftime("%Y%m%d-%H%M%S").split("-")
+
+    print(f"[{datetime.now().strftime('%Y%m%d-%H%M%S')}] |", "=" * 10 + "download_data_news" + "=" * 10)
     AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
     AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
     AWS_S3_REGION_NAME = "ap-northeast-2"
     DATA_DIR = getattr(settings, "DATA_DIR", "")
-    # today = datetime.now(KST).strftime("%Y%m%d")
-    today = datetime.now().strftime("%Y%m%d")
 
     session = boto3.Session(
         aws_access_key_id=AWS_ACCESS_KEY_ID,
@@ -28,6 +28,7 @@ def download_data_news():
     s3 = session.resource("s3")
     bucket = s3.Bucket(name="de-3-1")
 
+    FLAG = True
     area_list_news = AREA_LIST_NEWS
     for area in area_list_news:
         try:
@@ -37,13 +38,15 @@ def download_data_news():
             file_name = f"{area}-{today}.json"  # 파일 이름
             bucket_path = f"area_news/{area}"  # 버켓 주소
 
-            bucket.download_file(
-                f"{bucket_path}/{file_name}", f"{file_path}/{file_name}"
-            )
+            bucket.download_file(f"{bucket_path}/{file_name}", f"{file_path}/{file_name}")
         except Exception as e:
-            print(f"실패 장소: {area} | error message: {e}")
+            FLAG = False
+            print(f"[{datetime.now().strftime('%Y%m%d-%H%M%S')}] | 실패 장소: {area} | error message: {e}")
 
-    print("=" * 30)
+    if FLAG:
+        print(f"[{datetime.now().strftime('%Y%m%d-%H%M%S')}] | 실패 장소 없음 ")
+
+    print(f"[{datetime.now().strftime('%Y%m%d-%H%M%S')}] |", "=" * 30)
 
 
 def mkdir(dir):
@@ -51,16 +54,14 @@ def mkdir(dir):
         if not os.path.exists(dir):
             os.makedirs(dir)
     except OSError:
-        print("Error: Failed to create the directory.")
+        print(f"[{datetime.now().strftime('%Y%m%d-%H%M%S')}] | Error: Failed to create the directory.")
 
 
 def rm_news():
     import subprocess
 
     print("=" * 10 + "rm_news" + "=" * 10)
-    rm = subprocess.run(
-        ["sh", "cron/rm_news.sh"], capture_output=True, encoding="utf-8"
-    )
+    rm = subprocess.run(["sh", "cron/rm_news.sh"], capture_output=True, encoding="utf-8")
     if rm.stdout:
         print(rm.stdout)
     else:
