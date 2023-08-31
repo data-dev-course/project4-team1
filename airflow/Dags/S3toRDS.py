@@ -121,7 +121,7 @@ def df_to_rds(**kwargs):
 
 
 dag = DAG(
-    "s3_to_rds_dev",
+    "s3_to_rds",
     default_args=default_args,
     schedule_interval="*/5 * * * *",
     catchup=False,

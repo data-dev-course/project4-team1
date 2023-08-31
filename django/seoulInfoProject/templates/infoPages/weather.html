@@ -14,19 +14,17 @@
             <div class="temperature" style="display: flex; align-items: center; justify-content: center;">
                 <img src="{% static 'images/icon_temperature.png'%}" class="icon_temperature">
                 <b class="rpt_temp1 rpt_data color_01">{{ weather.temp }}
-                    ℃</b> 체감 <span class="rpt_temp2 rpt_data">{{weather.sensible_temp}}℃</span>
+                    ℃</b> &nbsp; 체감 <span class="rpt_temp2 rpt_data">{{weather.sensible_temp}}℃</span>
             </div>
         </div>
         <!-- 습도 바람 -->
         <div class="moisture flex mt-3"
             style="display: flex; align-items: center; justify-content: center; margin-bottom:10px;">
-            <div class="base1_2"
-                style="display: flex; align-items: center; justify-content: center; width:50%;text-align:right; margin-right: 30px;">
+            <div class="test1">
                 <img src="{% static 'images/icon_moisture.png'%}" class="icon_moisture"> 습도 <b
                     class="rpt_humidity rpt_data">{{weather.humidity}}%</b>
             </div>
-            <div class="base1_2"
-                style="display: flex; align-items: center; justify-content: center; width:50%;text-align:left; margin-left: 30px;">
+            <div class="test2" >
                 <img src="{% static 'images/icon_wind.png'%}" class="icon_wind"> 바람 <b
                     class="rpt_wind rpt_data">{{weather.wind_spd}}m/s</b>
             </div>
@@ -50,21 +48,21 @@
         <!-- 주의보 -->
         <div class="rpt_data_empty rpt_weather_special"></div>
         <!-- 강수량 / 자외선 -->
-        <div class="flex weather_03 border-bottom">
+        <div class="flex weather_03 border-bottom" style="display:flex;">
             <div class="mr-3 vertical-center"><img src="/static/images/weather/ico_weather_rain.png"
                     class="ico_weather_rain"></div>
-            <div class="mw-77 basis-1/4 border-right vertical-center">
+            <div class="weather_news border-right vertical-center" style="padding: 10px;">
                 강수량<br>
-                <b class="color_bk rpt_rain rpt_data">{{weather.precipitation}}</b>
+                <b class="color_bk rpt_rain rpt_data" style="margin-left: 10px; vertical:center;">{{weather.precipitation}}</b>
             </div>
-            <div class="pl-4 rpt_wAll_msgRain  rpt_data vertical-center">{{weather.pcp_msg}}</div>
+            <div class="pl-4 rpt_wAll_msgRain  rpt_data vertical-center" style="margin-left: 10px; vertical:center;">{{weather.pcp_msg}}</div>
         </div>
-        <div class="flex weather_03">
-            <div class=" mr-3 vertical-center"><img src="/static/images/weather/ico_weather_uv.png"
+        <div class="flex weather_03" style="display:flex;">
+            <div class=" mr-3 vertical-center" ><img src="/static/images/weather/ico_weather_uv.png"
                     class="ico_weather_uv"></div>
-            <div class="mw-77 pr-5 basis-2/4 border-right vertical-center">
+            <div class="weather_news border-right vertical-center" style="padding: 10px;">
                 자외선지수<br>
-                <b class="color_bk rpt_ray2 rpt_data"><span class="color_soso">{{weather.uv_index}}</span></b>
+                <b class="color_bk rpt_ray2 rpt_data" style="margin-left: 10px; vertical:center;"><span class="color_soso" >{{weather.uv_index}}</span></b>
             </div>
             <ul class="pl-4 rpt_wAll_msgRay  rpt_data vertical-center">{{weather.uv_msg}}</ul>
         </div>

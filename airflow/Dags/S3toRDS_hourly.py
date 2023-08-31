@@ -105,7 +105,7 @@ def df_to_rds(**kwargs):
                     ROW_NUMBER() OVER (PARTITION BY area_cd ORDER BY timestamp DESC) AS row_num
                     FROM {table_name}
                 ) AS subquery
-                WHERE row_num > 12
+                WHERE row_num > 24
                 );
                 """
                 con.execute(del_query)
