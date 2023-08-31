@@ -19,7 +19,6 @@ def placeList(request):
         paginator = Paginator(area_obj, 15)
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
-        
 
         context = {
             "page_obj": page_obj,
@@ -33,7 +32,7 @@ def placeList(request):
 
 def population(request):
     if request.method == "GET":
-        area = request.GET.get('area')
+        area = request.GET.get("area")
 
         congest_json, congest_fcst_json, congest_past_json = population_filter(area)
         area_info, jongseong = get_area_info(area)
@@ -77,8 +76,7 @@ def restaurant(request):
             "jongseong": jongseong,
             "restaurant_info": restaurant_info,
         }
-    return render(request, PATH + "infoPages/restaurant.html",context)
-
+    return render(request, PATH + "infoPages/restaurant.html", context)
 
 
 def news(request):
@@ -96,4 +94,3 @@ def news(request):
         context.update(news_area)
 
     return render(request, PATH + "infoPages/news.html", context)
-

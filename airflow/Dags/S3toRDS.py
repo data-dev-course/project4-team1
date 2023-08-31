@@ -16,6 +16,7 @@ default_args = {
     "retry_delay": timedelta(seconds=1),
 }
 
+
 # s3 data df로 변환
 def s3_to_df(data_category):
     try:
@@ -24,22 +25,31 @@ def s3_to_df(data_category):
         s3_client = boto3.client("s3")
 
         # 현재 날짜 데이터 가져오기
-        current_date = datetime.now().strftime('%Y%m%d')
+        current_date = datetime.now().strftime("%Y%m%d")
         con_df = pd.DataFrame()
 
         for area in area_list:
-            file_path = 'area_data/' + area +'/'+ current_date +'/'
-            file_name = 'area_data-'+area+'-'+data_category+'_data_'+current_date+'.csv'
-            response = s3_client.get_object(Bucket=s3_bucket, Key= file_path+file_name)
+            file_path = "area_data/" + area + "/" + current_date + "/"
+            file_name = (
+                "area_data-"
+                + area
+                + "-"
+                + data_category
+                + "_data_"
+                + current_date
+                + ".csv"
+            )
+            response = s3_client.get_object(Bucket=s3_bucket, Key=file_path + file_name)
 
             data = response["Body"].read().decode("utf-8")
             df = pd.read_csv(io.StringIO(data))
-            con_df = pd.concat([con_df,df], ignore_index=True)
+            con_df = pd.concat([con_df, df], ignore_index=True)
 
     except Exception as e:
         raise AirflowException(f"s3_to_df 오류 발생. {e}")
 
-    return (con_df)
+    return con_df
+
 
 # df를 rds에 적재
 def df_to_rds(**kwargs):
@@ -52,7 +62,7 @@ def df_to_rds(**kwargs):
         db_name = Variable.get("db_name")
         db_user = Variable.get("db_user")
         db_password = Variable.get("db_password")
-        db_port = '5432'
+        db_port = "5432"
 
         if table_name == "weather_news":
             file_name = table_name + "list"
@@ -65,19 +75,27 @@ def df_to_rds(**kwargs):
 
         # 컬럼명 소문자로 변경 (psql 컬럼명은 소문자 기준)
         df.columns = df.columns.str.lower()
-        
+
         # 혼잡도 레벨 one-hot encoding
-        if table_name == 'congest':
-            mapping = {'붐빔': 0, '약간 붐빔': 1, '보통': 2, '여유':3}
-            df['congest_lvl_one_hot'] = df['area_congest_lvl'].map(mapping)
+        if table_name == "congest":
+            mapping = {"붐빔": 0, "약간 붐빔": 1, "보통": 2, "여유": 3}
+            df["congest_lvl_one_hot"] = df["area_congest_lvl"].map(mapping)
 
         # SQLAlchemy를 사용하여 RDS에 연결
-        engine = create_engine(f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}")
+        engine = create_engine(
+            f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+        )
 
         # DataFrame을 RDS 테이블로 적재
-        df.to_sql(table_name, con=engine, if_exists='replace', index_label='id', dtype=data_type)
+        df.to_sql(
+            table_name,
+            con=engine,
+            if_exists="replace",
+            index_label="id",
+            dtype=data_type,
+        )
         with engine.connect() as con:
-            if table_name == 'congest':
+            if table_name == "congest":
                 create_query = """
                 CREATE TABLE congest_temp AS(
                 SELECT a.*, b.image
@@ -85,15 +103,12 @@ def df_to_rds(**kwargs):
                 ON a.area_cd = b.category
                 );
                 """
-                
+
                 con.execute(create_query)
                 con.execute("DROP TABLE congest;")
                 con.execute("ALTER TABLE congest_temp RENAME TO congest;")
 
             con.execute(f"ALTER TABLE {table_name} ADD PRIMARY KEY (id);")
-            
-
-
 
     except ValueError as e:
         print(kwargs)
@@ -108,7 +123,7 @@ def df_to_rds(**kwargs):
 dag = DAG(
     "s3_to_rds",
     default_args=default_args,
-    schedule_interval='*/5 * * * *',
+    schedule_interval="*/5 * * * *",
     catchup=False,
 )
 
@@ -117,7 +132,7 @@ congest_s3_to_rds = PythonOperator(
     task_id="congest_s3_to_rds",
     python_callable=df_to_rds,
     params={
-        'data_type':{
+        "data_type": {
             "area_nm": String(100),
             "area_cd": String(20),
             "area_congest_lvl": String(20),
@@ -140,7 +155,7 @@ congest_s3_to_rds = PythonOperator(
             "timestamp": DateTime(),
             "area_category": String(100),
         },
-        'table_name':'congest',
+        "table_name": "congest",
     },
     dag=dag,
 )
@@ -150,16 +165,16 @@ congest_fcst_s3_to_rds = PythonOperator(
     task_id="congest_fcst_s3_to_rds",
     python_callable=df_to_rds,
     params={
-        'data_type':{
+        "data_type": {
             "area_nm": String(100),
             "area_cd": String(20),
             "timestamp": DateTime(),
             "fcst_time": DateTime(),
             "fcst_congest_lvl": String(20),
             "fcst_ppltn_min": Integer(),
-            "fcst_ppltn_max": Integer(),    
+            "fcst_ppltn_max": Integer(),
         },
-        'table_name':'congest_fcst',
+        "table_name": "congest_fcst",
     },
     dag=dag,
 )
@@ -168,7 +183,7 @@ weather_s3_to_rds = PythonOperator(
     task_id="weather_s3_to_rds",
     python_callable=df_to_rds,
     params={
-        'data_type':{
+        "data_type": {
             "area_nm": String(100),
             "area_cd": String(20),
             "weather_time": DateTime(),
@@ -182,7 +197,7 @@ weather_s3_to_rds = PythonOperator(
             "precipitation": String(100),
             "precpt_type": String(100),
             "pcp_msg": Text(),
-            "sunrise":String(20),
+            "sunrise": String(20),
             "sunset": String(20),
             "uv_index_lvl": Integer(),
             "uv_index": String(20),
@@ -196,19 +211,18 @@ weather_s3_to_rds = PythonOperator(
             "air_msg": Text(),
             "timestamp": DateTime(),
         },
-        'table_name':'weather',
+        "table_name": "weather",
     },
     dag=dag,
 )
-
 
 
 weather_fcst_s3_to_rds = PythonOperator(
     task_id="weather_fcst_s3_to_rds",
     python_callable=df_to_rds,
     params={
-        'data_type':{
-            "area_nm":String(100),
+        "data_type": {
+            "area_nm": String(100),
             "area_cd": String(20),
             "timestamp": DateTime(),
             "fcst_dt": DateTime(),
@@ -218,7 +232,7 @@ weather_fcst_s3_to_rds = PythonOperator(
             "rain_chance": Integer(),
             "sky_stts": String(30),
         },
-        'table_name':'weather_fcst',
+        "table_name": "weather_fcst",
     },
     dag=dag,
 )
@@ -227,8 +241,8 @@ weather_news_s3_to_rds = PythonOperator(
     task_id="weather_news_s3_to_rds",
     python_callable=df_to_rds,
     params={
-        'data_type':{
-            "area_nm":String(100),
+        "data_type": {
+            "area_nm": String(100),
             "area_cd": String(20),
             "timestamp": DateTime(),
             "fcst_dt": DateTime(),
@@ -238,14 +252,14 @@ weather_news_s3_to_rds = PythonOperator(
             "rain_chance": Integer(),
             "sky_stts": String(30),
         },
-        'table_name':'weather_news',
+        "table_name": "weather_news",
     },
     dag=dag,
 )
 
 
-congest_s3_to_rds  
-congest_s3_to_rds 
-weather_s3_to_rds 
+congest_s3_to_rds
+congest_s3_to_rds
+weather_s3_to_rds
 weather_fcst_s3_to_rds
 weather_news_s3_to_rds
