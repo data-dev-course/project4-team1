@@ -1,6 +1,6 @@
 from info_app.models import *
 from django.core import serializers
-from django.db.models import F
+from django.db.models import Max, Func
 
 
 def category_filter(category, selected_option):
@@ -11,7 +11,12 @@ def category_filter(category, selected_option):
         congest_obj = Congest.objects.filter(area_category=category)
 
     if selected_option == "option2":
-        congest_obj = congest_obj.order_by("area_nm")
+        ko_kr = Func(
+            "area_nm",
+            function="ko_KR.utf8",
+            template='(%(expressions)s) COLLATE "%(function)s"',
+        )
+        congest_obj = congest_obj.order_by(ko_kr.asc())
     else:
         congest_obj = congest_obj.order_by("congest_lvl_one_hot", "-area_ppltn_max")
 
@@ -43,6 +48,14 @@ def population_filter(area):
     return congest_json, congest_fcst_json, congest_past_json
 
 
+def cal_past_population(area):
+    # congest = Congest.objects.get(area_cd = area)
+    congest_past = CongestPast.objects.filter(area_cd=area)
+    max_price = congest_past.aggregate(Max("area_ppltn_max"))["area_ppltn_max__max"]
+    congest_max = congest_past.filter(area_ppltn_max=max_price).first()
+    return congest_max
+
+
 def get_area_info(area):
     area = Congest.objects.get(area_cd=area)
     area_split = area.area_nm[-1]
@@ -53,8 +66,10 @@ def get_area_info(area):
 def get_area_congest_msg(area_info):
     msg = area_info.area_congest_msg
     msg_list = msg.split(".")
-    while "" in msg_list:
-        msg_list.remove("")
+
+    for i in range(len(msg_list)):
+        if msg_list[i] == "" or "지도" in msg_list[i]:
+            msg_list.pop(i)
 
     return msg_list
 
@@ -90,6 +105,8 @@ def cal_congest(area_info):
             area_info.non_resnt_ppltn_rate - area_info.resnt_ppltn_rate, 1
         )
 
+    max_past_congest = cal_past_population(area_info.area_cd)
+
     result = {
         "gender": gender,
         "gender_val": gender_val,
@@ -97,6 +114,7 @@ def cal_congest(area_info):
         "age_val": age_val,
         "resnt": resnt,
         "resnt_val": resnt_val,
+        "max_past_congest": max_past_congest,
     }
 
     return result

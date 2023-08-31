@@ -159,7 +159,7 @@ Highcharts.chart('congest_bar_chart', {
         data: data_list
         ,
         dataLabels: {
-            enabled: true,
+            enabled: false,
             rotation: -90,
             color: '#FFFFFF',
             align: 'right',
