@@ -11,36 +11,39 @@
             <div class="card_img" style="width:25%; float: left;"> 
                 <img src="{{ restaurant.image_url }}" style="width: 100%; border-radius: 15px;">
             </div>
-            <div class="card_title" style="width: 60%; float:left; margin:10px;">
-                <span><a><b>{{ restaurant.restaurant_nm }}</b></a></span>
-                <span> <small>{{ restaurant.category_nm }}</small></span>
-            </div>
-            <div class="'card_score" style="width:60%; float:left; margin-left: 10px;"> 
-                {% if restaurant.rating %}
-                    <span>{{ restaurant.rating }}</span>
-                {% endif %}
-                {% if restaurant.review_count %}
-                    <span>({{ restaurant.review_count }}건)</span>
-                {% endif %}
-                {% if restaurant.rating or restaurant.review_count%}
-                    <span> | </span>
-                {% endif %}
-                <span>리뷰 {{ restaurant.blog_review_count }}</span>
-            </div>
-            <div class="card_address" style="width:60%; float:left; margin-left:10px;"> 
-                {% if restaurant.road_address_nm %}
-                    <div>{{ restaurant.road_address_nm }}</div>
-                {% endif %}
-                <div>(지번) {{ restaurant.address_nm }}</div>
-            </div>
-            <div class="card_info_etc" style="width:60%; float:left; margin-left:10px; overflow: hidden;"> 
-                {% if restaurant.phone %}
-                    <span>{{ restaurant.phone }}</span>
-                {% endif %}
-                <span><a href="{{ restaurant.place_url }}">상세보기</a></span>
-                {% if restaurant.homepage_url %}
-                <span><a href="{{ restaurant.homepage_url }}">홈페이지</a></span>
-                {% endif %}
+            <div class="text_block" style="width:75%; align-items: center;">
+                <div class="card_title" style="width: 60%; float:left; margin:10px;">
+                    <span><a><b>{{ restaurant.restaurant_nm }}</b></a></span>
+                    <span> <small>{{ restaurant.category_nm }}</small></span>
+                </div>
+            
+                <div class="card_score" style="width:60%; float:left; margin-left: 10px;"> 
+                    {% if restaurant.rating %}
+                        <span>{{ restaurant.rating }}</span>
+                    {% endif %}
+                    {% if restaurant.review_count %}
+                        <span>({{ restaurant.review_count }}건)</span>
+                    {% endif %}
+                    {% if restaurant.rating or restaurant.review_count%}
+                        <span> | </span>
+                    {% endif %}
+                    <span>리뷰 {{ restaurant.blog_review_count }}</span>
+                </div>
+                <div class="card_address" style="width:60%; float:left; margin-left:10px;"> 
+                    {% if restaurant.road_address_nm %}
+                        <div>{{ restaurant.road_address_nm }}</div>
+                    {% endif %}
+                    <div>(지번) {{ restaurant.address_nm }}</div>
+                </div>
+                <div class="card_info_etc" style="width:60%; float:left; margin-left:10px; overflow: hidden;"> 
+                    {% if restaurant.phone %}
+                        <span>{{ restaurant.phone }}</span>
+                    {% endif %}
+                    <span><a href="{{ restaurant.place_url }}">상세보기</a></span>
+                    {% if restaurant.homepage_url %}
+                    <span><a href="{{ restaurant.homepage_url }}">홈페이지</a></span>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

@@ -14,14 +14,18 @@
 
 <body id='_body'>
     <div class="main_top">
-        <div class="top_home">
-            <a href='/'><img src= "{% static 'images/icons8-home-48.png'%}"> <a>
+        <div class="top_home" style="margin-top:3px;" >
+            <a href='/' style="margin:5px;">
+                <span class="material-icons" style="color:white; font-size:40px; ">home</span>
+            </a>
         </div>
+        <a href='/' style="text-color:black;">
         <div class="top_center">
             <img src= "{% static 'images/free-icon-seoul-4480816.png'%}">
             &nbsp
             <h4> 실시간서울정보 </h4>
         </div>
+        </a>
     </div>
     {% if request.path != "/"  %}
         {% include "partialPages/top_area.html" with area_nm=area_info.area_nm timestamp=area_info.timestamp%}

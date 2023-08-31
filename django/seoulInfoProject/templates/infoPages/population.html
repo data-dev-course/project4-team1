@@ -57,10 +57,13 @@
                 <ul class="report_ul ml-6 basis-4/5 rp_pop_next rpt_data">-</ul>
             </div>
         </div>
-        <h4 class="mt-2 pt-2 past_div" id="past_div">지난 24시간 추이</h4>
+        <h4 class="mt-2 pt-2 past_div" id="past_div">지난 12시간 추이</h4>
         <div class="items-center" style="display: flex; align-items: center;">
             <div class="ico_past"><img src="{% static 'images/ico_past.png'%}"></div>
-            <ul class="report_ul" style="margin: 25px; font-size: 11px;"><li><b class="color_bk">18시(현재)</b>에 인구가 제일 많고<br>혼잡도도 가장 높아요.</li><li>혼잡정도는 <b class="rpt_data" style="color:#DD1F3D">붐빔</b>이예요.</li></ul>
+            <ul class="report_ul" style="margin: 25px; font-size: 11px;">
+                <li><b class="color_bk">{{ ppltn_cal.max_past_congest.timestamp|date:"H시" }}</b>에 인구가 제일 많고<br>혼잡도도 가장 높아요.</li>
+                <li>혼잡정도는 <b class="rpt_data" style="color:#DD1F3D">{{ppltn_cal.max_past_congest.area_congest_lvl}}</b>이예요.</li>
+            </ul>
         </div>
     </div>
     <!-- 성별/연령별 -->

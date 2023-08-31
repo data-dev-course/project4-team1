@@ -54,9 +54,9 @@ def df_to_rds(**kwargs):
         db_password = Variable.get("db_password")
         db_port = '5432'
 
-        if table_name == 'weather_news':
-            file_name = table_name + 'list'
-            
+        if table_name == "weather_news":
+            file_name = table_name + "list"
+
         else:
             file_name = table_name
 
@@ -97,8 +97,8 @@ def df_to_rds(**kwargs):
 
     except ValueError as e:
         print(kwargs)
-        print(df[df.duplicated(subset='area_cd',keep=False)])
-        
+        print(df[df.duplicated(subset="area_cd", keep=False)])
+
         raise AirflowException(f"df_to_rds ValueError 오류 발생. {e}")
 
     except Exception as e:

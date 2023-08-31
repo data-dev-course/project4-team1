@@ -11,7 +11,7 @@ from airflow.models import Variable
 default_args = {
     "owner": "ptj",
     "depends_on_past": False,
-    "start_date": datetime(2023, 8, 29, 13,0, 0),
+    "start_date": datetime(2023, 8, 29, 13, 0, 0),
     "retries": 1,
     "retry_delay": timedelta(seconds=1),
 }
@@ -83,7 +83,7 @@ def df_to_rds(**kwargs):
                     ROW_NUMBER() OVER (PARTITION BY area_cd ORDER BY timestamp DESC) AS row_num
                     FROM {table_name}
                 ) AS subquery
-                WHERE row_num > 12
+                WHERE row_num > 24
                 );
                 """
                 con.execute(del_query)

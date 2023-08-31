@@ -1,47 +1,27 @@
 {% extends '../base.html' %}
 {% load static %}
-
 {% block content %}
-
 {% include "../partialPages/nav_bar.html" %}
 
-<div class="report_inner_wrap">
-    <!-- 혼잡도 추이-->
-    <div class="report_cell">
 
-        <a href="/">
-        {% for item in items %}
-        <div class="card" style="height: 20%; cursor: pointer;" onclick="location.href='/'">
-                <div class="card_img" style="width:25%; float: left;"> 
-                    <img src="{% static 'images/s.jpg'%}" style="width: 100%; border-radius: 15px;">
-                </div>
-                <div class="card_title" style="width: 60%; float:left; margin:10px;">
-                    <b>{{ item.title }}</b>
-                </div>
-                <div class="'card_score" style="width:60%; float:left; margin-left: 10px;"> 
-                    <span> 기사 발행일 : {{ item.pubDate }}</span>
-                </div>
-                <div class="card_address" style="width:60%; float:left; margin-left:10px;"> 
-                    <div>{{ item.description }}</div>
-                    
-                </div>
-             
-        </div>
-        </a>
-        {% endfor %}
-        
-        {% comment %} {% for item in items %}
-        <p class="highcharts-description">
-            <h1> {{ item.title }} </h1> <br><br>
-            <a href="{{ item.originallink }}">기사 링크</a><br><br>
-            <!-- originallink : {{ item.originallink }} <br><br> -->
-            <!-- link : {{ item.link }} <br><br> -->
-            요약 : {{ item.description }} <br><br>
-            기사 발행일 : {{ item.pubDate }} <br>
-            ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ <br>
-        </p>
-        {% endfor %} {% endcomment %}
-    </div>
-                  
+<div class="report_inner_wrap">
+    {% for item in items %}
+      <div class="report_cell">
+          <div class="card" style="height: 10%;" onclick="window.open('{{ item.originallink }}')">
+            <div class="card_img" style="width:25%; float: left;"> 
+                <img src="{{ item.img }}" style="width: 100%; border-radius: 15px;">
+            </div>
+            <div class="card_title" style="width: 70%; float:left; margin:10px;">
+                <span><a><b>{{ item.title }}</b></a></span>
+            </div>
+            <div class="'card_score" style="width:60%; float:left; margin-left: 10px;"> 
+                <span>{{ item.description }}</span>
+            </div>
+            <div class="card_info_etc" style="width:60%; float:left; margin-top:20px ; margin-left:10px; overflow: hidden;"> 
+                <span><small>{{ item.pubDate }}</small></span>
+            </div>
+          </div>
+      </div>          
+    {% endfor %}
 </div>
 {% endblock %}
