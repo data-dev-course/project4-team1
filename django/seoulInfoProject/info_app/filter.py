@@ -56,7 +56,6 @@ def cal_past_population(area):
     return congest_max
 
 
-
 def cal_past_population(area):
     # congest = Congest.objects.get(area_cd = area)
     congest_past = CongestPast.objects.filter(area_cd=area)
