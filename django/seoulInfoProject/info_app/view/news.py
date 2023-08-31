@@ -34,7 +34,7 @@ def news_data(area, data_path) -> json:
 
 def area_replace(area) -> str:
     area = str(area)
-    new_area = area.replace("·", " ")
+    new_area = area.replace("·", " ").replace("(", " ").replace(")", "")
     return new_area
 
 
