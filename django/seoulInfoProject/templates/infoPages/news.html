@@ -5,11 +5,9 @@
 
 
 <div class="report_inner_wrap">
-    <!-- 혼잡도 추이-->
     {% for item in items %}
-
-    <div class="report_cell">
-        <div class="card" style="height: 10%;" onclick="window.open('{{ item.originallink }}')">
+      <div class="report_cell">
+          <div class="card" style="height: 10%;" onclick="window.open('{{ item.originallink }}')">
             <div class="card_img" style="width:25%; float: left;"> 
                 <img src="{{ item.img }}" style="width: 100%; border-radius: 15px;">
             </div>
@@ -22,9 +20,8 @@
             <div class="card_info_etc" style="width:60%; float:left; margin-top:20px ; margin-left:10px; overflow: hidden;"> 
                 <span><small>{{ item.pubDate }}</small></span>
             </div>
-        </div>
-        
-    </div>          
+          </div>
+      </div>          
     {% endfor %}
 </div>
 {% endblock %}
