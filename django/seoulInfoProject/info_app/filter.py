@@ -56,6 +56,14 @@ def cal_past_population(area):
     return congest_max
 
 
+def cal_past_population(area):
+    # congest = Congest.objects.get(area_cd = area)
+    congest_past = CongestPast.objects.filter(area_cd=area)
+    max_price = congest_past.aggregate(Max("area_ppltn_max"))["area_ppltn_max__max"]
+    congest_max = congest_past.filter(area_ppltn_max=max_price).first()
+    return congest_max
+
+
 def get_area_info(area):
     area = Congest.objects.get(area_cd=area)
     area_split = area.area_nm[-1]

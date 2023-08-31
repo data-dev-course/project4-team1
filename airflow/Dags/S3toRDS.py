@@ -7,6 +7,7 @@ import boto3
 import io
 from sqlalchemy import create_engine, Integer, Float, DateTime, Text, String
 from airflow.models import Variable
+from pytz import timezone
 
 default_args = {
     "owner": "ptj",
@@ -25,7 +26,8 @@ def s3_to_df(data_category):
         s3_client = boto3.client("s3")
 
         # 현재 날짜 데이터 가져오기
-        current_date = datetime.now().strftime("%Y%m%d")
+        kst = timezone("Asia/Seoul")
+        current_date = datetime.now().astimezone(kst).strftime("%Y%m%d")
         con_df = pd.DataFrame()
 
         for area in area_list:
@@ -54,7 +56,6 @@ def s3_to_df(data_category):
 # df를 rds에 적재
 def df_to_rds(**kwargs):
     try:
-        print(kwargs)
         data_type = kwargs["params"]["data_type"]
         table_name = kwargs["params"]["table_name"]
 
