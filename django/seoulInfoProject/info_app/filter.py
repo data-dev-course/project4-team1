@@ -10,11 +10,11 @@ def category_filter(category, selected_option):
         print(category)
         congest_obj = Congest.objects.filter(area_category=category)
 
-    if selected_option == 'option2':
+    if selected_option == "option2":
         ko_kr = Func(
             "area_nm",
             function="ko_KR.utf8",
-            template='(%(expressions)s) COLLATE "%(function)s"'
+            template='(%(expressions)s) COLLATE "%(function)s"',
         )
         congest_obj = congest_obj.order_by(ko_kr.asc())
     else:
@@ -57,6 +57,14 @@ def cal_past_population(area):
     return congest_max
     
 
+def cal_past_population(area):
+    # congest = Congest.objects.get(area_cd = area)
+    congest_past = CongestPast.objects.filter(area_cd=area)
+    max_price = congest_past.aggregate(Max("area_ppltn_max"))["area_ppltn_max__max"]
+    congest_max = congest_past.filter(area_ppltn_max=max_price).first()
+    return congest_max
+
+
 def get_area_info(area):
     area = Congest.objects.get(area_cd=area)
     area_split = area.area_nm[-1]
@@ -69,7 +77,7 @@ def get_area_congest_msg(area_info):
     msg_list = msg.split(".")
 
     for i in range(len(msg_list)):
-        if msg_list[i]=="" or '지도' in msg_list[i]:
+        if msg_list[i] == "" or "지도" in msg_list[i]:
             msg_list.pop(i)
 
     return msg_list

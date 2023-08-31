@@ -19,7 +19,6 @@ def placeList(request):
         paginator = Paginator(area_obj, 15)
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
-        
 
         context = {
             "page_obj": page_obj,
