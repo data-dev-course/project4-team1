@@ -65,7 +65,7 @@ def get_area_congest_msg(area_info):
 
 def cal_congest(area_info):
     
-    if area_info.male_ppltn_rate > area_info.male_ppltn_rate:
+    if area_info.male_ppltn_rate > area_info.female_ppltn_rate:
         gender = '남성'
         gender_val = round(area_info.male_ppltn_rate - area_info.female_ppltn_rate,1)
     else:
