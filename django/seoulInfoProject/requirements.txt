@@ -16,3 +16,4 @@ requests==2.31.0
 bs4==0.0.1
 # local test
 django-environ==0.10.0
+pytz==2023.3
