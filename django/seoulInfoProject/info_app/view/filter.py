@@ -145,6 +145,8 @@ def cal_fcst_population(congest_fcst):
         congest_fcst = congest_fcst.filter(fcst_congest_lvl="보통")
     else:
         congest_fcst = congest_fcst.filter(fcst_congest_lvl="여유")
+
+
     max_price = congest_fcst.aggregate(Max("fcst_ppltn_max"))["fcst_ppltn_max__max"]
     congest_max = congest_fcst.filter(fcst_ppltn_max=max_price).first()
 
