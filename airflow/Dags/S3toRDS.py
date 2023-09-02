@@ -46,7 +46,6 @@ def s3_to_df(data_category):
 # df를 rds에 적재
 def df_to_rds(**kwargs):
     try:
-        
         data_type = kwargs["params"]["data_type"]
         table_name = kwargs["params"]["table_name"]
 
