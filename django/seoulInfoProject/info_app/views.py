@@ -37,7 +37,6 @@ def population(request):
         congest_data = population_filter(area)
         area_info, jongseong = get_area_info(area)
         msg = get_area_congest_msg(area_info)
-        ppltn_cal = cal_congest(area_info)
 
         context = {
             "area_info": area_info,
@@ -68,6 +67,11 @@ def restaurant(request):
         area = request.GET.get("area")
         area_info, jongseong = get_area_info(area)
         restaurant_info = restaurant_filter(area)
+
+        paginator = Paginator(restaurant_info, 15)
+        page_number = request.GET.get("page")
+        restaurant_info = paginator.get_page(page_number)
+
         context = {
             "area_info": area_info,
             "jongseong": jongseong,

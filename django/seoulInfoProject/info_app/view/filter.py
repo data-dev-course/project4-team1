@@ -51,8 +51,8 @@ def population_filter(area):
         congest_past_json = serializers.serialize('json',congest_past_12)
 
     else:
-        congest_past_json = serializers.serialize('json',congest_past)
-        max_past_congest, past_ratio_list = cal_past_population(congest_past)
+        congest_past_json = serializers.serialize("json", congest_past)
+        max_past_congest, past_ratio_list = cal_past_population(congest_past, None)
         max_fcst_congest = None
 
 
