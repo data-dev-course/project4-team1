@@ -32,7 +32,7 @@ def placeList(request):
 
 def population(request):
     if request.method == "GET":
-        area = request.GET.get('area')
+        area = request.GET.get("area")
 
         congest_data = population_filter(area)
         area_info, jongseong = get_area_info(area)
@@ -77,8 +77,7 @@ def restaurant(request):
             "jongseong": jongseong,
             "restaurant_info": restaurant_info,
         }
-    return render(request, PATH + "infoPages/restaurant.html",context)
-
+    return render(request, PATH + "infoPages/restaurant.html", context)
 
 
 def news(request):
@@ -96,4 +95,3 @@ def news(request):
         context.update(news_area)
 
     return render(request, PATH + "infoPages/news.html", context)
-

@@ -26,37 +26,37 @@ def category_filter(category, selected_option):
     for ca in category_class:
         ca_dic = {}
         ca_dic["name"] = ca
-        
+
         if category == ca:
-            ca_dic['focus'] = ' on'
+            ca_dic["focus"] = " on"
         else:
             ca_dic["focus"] = ""
         categorys.append(ca_dic)
-        
+
     return congest_obj, categorys
 
 
-
 def population_filter(area):
-    congest = Congest.objects.filter(area_cd = area)
-    congest_json = serializers.serialize('json',congest)
+    congest = Congest.objects.filter(area_cd=area)
+    congest_json = serializers.serialize("json", congest)
 
-    congest_fcst = CongestFcst.objects.filter(area_cd = area)
-    congest_fcst_json = serializers.serialize('json',congest_fcst)
-    
-    congest_past = CongestPast.objects.filter(area_cd = area).order_by('timestamp')
+    congest_fcst = CongestFcst.objects.filter(area_cd=area)
+    congest_fcst_json = serializers.serialize("json", congest_fcst)
+
+    congest_past = CongestPast.objects.filter(area_cd=area).order_by("timestamp")
     if congest_fcst[0].fcst_ppltn_max and len(congest_past) >= 12:
         _id = len(congest_past) - 12
-        congest_past_12 = CongestPast.objects.filter(area_cd = area).order_by('timestamp')[12:]
+        congest_past_12 = CongestPast.objects.filter(area_cd=area).order_by(
+            "timestamp"
+        )[12:]
         max_past_congest, past_ratio_list = cal_past_population(congest_past, True)
         max_fcst_congest = cal_fcst_population(congest_fcst)
-        congest_past_json = serializers.serialize('json',congest_past_12)
+        congest_past_json = serializers.serialize("json", congest_past_12)
 
     else:
         congest_past_json = serializers.serialize("json", congest_past)
         max_past_congest, past_ratio_list = cal_past_population(congest_past, None)
         max_fcst_congest = None
-
 
     sub_result = cal_congest(congest[0])
 
@@ -107,18 +107,28 @@ def cal_past_population(congest_past, congest_past_12):
 
     # 현재 날짜 데이터 가져오기
     kst = timezone("Asia/Seoul")
-    current_time = datetime.now().astimezone(kst).replace(minute=0, second=0, microsecond=0)
+    current_time = (
+        datetime.now().astimezone(kst).replace(minute=0, second=0, microsecond=0)
+    )
     # 12시간 이전의 시간 계산
     twelve_hours_ago = current_time - timedelta(hours=12)
 
     if congest_past.filter(area_congest_lvl="붐빔"):
-        congest_past = congest_past.filter(area_congest_lvl="붐빔",timestamp__gte=twelve_hours_ago)
+        congest_past = congest_past.filter(
+            area_congest_lvl="붐빔", timestamp__gte=twelve_hours_ago
+        )
     elif congest_past.filter(area_congest_lvl="약간 붐빔"):
-        congest_past = congest_past.filter(area_congest_lvl="약간 붐빔",timestamp__gte=twelve_hours_ago)
+        congest_past = congest_past.filter(
+            area_congest_lvl="약간 붐빔", timestamp__gte=twelve_hours_ago
+        )
     elif congest_past.filter(area_congest_lvl="보통"):
-        congest_past = congest_past.filter(area_congest_lvl="보통",timestamp__gte=twelve_hours_ago)
+        congest_past = congest_past.filter(
+            area_congest_lvl="보통", timestamp__gte=twelve_hours_ago
+        )
     else:
-        congest_past = congest_past.filter(area_congest_lvl="여유",timestamp__gte=twelve_hours_ago)
+        congest_past = congest_past.filter(
+            area_congest_lvl="여유", timestamp__gte=twelve_hours_ago
+        )
 
     max_price = congest_past.aggregate(Max("area_ppltn_max"))["area_ppltn_max__max"]
     congest_max = congest_past.filter(area_ppltn_max=max_price).first()
@@ -201,6 +211,7 @@ def cal_congest(area_info):
     }
 
     return result
+
 
 def has_jongseong(character):
     # 한글의 유니코드 범위: 0xAC00 ~ 0xD7A3
