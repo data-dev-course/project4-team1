@@ -1,21 +1,72 @@
+{% load static %}
 
+{% if congest_data.max_fcst_congest%}
 
-<div class="graphbox mt-2" style="height: 400px; position: relative">
-    <div id="congest_bar_chart"></div>
-    <script src="{% static 'js/chart/congest_bar_chart.js'%}"></script>
+<h4 class="mt-2 pt-2">향후 12시간 전망</h4>
+<div class="items-center" style="display: flex; align-items: center;">
+    <div class="ico_past" ><img src="{% static 'images/ico_future.png'%}"></div>
+    <ul class="report_ul" style="margin: 25px; font-size: 13px;">
+        <li><b class="color_bk">{{ congest_data.max_fcst_congest.fcst_time|date:"H시" }}</b>에 인구가 제일 많고<br>혼잡도도 가장 높아요.</li>
+        <li>혼잡정도는 
+            <b class="rpt_data" 
+            style=
+            {%if '약간' in congest_data.max_fcst_congest.fcst_congest_lvl%}
+            "color:#FF8040;"
+            {% elif congest_data.max_fcst_congest.fcst_congest_lvl in '붐빔'%}
+            "color:#DD1F3D;"
+            {% elif congest_data.max_fcst_congest.fcst_congest_lvl in '보통'%}
+            "color:#FFB100;"
+            {% else %} 
+            "color:#00D369;" 
+            {% endif %}
+            >
+            {{congest_data.max_fcst_congest.fcst_congest_lvl}}</b>이예요.
+        </li>
+    </ul>
 </div>
-<div class="predict_div" id="predict_div" style="display: none;">
-    <h4 class="mt-2 pt-2">향후 12시간 전망</h4>
-    <div class="flex items-center pt-2">
-        <div class="ico_past"><img src="{% static 'images/ico_future.png'%}"></div>
-        <ul class="report_ul ml-6 basis-4/5 rp_pop_next rpt_data">-</ul>
-    </div>
+
+<h4 class="mt-2 pt-2 past_div" id="past_div">지난 12시간 추이</h4>
+<div class="items-center" style="display: flex; align-items: center;">
+    <div class="ico_past"><img src="{% static 'images/ico_past.png'%}"></div>
+    <ul class="report_ul" style="margin: 25px; font-size: 13px;">
+        <li><b class="color_bk">{{ congest_data.max_past_congest.timestamp|date:"H시" }}</b>에 인구가 제일 많고<br>혼잡도도 가장 높아요.</li>
+        <li>혼잡정도는 
+            <b class="rpt_data" 
+            style=
+            {%if '약간' in congest_data.max_past_congest.area_congest_lvl%}
+            "color:#FF8040;"
+            {% elif congest_data.max_past_congest.area_congest_lvl in '붐빔'%}
+            "color:#DD1F3D;"
+            {% elif congest_data.max_past_congest.area_congest_lvl in '보통'%}
+            "color:#FFB100;"
+            {% else %} 
+            "color:#00D369;" 
+            {% endif %}
+            >
+            {{congest_data.max_past_congest.area_congest_lvl}}</b>이예요.</li>
+    </ul>
 </div>
+
+{% else %}
 <h4 class="mt-2 pt-2 past_div" id="past_div">지난 24시간 추이</h4>
 <div class="items-center" style="display: flex; align-items: center;">
     <div class="ico_past"><img src="{% static 'images/ico_past.png'%}"></div>
-    <ul class="report_ul" style="margin: 25px; font-size: 11px;">
-        <li><b class="color_bk">{{ppltn_cal.max_past_congest.timestamp}}18시(현재)</b>에 인구가 제일 많고<br>혼잡도도 가장 높아요.</li>
-        <li>혼잡정도는 <b class="rpt_data" style="color:#DD1F3D">{{ppltn_cal.max_past_congest.area_congest_lvl}}</b>이예요.</li>
+    <ul class="report_ul" style="margin: 25px; font-size: 13px;">
+        <li><b class="color_bk">{{ congest_data.max_past_congest.timestamp|date:"H시" }}</b>에 인구가 제일 많고<br>혼잡도도 가장 높아요.</li>
+        <li>혼잡정도는 
+            <b class="rpt_data" 
+            style=
+            {%if '약간' in congest_data.max_past_congest.area_congest_lvl %}
+            "color:#FF8040;"
+            {% elif congest_data.max_past_congest.area_congest_lvl in '붐빔'%}
+            "color:#DD1F3D;"
+            {% elif congest_data.max_past_congest.area_congest_lvl in '보통'%}
+            "color:#FFB100;"
+            {% else %} 
+            "color:#00D369;" 
+            {% endif %}
+            >
+            {{congest_data.max_past_congest.area_congest_lvl}}</b>이예요.</li>
     </ul>
 </div>
+{% endif %}

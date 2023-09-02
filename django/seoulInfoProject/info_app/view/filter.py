@@ -1,13 +1,12 @@
 from info_app.models import *
 from django.core import serializers
-from django.db.models import Max, Func
+from django.db.models import Min, Max, Func
 
 
 def category_filter(category, selected_option):
     if category == "전체보기":
         congest_obj = Congest.objects.all()
     else:
-        print(category)
         congest_obj = Congest.objects.filter(area_category=category)
 
     if selected_option == "option2":
@@ -43,24 +42,98 @@ def population_filter(area):
     congest_fcst_json = serializers.serialize("json", congest_fcst)
 
     congest_past = CongestPast.objects.filter(area_cd=area).order_by("timestamp")
-    congest_past_json = serializers.serialize("json", congest_past)
+    if congest_fcst[0].fcst_ppltn_max and len(congest_past) >= 12:
+        _id = len(congest_past) - 12
+        congest_past_12 = CongestPast.objects.filter(area_cd=area, id__gte=3).order_by(
+            "timestamp"
+        )
+        max_past_congest, past_ratio_list = cal_past_population(
+            congest_past, congest_past_12
+        )
+        max_fcst_congest = cal_fcst_population(congest_fcst)
+        congest_past_json = serializers.serialize("json", congest_past_12)
 
-    return congest_json, congest_fcst_json, congest_past_json
+    else:
+        congest_past_json = serializers.serialize("json", congest_past)
+        max_past_congest, past_ratio_list = cal_past_population(congest_past)
+        max_fcst_congest = None
+
+    sub_result = cal_congest(congest[0])
+
+    result = {
+        "congest_json": congest_json,
+        "congest_fcst_json": congest_fcst_json,
+        "congest_past_json": congest_past_json,
+        "max_past_congest": max_past_congest,
+        "max_fcst_congest": max_fcst_congest,
+        "past_ratio_list": past_ratio_list,
+    }
+
+    result.update(sub_result)
+
+    return result
 
 
-def cal_past_population(area):
-    # congest = Congest.objects.get(area_cd = area)
-    congest_past = CongestPast.objects.filter(area_cd=area)
+def cal_past_population(congest_past, congest_past_12):
+    # 1, 3, 24시간전 인구수 증감 계산
+    congest_last_idx = len(congest_past) - 1
+    congest_1_ago = (
+        congest_past[congest_last_idx - 1].area_ppltn_max
+        / congest_past[congest_last_idx].area_ppltn_max
+    )
+    congest_3_ago = (
+        congest_past[congest_last_idx - 3].area_ppltn_max
+        / congest_past[congest_last_idx].area_ppltn_max
+    )
+    congest_24_ago = (
+        congest_past[congest_last_idx - 23].area_ppltn_max
+        / congest_past[congest_last_idx].area_ppltn_max
+    )
+
+    congest_ago_list = [congest_1_ago, congest_3_ago, congest_24_ago]
+    congest_ago_result_list = []
+    for i in congest_ago_list:
+        if i < 1:
+            ratio = str(round((1 - i) * 100, 1))
+        elif i > 1:
+            ratio = "-" + str(round((i - 1) * 100, 1))
+        else:
+            ratio = "0.0"
+        congest_ago_result_list.append(ratio)
+
+    # 혼잡도, 인구수 최대인 시간대 구하기
+    if congest_past_12:
+        congest_past = congest_past_12
+
+    if congest_past.filter(area_congest_lvl="붐빔"):
+        congest_past = congest_past.filter(area_congest_lvl="붐빔")
+    elif congest_past.filter(area_congest_lvl="약간 붐빔"):
+        congest_past = congest_past.filter(area_congest_lvl="약간 붐빔")
+    elif congest_past.filter(area_congest_lvl="보통"):
+        congest_past = congest_past.filter(area_congest_lvl="보통")
+    else:
+        congest_past = congest_past.filter(area_congest_lvl="여유")
+
     max_price = congest_past.aggregate(Max("area_ppltn_max"))["area_ppltn_max__max"]
     congest_max = congest_past.filter(area_ppltn_max=max_price).first()
-    return congest_max
+
+    return congest_max, congest_ago_result_list
 
 
-def cal_past_population(area):
-    # congest = Congest.objects.get(area_cd = area)
-    congest_past = CongestPast.objects.filter(area_cd=area)
-    max_price = congest_past.aggregate(Max("area_ppltn_max"))["area_ppltn_max__max"]
-    congest_max = congest_past.filter(area_ppltn_max=max_price).first()
+def cal_fcst_population(congest_fcst):
+    if congest_fcst.filter(fcst_congest_lvl="붐빔"):
+        congest_fcst = congest_fcst.filter(fcst_congest_lvl="붐빔")
+    elif congest_fcst.filter(fcst_congest_lvl="약간 붐빔"):
+        congest_fcst = congest_fcst.filter(fcst_congest_lvl="약간 붐빔")
+
+    elif congest_fcst.filter(fcst_congest_lvl="보통"):
+        congest_fcst = congest_fcst.filter(fcst_congest_lvl="보통")
+    else:
+        congest_fcst = congest_fcst.filter(fcst_congest_lvl="여유")
+
+    max_price = congest_fcst.aggregate(Max("fcst_ppltn_max"))["fcst_ppltn_max__max"]
+    congest_max = congest_fcst.filter(fcst_ppltn_max=max_price).first()
+
     return congest_max
 
 
@@ -83,7 +156,7 @@ def get_area_congest_msg(area_info):
 
 
 def cal_congest(area_info):
-    if area_info.male_ppltn_rate > area_info.male_ppltn_rate:
+    if area_info.male_ppltn_rate > area_info.female_ppltn_rate:
         gender = "남성"
         gender_val = round(area_info.male_ppltn_rate - area_info.female_ppltn_rate, 1)
     else:
@@ -113,8 +186,6 @@ def cal_congest(area_info):
             area_info.non_resnt_ppltn_rate - area_info.resnt_ppltn_rate, 1
         )
 
-    max_past_congest = cal_past_population(area_info.area_cd)
-
     result = {
         "gender": gender,
         "gender_val": gender_val,
@@ -122,7 +193,6 @@ def cal_congest(area_info):
         "age_val": age_val,
         "resnt": resnt,
         "resnt_val": resnt_val,
-        "max_past_congest": max_past_congest,
     }
 
     return result

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.conf import settings
-from info_app.filter import *
+from .view.filter import *
 from .view.news import *
 
 PATH = ""
@@ -34,7 +34,7 @@ def population(request):
     if request.method == "GET":
         area = request.GET.get("area")
 
-        congest_json, congest_fcst_json, congest_past_json = population_filter(area)
+        congest_data = population_filter(area)
         area_info, jongseong = get_area_info(area)
         msg = get_area_congest_msg(area_info)
         ppltn_cal = cal_congest(area_info)
@@ -43,10 +43,7 @@ def population(request):
             "area_info": area_info,
             "jongseong": jongseong,
             "congest_msg": msg,
-            "congest_json": congest_json,
-            "congest_fcst_json": congest_fcst_json,
-            "congest_past_json": congest_past_json,
-            "ppltn_cal": ppltn_cal,
+            "congest_data": congest_data,
         }
     return render(request, PATH + "infoPages/population.html", context)
 

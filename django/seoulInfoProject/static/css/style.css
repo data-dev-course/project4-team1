@@ -722,8 +722,8 @@ table th, table td {border-right:1px solid #D2DBE2; text-align: left}
 	align-items: center;
 } */
 .ico_past > img {width: 53px}
-.arr_up::after {content: 'â–²'; margin-left: 2px; font-size: 0.8em}
-.arr_down::after {content: 'â–¼'; margin-left: 2px; font-size: 0.8em}
+.arr_up::after {content: '▲'; margin-left: 2px; font-size: 0.8em}
+.arr_down::after {content: '▼'; margin-left: 2px; font-size: 0.8em}
 
 .report_cell h3 {color: #4C65A7; font-size: 17px; font-weight: bold; padding-bottom: 5px; }
 .report_cell h4 {color: #575757; font-weight: bold; font-size: 15px; margin-bottom: 3px}
@@ -1267,27 +1267,34 @@ canvas{cursor: default;}
 }
 
 .main_top{
-	width: 100%;
-	height: 50px;
+	display: flex; 
+	align-items: center; 
+	height: 50px; 
 	background: #A1CCD1;
-	display: flex;
+	
+
 }
 .top_home{
-	width: 44%;
-	float: left;
+	/* float: left; */
+	margin-right: auto;
+	width: 45px;
 	
 }
 .top_center{
+	display: flex; 
+	margin: 0 auto;
+	text-align: center;
+
+	height: 34px; 
 	align-items: center;
-	width: 56%;
-	height: 100%; 
-	display: flex;
 
 }
 
-.top_center img{
-	width: 45px;
 
+
+.top_right{
+	margin-left: auto;
+	width: 45px;
 }
 a{
 	text-decoration: none;
