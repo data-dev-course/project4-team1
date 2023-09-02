@@ -1,6 +1,8 @@
 from info_app.models import *
 from django.core import serializers
 from django.db.models import Min, Max, Func
+from datetime import datetime, timedelta
+from pytz import timezone
 
 
 def category_filter(category, selected_option):
@@ -44,12 +46,10 @@ def population_filter(area):
     congest_past = CongestPast.objects.filter(area_cd=area).order_by("timestamp")
     if congest_fcst[0].fcst_ppltn_max and len(congest_past) >= 12:
         _id = len(congest_past) - 12
-        congest_past_12 = CongestPast.objects.filter(area_cd=area, id__gte=3).order_by(
+        congest_past_12 = CongestPast.objects.filter(area_cd=area).order_by(
             "timestamp"
-        )
-        max_past_congest, past_ratio_list = cal_past_population(
-            congest_past, congest_past_12
-        )
+        )[12:]
+        max_past_congest, past_ratio_list = cal_past_population(congest_past, True)
         max_fcst_congest = cal_fcst_population(congest_fcst)
         congest_past_json = serializers.serialize("json", congest_past_12)
 
@@ -103,16 +103,32 @@ def cal_past_population(congest_past, congest_past_12):
 
     # 혼잡도, 인구수 최대인 시간대 구하기
     if congest_past_12:
-        congest_past = congest_past_12
+        congest_past.filter()
+
+    # 현재 날짜 데이터 가져오기
+    kst = timezone("Asia/Seoul")
+    current_time = (
+        datetime.now().astimezone(kst).replace(minute=0, second=0, microsecond=0)
+    )
+    # 12시간 이전의 시간 계산
+    twelve_hours_ago = current_time - timedelta(hours=12)
 
     if congest_past.filter(area_congest_lvl="붐빔"):
-        congest_past = congest_past.filter(area_congest_lvl="붐빔")
+        congest_past = congest_past.filter(
+            area_congest_lvl="붐빔", timestamp__gte=twelve_hours_ago
+        )
     elif congest_past.filter(area_congest_lvl="약간 붐빔"):
-        congest_past = congest_past.filter(area_congest_lvl="약간 붐빔")
+        congest_past = congest_past.filter(
+            area_congest_lvl="약간 붐빔", timestamp__gte=twelve_hours_ago
+        )
     elif congest_past.filter(area_congest_lvl="보통"):
-        congest_past = congest_past.filter(area_congest_lvl="보통")
+        congest_past = congest_past.filter(
+            area_congest_lvl="보통", timestamp__gte=twelve_hours_ago
+        )
     else:
-        congest_past = congest_past.filter(area_congest_lvl="여유")
+        congest_past = congest_past.filter(
+            area_congest_lvl="여유", timestamp__gte=twelve_hours_ago
+        )
 
     max_price = congest_past.aggregate(Max("area_ppltn_max"))["area_ppltn_max__max"]
     congest_max = congest_past.filter(area_ppltn_max=max_price).first()
