@@ -48,5 +48,18 @@
         </div>
     </div>
     {% endfor %}
+    <div class="pagination" id="pagination">
+        <span class="step-links">
+            {% for page in restaurant_info.paginator.page_range %}
+                <a href="/restaurant?page={{forloop.counter}}&area={{area_info.area_cd}}" style="color: #4C65A7;">
+                    {% if forloop.counter == restaurant_info.number %}
+                        &nbsp;&nbsp;<b>{{ forloop.counter }}</b>
+                    {% else %}
+                        &nbsp;&nbsp;{{ forloop.counter }}
+                    {% endif %}
+                </a>
+            {% endfor %}
+        </span>
+    </div>
 </div>
 {% endblock %}

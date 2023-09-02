@@ -27,7 +27,7 @@
                 <li class="flex_report" style="display:flex;">
                     <div class="grow">1시간 전 대비 증감율</div>
                     <div class= {% if '-' in congest_data.past_ratio_list.0 %}"rpt_data color_down arr_down">
-                                {% elif "0.0" in congest_data.past_ratio_list.0 %}>
+                                {% elif "0.0" in congest_data.past_ratio_list.0 and congest_data.past_ratio_list.0|length == 3 %}>
                                 {% else %} "rpt_data color_up arr_up"> {% endif %}
                         &nbsp; {{congest_data.past_ratio_list.0}}%
                     </div>
@@ -35,14 +35,14 @@
                 <li class="flex_report" style="display:flex;">
                     <div class="grow">3시간 전 대비 증감율</div>
                     <div class={% if "-" in congest_data.past_ratio_list.1 %}"rpt_data color_down arr_down">
-                        {% elif "0.0" in congest_data.past_ratio_list.1 %}>
+                        {% elif "0.0" in congest_data.past_ratio_list.1 and congest_data.past_ratio_list.1|length == 3 %}>
                         {% else %} "rpt_data color_up arr_up"> {% endif %}
                         &nbsp; {{congest_data.past_ratio_list.1}}%</div>
                 </li>
                 <li class="flex_report" style="display:flex; text-align:center;">
                     <div class="grow">어제자 동시간 대비 증감율</div>
                     <div class={% if '-' in congest_data.past_ratio_list.2 %}"rpt_data color_down arr_down">
-                        {% elif "0.0" in congest_data.past_ratio_list.2 %}>
+                        {% elif "0.0" in congest_data.past_ratio_list.2 and congest_data.past_ratio_list.2|length == 3 %}>
                         {% else %} "rpt_data color_up arr_up"> {% endif %}
                         &nbsp; {{congest_data.past_ratio_list.2}}%</div>
                 </li>
