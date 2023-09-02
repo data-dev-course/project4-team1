@@ -101,33 +101,32 @@ def cal_past_population(congest_past, congest_past_12):
             ratio = "0.0"
         congest_ago_result_list.append(ratio)
 
-    # 혼잡도, 인구수 최대인 시간대 구하기
-    if congest_past_12:
-        congest_past.filter()
-
-    # 현재 날짜 데이터 가져오기
     kst = timezone("Asia/Seoul")
     current_time = (
         datetime.now().astimezone(kst).replace(minute=0, second=0, microsecond=0)
     )
-    # 12시간 이전의 시간 계산
-    twelve_hours_ago = current_time - timedelta(hours=12)
+    # 혼잡도, 인구수 최대인 시간대 구하기
+    if congest_past_12:
+        # 12시간 이전의 시간 계산
+        hours_ago = current_time - timedelta(hours=12)
+    else:
+        hours_ago = current_time - timedelta(hours=24)
 
     if congest_past.filter(area_congest_lvl="붐빔"):
         congest_past = congest_past.filter(
-            area_congest_lvl="붐빔", timestamp__gte=twelve_hours_ago
+            area_congest_lvl="붐빔", timestamp__gte=hours_ago
         )
     elif congest_past.filter(area_congest_lvl="약간 붐빔"):
         congest_past = congest_past.filter(
-            area_congest_lvl="약간 붐빔", timestamp__gte=twelve_hours_ago
+            area_congest_lvl="약간 붐빔", timestamp__gte=hours_ago
         )
     elif congest_past.filter(area_congest_lvl="보통"):
         congest_past = congest_past.filter(
-            area_congest_lvl="보통", timestamp__gte=twelve_hours_ago
+            area_congest_lvl="보통", timestamp__gte=hours_ago
         )
     else:
         congest_past = congest_past.filter(
-            area_congest_lvl="여유", timestamp__gte=twelve_hours_ago
+            area_congest_lvl="여유", timestamp__gte=hours_ago
         )
 
     max_price = congest_past.aggregate(Max("area_ppltn_max"))["area_ppltn_max__max"]
