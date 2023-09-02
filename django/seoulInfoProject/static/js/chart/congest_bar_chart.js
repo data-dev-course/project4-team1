@@ -39,7 +39,7 @@ for (num in congest_past){
         time = '현재'
         past_congest_lvl = '혼잡도: '+ past_data['area_congest_lvl']
         ppltn_range = '인구수: '
-    }else if(congest_past.length > 12 && int_num % 4 === 0){
+    }else if(congest_past.length > 12 && int_num % 6 === 0){
         time = date.getHours()+'시'
         past_congest_lvl = '과거 혼잡도: '+ past_data['area_congest_lvl']
         ppltn_range = '과거 인구수: '
