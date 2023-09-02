@@ -30,7 +30,7 @@ else:
     }
 
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 # INSTALLED_APPS += ["storages"]
 # if "AWS_ACCESS_KEY_ID" in env:
