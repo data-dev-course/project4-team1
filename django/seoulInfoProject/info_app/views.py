@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.conf import settings
-from info_app.filter import *
+from .view.filter import *
 from .view.news import *
 
 PATH = ""
@@ -20,9 +20,6 @@ def placeList(request):
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
 
-        print(q)
-        print(selected_option)
-
         context = {
             "page_obj": page_obj,
             "categorys": categorys,
@@ -37,19 +34,15 @@ def population(request):
     if request.method == "GET":
         area = request.GET.get("area")
 
-        congest_json, congest_fcst_json, congest_past_json = population_filter(area)
+        congest_data = population_filter(area)
         area_info, jongseong = get_area_info(area)
         msg = get_area_congest_msg(area_info)
-        ppltn_cal = cal_congest(area_info)
 
         context = {
             "area_info": area_info,
             "jongseong": jongseong,
             "congest_msg": msg,
-            "congest_json": congest_json,
-            "congest_fcst_json": congest_fcst_json,
-            "congest_past_json": congest_past_json,
-            "ppltn_cal": ppltn_cal,
+            "congest_data": congest_data,
         }
     return render(request, PATH + "infoPages/population.html", context)
 
@@ -74,6 +67,11 @@ def restaurant(request):
         area = request.GET.get("area")
         area_info, jongseong = get_area_info(area)
         restaurant_info = restaurant_filter(area)
+
+        paginator = Paginator(restaurant_info, 15)
+        page_number = request.GET.get("page")
+        restaurant_info = paginator.get_page(page_number)
+
         context = {
             "area_info": area_info,
             "jongseong": jongseong,
@@ -86,19 +84,14 @@ def news(request):
     if request.method == "GET":
         area = request.GET.get("area")
         area_info, jongseong = get_area_info(area)
-        context = {
-            "area_info": area_info,
-            "jongseong": jongseong,
-        }
-
         str_area_nm = area_info.area_nm
-
         data_path = getattr(settings, "DATA_DIR", None)
         news_area = news_data(str_area_nm, f"{data_path}/news")
+
         context = {
             "area_info": area_info,
             "jongseong": jongseong,
         }
-        context += news_area
+        context.update(news_area)
 
     return render(request, PATH + "infoPages/news.html", context)

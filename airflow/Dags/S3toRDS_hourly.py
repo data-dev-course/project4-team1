@@ -7,6 +7,7 @@ import boto3
 import io
 from sqlalchemy import create_engine, inspect, Integer, Float, DateTime, Text, String
 from airflow.models import Variable
+from pytz import timezone
 
 default_args = {
     "owner": "ptj",
@@ -25,7 +26,8 @@ def s3_to_df(data_category):
         s3_client = boto3.client("s3")
 
         # 현재 날짜 데이터 가져오기
-        current_date = datetime.now().strftime("%Y%m%d")
+        kst = timezone("Asia/Seoul")
+        current_date = datetime.now().astimezone(kst).strftime("%Y%m%d")
         con_df = pd.DataFrame()
 
         for area in area_list:
@@ -105,7 +107,7 @@ def df_to_rds(**kwargs):
                     ROW_NUMBER() OVER (PARTITION BY area_cd ORDER BY timestamp DESC) AS row_num
                     FROM {table_name}
                 ) AS subquery
-                WHERE row_num > 12
+                WHERE row_num > 24
                 );
                 """
                 con.execute(del_query)

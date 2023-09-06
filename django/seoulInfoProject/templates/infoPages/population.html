@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block content %}
-{{ congest_json|json_script:"congest" }}
-{{ congest_fcst_json|json_script:"congest_fcst" }}
-{{ congest_past_json|json_script:"congest_past" }}
+{{ congest_data.congest_json|json_script:"congest" }}
+{{ congest_data.congest_fcst_json|json_script:"congest_fcst" }}
+{{ congest_data.congest_past_json|json_script:"congest_past" }}
 
 
 {% include "../partialPages/nav_bar.html" %}
@@ -14,7 +14,7 @@
         <p class="pop_date_right">※ {{area_info.timestamp | date:'Y-m-d H:i'}} 기준</p>
         <br>
         {% include "../partialPages/popul_graphic.html" with congest=area_info.area_congest_lvl %}
-        <ul class="report_ul mt-2 rpt_pop_congest_txt2_m rpt_data">
+        <ul class="report_ul mt-2 rpt_pop_congest_txt2_m rpt_data" style="margin-left: 12px;">
             {% for msg in congest_msg %}
             <li>{{msg}}.</li>
             {% endfor %}
@@ -26,15 +26,25 @@
             <ul class="report_ul">
                 <li class="flex_report" style="display:flex;">
                     <div class="grow">1시간 전 대비 증감율</div>
-                    <div class="rpt_data rpt_pop_updown1 color_up arr_up">2.9%</div>
+                    <div class= {% if '-' in congest_data.past_ratio_list.0 %}"rpt_data color_down arr_down">
+                                {% elif "0.0" in congest_data.past_ratio_list.0 and congest_data.past_ratio_list.0|length == 3 %}>
+                                {% else %} "rpt_data color_up arr_up"> {% endif %}
+                        &nbsp; {{congest_data.past_ratio_list.0}}%
+                    </div>
                 </li>
                 <li class="flex_report" style="display:flex;">
                     <div class="grow">3시간 전 대비 증감율</div>
-                    <div class="rpt_data rpt_pop_updown2 color_up arr_up">29.4%</div>
+                    <div class={% if "-" in congest_data.past_ratio_list.1 %}"rpt_data color_down arr_down">
+                        {% elif "0.0" in congest_data.past_ratio_list.1 and congest_data.past_ratio_list.1|length == 3 %}>
+                        {% else %} "rpt_data color_up arr_up"> {% endif %}
+                        &nbsp; {{congest_data.past_ratio_list.1}}%</div>
                 </li>
                 <li class="flex_report" style="display:flex; text-align:center;">
-                    <div class="grow">최근 28일 동시간 평균 대비 증감율</div>
-                    <div class="rpt_data rpt_pop_updown3 color_up arr_up">72.5%</div>
+                    <div class="grow">어제자 동시간 대비 증감율</div>
+                    <div class={% if '-' in congest_data.past_ratio_list.2 %}"rpt_data color_down arr_down">
+                        {% elif "0.0" in congest_data.past_ratio_list.2 and congest_data.past_ratio_list.2|length == 3 %}>
+                        {% else %} "rpt_data color_up arr_up"> {% endif %}
+                        &nbsp; {{congest_data.past_ratio_list.2}}%</div>
                 </li>
             </ul>
         </div>
@@ -50,18 +60,8 @@
             <div id="congest_bar_chart"></div>
             <script src="{% static 'js/chart/congest_bar_chart.js'%}"></script>
         </div>
-        <div class="predict_div" id="predict_div" style="display: none;">
-            <h4 class="mt-2 pt-2">향후 12시간 전망</h4>
-            <div class="flex items-center pt-2">
-                <div class="ico_past"><img src="{% static 'images/ico_future.png'%}"></div>
-                <ul class="report_ul ml-6 basis-4/5 rp_pop_next rpt_data">-</ul>
-            </div>
-        </div>
-        <h4 class="mt-2 pt-2 past_div" id="past_div">지난 24시간 추이</h4>
-        <div class="items-center" style="display: flex; align-items: center;">
-            <div class="ico_past"><img src="{% static 'images/ico_past.png'%}"></div>
-            <ul class="report_ul" style="margin: 25px; font-size: 11px;"><li><b class="color_bk">18시(현재)</b>에 인구가 제일 많고<br>혼잡도도 가장 높아요.</li><li>혼잡정도는 <b class="rpt_data" style="color:#DD1F3D">붐빔</b>이예요.</li></ul>
-        </div>
+        {% include "../partialPages/congest_summary.html" %}
+
     </div>
     <!-- 성별/연령별 -->
     <div class="report_cell">
@@ -71,28 +71,28 @@
             
             <div id="gender_ratio_pie_chart" list_data="{{congest.area.nm}}"></div>
             <script src="{% static 'js/chart/gender_ratio_pie_chart.js'%}"></script>
+
+            <div class="chart_img m">
+                <center><img src="{% static 'images/icon_male.png'%}"></center>
+                <p>남성</p>
+            </div>
+        
+        
+            <div class="chart_img f">
+                <center><img src="{% static 'images/icon_female.png'%}"></center>		
+                <p>여성</p>
+            </div>
             
-            <div class="basis-1/2" >
-                <div class="chart_img m">
-                    <center><img src="{% static 'images/icon_male.png'%}"></center>
-                    <p>남성</p>
-                </div>
-            </div>
-            <div class="basis-1/2">
-                <div class="chart_img f">
-                    <center><img src="{% static 'images/icon_female.png'%}"></center>		
-                    <p>여성</p>
-                </div>
-            </div>
+
             
             
         </div>
         <ul class="report_ul mt-2">
             <li class="rpt_data rpt_pop_gender">
-                {% if ppltn_cal.gender in "남성" %}
-                <b class="color_01">남성</b>이 여성보다 <b class="color_01">{{ppltn_cal.gender_val}}%</b> 많아요
+                {% if congest_data.gender in "남성" %}
+                <b class="color_01">남성</b>이 여성보다 <b class="color_01">{{congest_data.gender_val}}%</b> 많아요
                 {% else %}               
-                <b class="color_02">여성</b>이 남성보다 <b class="color_02">{{ppltn_cal.gender_val}}%</b> 많아요
+                <b class="color_02">여성</b>이 남성보다 <b class="color_02">{{congest_data.gender_val}}%</b> 많아요
                 {% endif %}
             </li>
         </ul>
@@ -134,7 +134,7 @@
                 </div>
         </div>
         <ul class="report_ul mt-2 ">
-            <li class="rpt_data rpt_pop_age">전체 연령대 중 <b class="color_01">{{ppltn_cal.age}}</b>가  <b class="color_01">{{ppltn_cal.age_val}}%</b>로 가장 많아요</li>
+            <li class="rpt_data rpt_pop_age">전체 연령대 중 <b class="color_01">{{congest_data.age}}</b>가  <b class="color_01">{{congest_data.age_val}}%</b>로 가장 많아요</li>
         </ul>
         <h4 class="mt-2 pt-3">상주·비상주 비율</h4>
         <!-- <div id="population_graph_genderAge" class="chart_genderAge"></div>  -->
@@ -166,10 +166,10 @@
         <ul class="report_ul mt-2">
             <!-- <li class="rpt_data rpt_pop_genderAge"></li>   -->
             <li class="rpt_data rpt_pop_sojn">
-                {% if ppltn_cal.resnt in '비상주' %}
-                <b class="color_01">비상주</b> 인구가 상주 인구보다 <b class="color_01">{{ppltn_cal.resnt_val}}%</b> 더 많아요.
+                {% if congest_data.resnt in '비상주' %}
+                <b class="color_01">비상주</b> 인구가 상주 인구보다 <b class="color_01">{{congest_data.resnt_val}}%</b> 더 많아요.
                 {% else %}
-                <b class="color_01">상주</b> 인구가 비상주 인구보다 <b class="color_01">{{ppltn_cal.resnt_val}}%</b> 더 많아요.
+                <b class="color_01">상주</b> 인구가 비상주 인구보다 <b class="color_01">{{congest_data.resnt_val}}%</b> 더 많아요.
                 {% endif %}
             </li>
         </ul>

@@ -39,12 +39,18 @@ for (num in congest_past){
         time = '현재'
         past_congest_lvl = '혼잡도: '+ past_data['area_congest_lvl']
         ppltn_range = '인구수: '
-    }else if(int_num === 0 || int_num === Math.floor(congest_past.length / 2)){
-        console.log(Math.floor(congest_past.length / 2))
+    }else if(congest_past.length > 12 && int_num % 6 === 0){
+
+
         time = date.getHours()+'시'
         past_congest_lvl = '과거 혼잡도: '+ past_data['area_congest_lvl']
         ppltn_range = '과거 인구수: '
-    }else{
+    }else if(int_num % Math.floor(congest_past.length / 2) === 0 ){
+        time = date.getHours()+'시'
+        past_congest_lvl = '과거 혼잡도: '+ past_data['area_congest_lvl']
+        ppltn_range = '과거 인구수: '
+    }
+    else{
         time = ''
         past_congest_lvl = '과거 혼잡도: '+ past_data['area_congest_lvl']
         ppltn_range = '과거 인구수: '
@@ -99,19 +105,6 @@ for (num in congest_fcst){
         }
     })
 }
-console.log(Math.floor(congest_past.length / 2))
-var timestamp1 = data_list[0][0]
-var timestamp2 = "2023-08-29T15:30:00Z";
-
-var date = new Date(timestamp1);
-var hours =  date.getHours();
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    var el = document.getElementById('gender_ratio_pie_chart');
-    var congest = JSON.parse(el.getAttribute("list_data"));
-    console.log(congest);
-});
 
 Highcharts.chart('congest_bar_chart', {
     chart: {
@@ -159,7 +152,7 @@ Highcharts.chart('congest_bar_chart', {
         data: data_list
         ,
         dataLabels: {
-            enabled: true,
+            enabled: false,
             rotation: -90,
             color: '#FFFFFF',
             align: 'right',
