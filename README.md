@@ -59,6 +59,8 @@
 
 ![web_github](https://github.com/data-dev-course/project4-team1/assets/64563859/afc3f1f0-0613-45c8-b2bc-f68621a01ea0)
 
+<br>
+
 ## 시연 영상
 
 [![Video Label](http://img.youtube.com/vi/pfddNISzzg0/0.jpg)](https://youtu.be/pfddNISzzg0)
